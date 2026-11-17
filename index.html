@@ -51,7 +51,7 @@
             background: rgba(9, 14, 26, 0.92);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
-            padding: 12px 16px;
+            padding: 10px 14px;
         }
 
         .header-inner {
@@ -60,7 +60,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .brand {
@@ -85,7 +86,7 @@
         }
 
         .brand-title {
-            font-size: 1.15rem;
+            font-size: 1.12rem;
             font-weight: 800;
             letter-spacing: 0.5px;
             background: linear-gradient(90deg, #ffffff, #cbd5e1);
@@ -99,7 +100,7 @@
         }
 
         .brand-sub {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--text-muted);
             display: block;
         }
@@ -107,16 +108,17 @@
         .header-badges {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
+
 
         .param-pill {
             background: rgba(56, 189, 248, 0.12);
             border: 1px solid rgba(56, 189, 248, 0.3);
             color: var(--blue-accent);
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            padding: 5px 9px;
+            padding: 5px 8px;
             border-radius: 999px;
             white-space: nowrap;
         }
@@ -127,7 +129,7 @@
             border: none;
             padding: 6px 11px;
             border-radius: 999px;
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             font-weight: 700;
             cursor: pointer;
             display: flex;
@@ -179,7 +181,7 @@
         }
 
         .card-title {
-            font-size: 0.98rem;
+            font-size: 0.96rem;
             font-weight: 700;
             color: var(--text-main);
             display: flex;
@@ -212,21 +214,21 @@
         }
 
         .stat-tile-label {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .stat-tile-value {
-            font-size: 1.1rem;
+            font-size: 1.08rem;
             font-weight: 800;
             margin-top: 2px;
             color: var(--text-main);
         }
 
         .stat-tile-sub {
-            font-size: 0.7rem;
+            font-size: 0.69rem;
             color: var(--clay-light);
             font-weight: 600;
         }
@@ -241,13 +243,13 @@
         table.elo-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.84rem;
+            font-size: 0.83rem;
         }
 
         table.elo-table th {
             text-align: left;
             padding: 9px 6px;
-            font-size: 0.7rem;
+            font-size: 0.69rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: var(--text-muted);
@@ -256,7 +258,7 @@
         }
 
         table.elo-table td {
-            padding: 11px 6px;
+            padding: 10px 6px;
             border-bottom: 1px solid rgba(148, 163, 184, 0.08);
             white-space: nowrap;
         }
@@ -351,7 +353,7 @@
 
         label {
             display: block;
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 600;
             color: var(--text-muted);
             margin-bottom: 5px;
@@ -359,12 +361,12 @@
 
         input, select {
             width: 100%;
-            padding: 11px 12px;
+            padding: 10px 12px;
             background: var(--bg-input);
             border: 1px solid var(--border);
             border-radius: 10px;
             color: var(--text-main);
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             outline: none;
             transition: border-color 0.2s;
         }
@@ -382,6 +384,12 @@
         .grid-3 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 8px;
         }
 
@@ -408,19 +416,19 @@
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
-            margin-top: 6px;
+            margin-top: 8px;
         }
 
         .preset-btn {
             flex: 1;
-            min-width: 52px;
-            padding: 8px 6px;
+            min-width: 48px;
+            padding: 7px 6px;
             background: var(--bg-card-alt);
             border: 1px solid var(--border);
             border-radius: 8px;
             color: var(--text-main);
             font-weight: 700;
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             cursor: pointer;
             text-align: center;
             transition: all 0.15s;
@@ -434,11 +442,11 @@
 
         .btn {
             width: 100%;
-            padding: 13px 16px;
+            padding: 12px 16px;
             border: none;
             border-radius: 11px;
             font-weight: 700;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: transform 0.1s, opacity 0.2s;
             display: inline-flex;
@@ -527,6 +535,25 @@
             font-weight: 700;
             margin-top: 3px;
             line-height: 1.35;
+        }
+
+        /* MATCHMAKER CARDS */
+        .mm-option-card {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            padding: 11px 12px;
+            margin-top: 9px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .mm-option-card.best-balance {
+            border-color: rgba(163, 230, 53, 0.55);
+            background: linear-gradient(135deg, rgba(26, 46, 5, 0.32), rgba(12, 20, 37, 0.9));
         }
 
         /* CHART */
@@ -688,6 +715,122 @@
         .h2h-seg-d { background: var(--draw); height: 100%; transition: width 0.3s; }
         .h2h-seg-b { background: var(--blue-accent); height: 100%; transition: width 0.3s; }
 
+        /* ACHIEVEMENTS / BADGES */
+        .ach-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 11px;
+        }
+
+        .ach-card {
+            background: linear-gradient(155deg, rgba(17, 26, 46, 0.95), rgba(12, 20, 37, 0.95));
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 13px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.15s, border-color 0.2s;
+        }
+
+        .ach-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.24);
+        }
+
+        .ach-crest {
+            width: 54px;
+            height: 54px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ach-crest svg {
+            width: 54px;
+            height: 54px;
+            display: block;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+        }
+
+        .ach-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .ach-title {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.25;
+        }
+
+        .ach-desc {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+            line-height: 1.3;
+        }
+
+        .ach-record-pill {
+            display: inline-block;
+            margin-top: 7px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .ach-holders {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 7px;
+        }
+
+        .ach-holder-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(9, 14, 26, 0.75);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: border-color 0.15s;
+        }
+
+        .ach-holder-chip:hover {
+            border-color: var(--clay-light);
+        }
+
+        .profile-badges-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .profile-mini-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(23, 35, 61, 0.85);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
         /* BOTTOM NAV */
         .bottom-nav {
             position: fixed;
@@ -700,18 +843,18 @@
             border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
-            padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+            padding: 6px 2px calc(6px + env(safe-area-inset-bottom));
         }
 
         .nav-item {
             flex: 1;
-            max-width: 150px;
+            max-width: 135px;
             background: none;
             border: none;
             color: var(--text-muted);
-            padding: 6px 4px;
+            padding: 6px 2px;
             border-radius: 10px;
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -722,8 +865,8 @@
         }
 
         .nav-item svg {
-            width: 20px;
-            height: 20px;
+            width: 19px;
+            height: 19px;
         }
 
         .nav-item.active {
@@ -757,7 +900,7 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* MODAL TV GRAPHIC */
+        /* MODAL TV GRAPHIC & EDIT MODAL */
         .modal-backdrop {
             position: fixed;
             inset: 0;
@@ -768,6 +911,7 @@
             align-items: center;
             justify-content: center;
             padding: 14px;
+            overflow-y: auto;
         }
 
         .modal-backdrop.open {
@@ -793,18 +937,30 @@
             margin-bottom: 12px;
         }
 
+        @media (max-width: 560px) {
+            .ach-grid {
+                grid-template-columns: 1fr;
+            }
+            .grid-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         @media (max-width: 480px) {
             .summary-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
             .stat-tile-value {
-                font-size: 0.96rem;
+                font-size: 0.94rem;
             }
             table.elo-table {
-                font-size: 0.78rem;
+                font-size: 0.77rem;
             }
             .preview-vs {
                 grid-template-columns: 1fr;
+            }
+            .nav-item {
+                font-size: 0.61rem;
             }
         }
     </style>
@@ -817,7 +973,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · Štvorhra</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.05</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -833,16 +989,16 @@
     <div id="toast" class="toast">Uložené!</div>
 
     <main class="container">
-        <!-- SEKCIA 1: TABUĽKA -->
+        <!-- SEKCIA 1: TABUĽKA (JEDNOTLIVCI / PEVNÉ DVOJICE) -->
         <section id="sec-table" class="section active">
             <div class="summary-grid">
                 <div class="stat-tile">
-                    <div class="stat-tile-label">Líder štvorhry</div>
+                    <div class="stat-tile-label" id="sum-leader-label">Líder štvorhry</div>
                     <div class="stat-tile-value" id="sum-leader-name">Tibor</div>
                     <div class="stat-tile-sub" id="sum-leader-elo">1500 ELO</div>
                 </div>
                 <div class="stat-tile">
-                    <div class="stat-tile-label">Deblistov v DB</div>
+                    <div class="stat-tile-label" id="sum-count-label">Deblistov / Párov</div>
                     <div class="stat-tile-value" id="sum-players-count">12</div>
                     <div class="stat-tile-sub" id="sum-mode-badge">Prepočet od 1500 ELO</div>
                 </div>
@@ -857,11 +1013,16 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot"></span>
-                        Priebežná tabuľka ELO – Štvorhra (Štart 1500 ELO)
+                        <span id="leaderboard-card-title">Priebežná tabuľka ELO – Jednotlivci</span>
                     </div>
-                    <span style="font-size: 0.72rem; color: var(--text-muted);">Klikni na hráča pre detail a chémiu</span>
+                    <div style="display:flex; gap:6px;">
+                        <button id="tbl-mode-players" class="preset-btn active" style="padding:4px 10px; font-size:0.74rem;" onclick="setLeaderboardMode('players')">Jednotlivci (12)</button>
+                        <button id="tbl-mode-pairs" class="preset-btn" style="padding:4px 10px; font-size:0.74rem;" onclick="setLeaderboardMode('pairs')">Pevné dvojice</button>
+                    </div>
                 </div>
-                <div class="table-wrap">
+
+                <!-- TABUĽKA JEDNOTLIVCOV -->
+                <div class="table-wrap" id="wrap-table-players">
                     <table class="elo-table" id="leaderboard-table">
                         <thead>
                             <tr>
@@ -872,6 +1033,27 @@
                                 <th class="text-right">V</th>
                                 <th class="text-right">P</th>
                                 <th class="text-right">R</th>
+                                <th class="text-right">Gemy (%)</th>
+                                <th class="text-right">Úsp. (%)</th>
+                                <th class="text-center">Forma</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <!-- TABUĽKA PEVNÝCH DVOJÍC -->
+                <div class="table-wrap" id="wrap-table-pairs" style="display:none;">
+                    <table class="elo-table" id="pairs-leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Por.</th>
+                                <th>Dvojica (Tím)</th>
+                                <th class="text-right">Párové ELO</th>
+                                <th class="text-right">Záp.</th>
+                                <th class="text-right">Bilancia</th>
+                                <th class="text-right">Sety</th>
+                                <th class="text-right">Gemy</th>
                                 <th class="text-right">Úsp. (%)</th>
                                 <th class="text-center">Forma</th>
                             </tr>
@@ -903,9 +1085,41 @@
             </div>
         </section>
 
-        <!-- SEKCIA 2: NOVÝ ZÁPAS -->
+        <!-- SEKCIA 2: NOVÝ ZÁPAS & MATCHMAKER -->
         <section id="sec-match" class="section">
+
+            <!-- GENERÁTOR VYROVNANÝCH DVOJÍC NA KURT (MATCHMAKER) -->
             <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
+                        Matchmaker – Generátor vyrovnaných dvojíc na kurt
+                    </div>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);">Vyber 4 hráčov na kurte</span>
+                </div>
+                <div class="grid-4" style="margin-bottom: 10px;">
+                    <div>
+                        <label for="mm-p1">Hráč 1</label>
+                        <select id="mm-p1" onchange="renderMatchmaker()"></select>
+                    </div>
+                    <div>
+                        <label for="mm-p2">Hráč 2</label>
+                        <select id="mm-p2" onchange="renderMatchmaker()"></select>
+                    </div>
+                    <div>
+                        <label for="mm-p3">Hráč 3</label>
+                        <select id="mm-p3" onchange="renderMatchmaker()"></select>
+                    </div>
+                    <div>
+                        <label for="mm-p4">Hráč 4</label>
+                        <select id="mm-p4" onchange="renderMatchmaker()"></select>
+                    </div>
+                </div>
+                <div id="matchmaker-results"></div>
+            </div>
+
+            <!-- ZÁPIS ŠTVORHRY -->
+            <div class="card" id="new-match-form-card">
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot"></span>
@@ -1020,7 +1234,7 @@
             </div>
         </section>
 
-        <!-- SEKCIA 4: ŠTATISTIKY, VZÁJOMNÉ SÚBOJE (H2H) & CHÉMIA -->
+        <!-- SEKCIA 4: ŠTATISTIKY, VZÁJOMNÉ SÚBOJE (H2H), CHÉMIA & NEMESIS -->
         <section id="sec-h2h" class="section">
             <div class="card">
                 <div class="card-header">
@@ -1089,7 +1303,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot"></span>
-                        Detailná karta deblistu & Spoluhráčska chémia
+                        Detailná karta deblistu · Chémia & Nemesis
                     </div>
                 </div>
                 <div class="form-group">
@@ -1100,7 +1314,76 @@
             </div>
         </section>
 
-        <!-- SEKCIA 5: HISTÓRIA ZÁPASOV, DODATOČNÝ ZÁPIS & PARAMETRE -->
+        <!-- SEKCIA 5: ODZNAKY & ACHIEVEMENTY (VŠETKY 4 KATEGÓRIE VRÁTANE DVOJÍC) -->
+        <section id="sec-badges" class="section">
+            <div class="summary-grid">
+                <div class="stat-tile">
+                    <div class="stat-tile-label">Najviac odznakov</div>
+                    <div class="stat-tile-value" id="ach-top-collector">—</div>
+                    <div class="stat-tile-sub" id="ach-top-collector-count">0 titulov</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-tile-label">Jednotlivci</div>
+                    <div class="stat-tile-value">14</div>
+                    <div class="stat-tile-sub">Kategórie 1 – 3</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-tile-label">Odznaky Dvojíc</div>
+                    <div class="stat-tile-value">4</div>
+                    <div class="stat-tile-sub">Kategória 4</div>
+                </div>
+            </div>
+
+            <!-- KATEGÓRIA 1 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-dot" style="background: #f59e0b;"></span>
+                        1. Série a momentálna forma
+                    </div>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);">Klikni na meno pre detail hráča</span>
+                </div>
+                <div class="ach-grid" id="ach-cat-1"></div>
+            </div>
+
+            <!-- KATEGÓRIA 2 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
+                        2. Kanáre, tiebreaky a skóre
+                    </div>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);">Automatický rozbor všetkých setov</span>
+                </div>
+                <div class="ach-grid" id="ach-cat-2"></div>
+            </div>
+
+            <!-- KATEGÓRIA 3 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-dot" style="background: var(--blue-accent);"></span>
+                        3. ELO míľniky a aktivita
+                    </div>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);">Historické rekordy jednotlivcov</span>
+                </div>
+                <div class="ach-grid" id="ach-cat-3"></div>
+            </div>
+
+            <!-- KATEGÓRIA 4: TÍMOVÉ ACHIEVEMENTY PRE DVOJICE -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-dot" style="background: #e879f9;"></span>
+                        4. Tímové odznaky pre deblové dvojice
+                    </div>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);">Rekordy pevných párov a zápasov</span>
+                </div>
+                <div class="ach-grid" id="ach-cat-4"></div>
+            </div>
+        </section>
+
+        <!-- SEKCIA 6: HISTÓRIA ZÁPASOV, EDITÁCIA, DODATOČNÝ ZÁPIS & PARAMETRE -->
         <section id="sec-history" class="section">
 
             <!-- KARTA 1: INFO O REŽIME -->
@@ -1108,14 +1391,14 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie (ELO4MASTER v1)
+                        Aktívny režim histórie (ELO4MASTER v1.05)
                     </div>
                     <span class="param-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
 
                 <div class="mode-box">
-                    <div style="font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; color: var(--tennis-lime);">Kompletná história 24 štvorhier (12 hráčov)</div>
-                    <div style="font-size: 0.78rem; color: var(--text-muted);">Všetkých 12 deblistov začína na štarte s hodnotou 1500.0 ELO. V každom zápase sa očakávaná šanca počíta z priemerného ELO oboch dvojíc (K=32, D=200) a výsledná zmena sa pripíše každému zo štyroch aktérov.</div>
+                    <div style="font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; color: var(--tennis-lime);">Kompletná história 24 štvorhier (12 hráčov + Tímové ELO dvojíc)</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Všetkých 12 deblistov začína na štarte s hodnotou 1500.0 ELO. Každý zápas v histórii môžeš priamo upraviť tlačidlom ✎ alebo posunúť v rámci rovnakého dňa.</div>
                 </div>
             </div>
 
@@ -1241,15 +1524,84 @@
         </section>
     </main>
 
-    <!-- MODAL PRE TV GRAFIKU -->
+    <!-- MODAL PRE EDITÁCIU ZÁPASU -->
+    <div class="modal-backdrop" id="edit-match-modal" onclick="if(event.target===this) closeEditMatchModal()">
+        <div class="modal-box" style="max-width:520px;">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-title-dot"></span>
+                    Upraviť uloženú štvorhru
+                </div>
+                <button class="icon-btn" onclick="closeEditMatchModal()">Zavrieť ✕</button>
+            </div>
+            <input type="hidden" id="edit-match-id">
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="edit-date">Dátum zápasu</label>
+                    <input type="date" id="edit-date">
+                </div>
+                <div class="form-group">
+                    <label for="edit-gems">Presné gemy</label>
+                    <input type="text" id="edit-gems" placeholder="napr. 6:4 6:2">
+                </div>
+            </div>
+            <div class="team-select-box" style="margin-bottom:8px;">
+                <div class="team-select-title" style="color:var(--clay-light);">Tím A</div>
+                <div class="grid-2">
+                    <div>
+                        <label for="edit-t1p1">Hráč A1</label>
+                        <select id="edit-t1p1"></select>
+                    </div>
+                    <div>
+                        <label for="edit-t1p2">Hráč A2</label>
+                        <select id="edit-t1p2"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="team-select-box" style="margin-bottom:10px;">
+                <div class="team-select-title" style="color:var(--blue-accent);">Tím B</div>
+                <div class="grid-2">
+                    <div>
+                        <label for="edit-t2p1">Hráč B1</label>
+                        <select id="edit-t2p1"></select>
+                    </div>
+                    <div>
+                        <label for="edit-t2p2">Hráč B2</label>
+                        <select id="edit-t2p2"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-bottom:14px;">
+                <div>
+                    <label for="edit-sets1">Sety Tím A</label>
+                    <input type="number" id="edit-sets1" min="0" max="5">
+                </div>
+                <div>
+                    <label for="edit-sets2">Sety Tím B</label>
+                    <input type="number" id="edit-sets2" min="0" max="5">
+                </div>
+            </div>
+            <div class="grid-2">
+                <button class="btn btn-primary" onclick="saveEditedMatch()">Uložiť zmeny a prepočítať</button>
+                <button class="btn btn-secondary" onclick="closeEditMatchModal()">Zrušiť</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PRE TV GRAFIKU (3 REŽIMY) -->
     <div class="modal-backdrop" id="tv-modal" onclick="if(event.target===this) closeTvModal()">
         <div class="modal-box">
             <div class="card-header">
                 <div class="card-title">
                     <span class="card-title-dot"></span>
-                    Televízna infografika (Všetkých 12 deblistov · HD)
+                    Televízna HD Infografika (1600×900)
                 </div>
-                <button class="icon-btn" onclick="closeTvModal()">Zavrieť ✕</button>
+                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                    <button id="tv-mode-players" class="preset-btn active" style="padding:4px 9px; font-size:0.72rem;" onclick="setTvMode('players')">12 Hráčov</button>
+                    <button id="tv-mode-pairs" class="preset-btn" style="padding:4px 9px; font-size:0.72rem;" onclick="setTvMode('pairs')">Top Dvojice</button>
+                    <button id="tv-mode-last" class="preset-btn" style="padding:4px 9px; font-size:0.72rem;" onclick="setTvMode('last')">Posledný zápas</button>
+                    <button class="icon-btn" onclick="closeTvModal()">✕</button>
+                </div>
             </div>
             <canvas id="tvCanvas" width="1600" height="900"></canvas>
             <div class="grid-2">
@@ -1259,7 +1611,7 @@
         </div>
     </div>
 
-    <!-- SPODNÁ NAVIGÁCIA PRE MOBIL -->
+    <!-- SPODNÁ NAVIGÁCIA PRE MOBIL (6 SEKCIÍ) -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchTab('sec-table', this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
@@ -1267,7 +1619,7 @@
         </button>
         <button class="nav-item" onclick="switchTab('sec-match', this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-            Nový zápas
+            Zápas & Kurt
         </button>
         <button class="nav-item" onclick="switchTab('sec-chart', this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -1275,7 +1627,11 @@
         </button>
         <button class="nav-item" onclick="switchTab('sec-h2h', this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            H2H & Chémia
+            H2H & Hráči
+        </button>
+        <button class="nav-item" onclick="switchTab('sec-badges', this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            Odznaky
         </button>
         <button class="nav-item" onclick="switchTab('sec-history', this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -1349,11 +1705,15 @@
             players: [],
             matches: [],
             chartVisiblePlayers: {},
-            h2hMode: "teams"
+            h2hMode: "teams",
+            leaderboardMode: "players",
+            tvMode: "players"
         };
 
         let computedPlayers = [];
+        let computedPairs = [];
         let computedMatches = [];
+        let computedAchievements = [];
         let timelinePoints = [];
         let interactiveHitPoints = [];
 
@@ -1367,6 +1727,8 @@
                     state.matches = parsed.matches || JSON.parse(JSON.stringify(INITIAL_MATCHES));
                     state.chartVisiblePlayers = parsed.chartVisiblePlayers || {};
                     state.h2hMode = parsed.h2hMode || "teams";
+                    state.leaderboardMode = parsed.leaderboardMode || "players";
+                    state.tvMode = "players";
                 } catch (e) {
                     loadDefaults();
                 }
@@ -1406,6 +1768,8 @@
             state.matches = JSON.parse(JSON.stringify(INITIAL_MATCHES));
             state.chartVisiblePlayers = {};
             state.h2hMode = "teams";
+            state.leaderboardMode = "players";
+            state.tvMode = "players";
             state.players.forEach((p, idx) => {
                 p.color = PLAYER_COLORS[idx % PLAYER_COLORS.length];
                 state.chartVisiblePlayers[p.id] = true;
@@ -1430,17 +1794,40 @@
                 .map(x => x.item);
         }
 
-        function parseGemsString(gemsStr) {
-            let g1 = 0, g2 = 0;
-            if (!gemsStr || !gemsStr.trim()) return { g1: 0, g2: 0 };
+
+        function setLeaderboardMode(mode) {
+            state.leaderboardMode = mode;
+            document.getElementById("tbl-mode-players").classList.toggle("active", mode === "players");
+            document.getElementById("tbl-mode-pairs").classList.toggle("active", mode === "pairs");
+            document.getElementById("wrap-table-players").style.display = mode === "players" ? "block" : "none";
+            document.getElementById("wrap-table-pairs").style.display = mode === "pairs" ? "block" : "none";
+            document.getElementById("leaderboard-card-title").textContent = mode === "players"
+                ? "Priebežná tabuľka ELO – Jednotlivci"
+                : "Rebríček pevných dvojíc (Tímové ELO)";
+            renderLeaderboard();
+        }
+
+
+        function parseSetsFromGemsString(gemsStr) {
+            if (!gemsStr || !gemsStr.trim()) return [];
             const cleaned = gemsStr.replace(/,/g, " ").trim();
             const parts = cleaned.split(/\s+/);
+            const sets = [];
             parts.forEach(part => {
                 const m = part.match(/^(\d+)[:\-](\d+)/);
                 if (m) {
-                    g1 += parseInt(m[1], 10);
-                    g2 += parseInt(m[2], 10);
+                    sets.push({ g1: parseInt(m[1], 10), g2: parseInt(m[2], 10) });
                 }
+            });
+            return sets;
+        }
+
+        function parseGemsString(gemsStr) {
+            let g1 = 0, g2 = 0;
+            const sets = parseSetsFromGemsString(gemsStr);
+            sets.forEach(s => {
+                g1 += s.g1;
+                g2 += s.g2;
             });
             return { g1, g2 };
         }
@@ -1454,6 +1841,10 @@
                 if (m) return `${m[3]}${m[2]}${m[1]}${m[4]}`;
                 return part;
             }).join(" ");
+        }
+
+        function getPairKey(id1, id2) {
+            return [id1, id2].sort().join("__");
         }
 
         function recalculateAll() {
@@ -1481,9 +1872,53 @@
                     setsLost: 0,
                     gemsWon: 0,
                     gemsLost: 0,
-                    form: []
+                    form: [],
+                    curWinStreak: 0,
+                    maxWinStreak: 0,
+                    curLossStreak: 0,
+                    maxLossStreak: 0,
+                    curUnbeatenStreak: 0,
+                    maxUnbeatenStreak: 0,
+                    bagelsGiven: 0,
+                    bagelsTaken: 0,
+                    tbWon: 0,
+                    tbLost: 0,
+                    tbPlayed: 0,
+                    maxSingleGain: 0,
+                    maxSingleGainMatch: null,
+                    partnersSet: new Set()
                 };
             });
+
+            const pairsMap = {};
+            const getOrInitPair = (p1Obj, p2Obj) => {
+                const key = getPairKey(p1Obj.id, p2Obj.id);
+                if (!pairsMap[key]) {
+                    pairsMap[key] = {
+                        key,
+                        p1Id: p1Obj.id,
+                        p2Id: p2Obj.id,
+                        name: `${p1Obj.name} / ${p2Obj.name}`,
+                        color1: p1Obj.color,
+                        color2: p2Obj.color,
+                        elo: 1500.0,
+                        maxElo: 1500.0,
+                        minElo: 1500.0,
+                        lastDelta: 0,
+                        matches: 0,
+                        wins: 0,
+                        losses: 0,
+                        draws: 0,
+                        setsWon: 0,
+                        setsLost: 0,
+                        gemsWon: 0,
+                        gemsLost: 0,
+                        netElo: 0,
+                        form: []
+                    };
+                }
+                return pairsMap[key];
+            };
 
             timelinePoints = [{
                 step: 0,
@@ -1504,6 +1939,14 @@
                 const pB2 = pMap[m.t2p2];
                 if (!pA1 || !pA2 || !pB1 || !pB2) return;
 
+                const pairA = getOrInitPair(pA1, pA2);
+                const pairB = getOrInitPair(pB1, pB2);
+
+                pA1.partnersSet.add(pA2.id);
+                pA2.partnersSet.add(pA1.id);
+                pB1.partnersSet.add(pB2.id);
+                pB2.partnersSet.add(pB1.id);
+
                 const rA1 = pA1.elo, rA2 = pA2.elo;
                 const rB1 = pB1.elo, rB2 = pB2.elo;
 
@@ -1513,29 +1956,89 @@
                 const eA = 1 / (1 + Math.pow(10, (avgB - avgA) / D));
                 const eB = 1 - eA;
 
+                // Tímové ELO dvojice
+                const pairEA = 1 / (1 + Math.pow(10, (pairB.elo - pairA.elo) / D));
+
                 let sA = 0.5, sB = 0.5;
                 if (Number(m.sets1) > Number(m.sets2)) {
                     sA = 1; sB = 0;
-                    pA1.wins++; pA2.wins++;
-                    pB1.losses++; pB2.losses++;
-                    pA1.form.push("W"); pA2.form.push("W");
-                    pB1.form.push("L"); pB2.form.push("L");
+                    pairA.wins++; pairB.losses++;
+                    pairA.form.push("W"); pairB.form.push("L");
+                    [pA1, pA2].forEach(p => {
+                        p.wins++;
+                        p.form.push("W");
+                        p.curWinStreak++;
+                        if (p.curWinStreak > p.maxWinStreak) p.maxWinStreak = p.curWinStreak;
+                        p.curLossStreak = 0;
+                        p.curUnbeatenStreak++;
+                        if (p.curUnbeatenStreak > p.maxUnbeatenStreak) p.maxUnbeatenStreak = p.curUnbeatenStreak;
+                    });
+                    [pB1, pB2].forEach(p => {
+                        p.losses++;
+                        p.form.push("L");
+                        p.curLossStreak++;
+                        if (p.curLossStreak > p.maxLossStreak) p.maxLossStreak = p.curLossStreak;
+                        p.curWinStreak = 0;
+                        p.curUnbeatenStreak = 0;
+                    });
                 } else if (Number(m.sets2) > Number(m.sets1)) {
                     sA = 0; sB = 1;
-                    pA1.losses++; pA2.losses++;
-                    pB1.wins++; pB2.wins++;
-                    pA1.form.push("L"); pA2.form.push("L");
-                    pB1.form.push("W"); pB2.form.push("W");
+                    pairB.wins++; pairA.losses++;
+                    pairB.form.push("W"); pairA.form.push("L");
+                    [pA1, pA2].forEach(p => {
+                        p.losses++;
+                        p.form.push("L");
+                        p.curLossStreak++;
+                        if (p.curLossStreak > p.maxLossStreak) p.maxLossStreak = p.curLossStreak;
+                        p.curWinStreak = 0;
+                        p.curUnbeatenStreak = 0;
+                    });
+                    [pB1, pB2].forEach(p => {
+                        p.wins++;
+                        p.form.push("W");
+                        p.curWinStreak++;
+                        if (p.curWinStreak > p.maxWinStreak) p.maxWinStreak = p.curWinStreak;
+                        p.curLossStreak = 0;
+                        p.curUnbeatenStreak++;
+                        if (p.curUnbeatenStreak > p.maxUnbeatenStreak) p.maxUnbeatenStreak = p.curUnbeatenStreak;
+                    });
                 } else {
-                    pA1.draws++; pA2.draws++;
-                    pB1.draws++; pB2.draws++;
-                    pA1.form.push("D"); pA2.form.push("D");
-                    pB1.form.push("D"); pB2.form.push("D");
+                    pairA.draws++; pairB.draws++;
+                    pairA.form.push("D"); pairB.form.push("D");
+                    [pA1, pA2, pB1, pB2].forEach(p => {
+                        p.draws++;
+                        p.form.push("D");
+                        p.curWinStreak = 0;
+                        p.curLossStreak = 0;
+                        p.curUnbeatenStreak++;
+                        if (p.curUnbeatenStreak > p.maxUnbeatenStreak) p.maxUnbeatenStreak = p.curUnbeatenStreak;
+                    });
                 }
 
                 const s1 = Number(m.sets1) || 0;
                 const s2 = Number(m.sets2) || 0;
+                const parsedSets = parseSetsFromGemsString(m.gems);
                 const parsedGems = parseGemsString(m.gems);
+
+                parsedSets.forEach(st => {
+                    if (st.g1 === 6 && st.g2 === 0) {
+                        pA1.bagelsGiven++; pA2.bagelsGiven++;
+                        pB1.bagelsTaken++; pB2.bagelsTaken++;
+                    } else if (st.g2 === 6 && st.g1 === 0) {
+                        pB1.bagelsGiven++; pB2.bagelsGiven++;
+                        pA1.bagelsTaken++; pA2.bagelsTaken++;
+                    }
+                    if ((st.g1 === 7 && st.g2 === 6) || (st.g1 === 6 && st.g2 === 7)) {
+                        [pA1, pA2, pB1, pB2].forEach(p => p.tbPlayed++);
+                        if (st.g1 > st.g2) {
+                            pA1.tbWon++; pA2.tbWon++;
+                            pB1.tbLost++; pB2.tbLost++;
+                        } else {
+                            pB1.tbWon++; pB2.tbWon++;
+                            pA1.tbLost++; pA2.tbLost++;
+                        }
+                    }
+                });
 
                 [pA1, pA2].forEach(p => {
                     p.matches++;
@@ -1553,9 +2056,44 @@
                     p.gemsLost += parsedGems.g1;
                 });
 
+                pairA.matches++;
+                pairA.setsWon += s1; pairA.setsLost += s2;
+                pairA.gemsWon += parsedGems.g1; pairA.gemsLost += parsedGems.g2;
+
+                pairB.matches++;
+                pairB.setsWon += s2; pairB.setsLost += s1;
+                pairB.gemsWon += parsedGems.g2; pairB.gemsLost += parsedGems.g1;
+
                 const rawDeltaA = K * (sA - eA);
                 const deltaA = Math.round(rawDeltaA * 10) / 10;
                 const deltaB = -deltaA;
+
+                // Posun párového ELO
+                const rawPairDeltaA = K * (sA - pairEA);
+                const pairDeltaA = Math.round(rawPairDeltaA * 10) / 10;
+                pairA.elo = Math.round((pairA.elo + rawPairDeltaA) * 10) / 10;
+                pairB.elo = Math.round((pairB.elo - rawPairDeltaA) * 10) / 10;
+                pairA.netElo = Math.round((pairA.netElo + deltaA) * 10) / 10;
+                pairB.netElo = Math.round((pairB.netElo + deltaB) * 10) / 10;
+                pairA.lastDelta = pairDeltaA;
+                pairB.lastDelta = -pairDeltaA;
+
+                if (deltaA > 0) {
+                    [pA1, pA2].forEach(p => {
+                        if (deltaA > p.maxSingleGain) {
+                            p.maxSingleGain = deltaA;
+                            p.maxSingleGainMatch = `#${idx + 1}`;
+                        }
+                    });
+                }
+                if (deltaB > 0) {
+                    [pB1, pB2].forEach(p => {
+                        if (deltaB > p.maxSingleGain) {
+                            p.maxSingleGain = deltaB;
+                            p.maxSingleGainMatch = `#${idx + 1}`;
+                        }
+                    });
+                }
 
                 pA1.elo = Math.round((rA1 + rawDeltaA) * 10) / 10;
                 pA2.elo = Math.round((rA2 + rawDeltaA) * 10) / 10;
@@ -1576,6 +2114,8 @@
                     nameB2: pB2.name,
                     teamNameA: `${pA1.name} / ${pA2.name}`,
                     teamNameB: `${pB1.name} / ${pB2.name}`,
+                    pairKeyA: pairA.key,
+                    pairKeyB: pairB.key,
                     avgBeforeA: avgA,
                     avgBeforeB: avgB,
                     eloBeforeA1: rA1,
@@ -1589,7 +2129,11 @@
                     deltaA: deltaA,
                     deltaB: deltaB,
                     probA: eA,
-                    probB: eB
+                    probB: eB,
+                    gems1: parsedGems.g1,
+                    gems2: parsedGems.g2,
+                    totalGems: parsedGems.g1 + parsedGems.g2,
+                    gemDiff: Math.abs(parsedGems.g1 - parsedGems.g2)
                 };
                 computedMatches.push(enriched);
 
@@ -1606,9 +2150,18 @@
                 timelinePoints.push(snap);
             });
 
-            computedPlayers = Object.values(pMap).sort((a, b) => {
+            computedPlayers = Object.values(pMap).map(p => ({
+                ...p,
+                uniquePartnersCount: p.partnersSet.size,
+                avgGemDiff: p.matches >= 3 ? Math.round(((p.gemsWon - p.gemsLost) / p.matches) * 10) / 10 : null
+            })).sort((a, b) => {
                 if (b.elo !== a.elo) return b.elo - a.elo;
                 return b.matches - a.matches;
+            });
+
+            computedPairs = Object.values(pairsMap).sort((a, b) => {
+                if (b.elo !== a.elo) return b.elo - a.elo;
+                return b.wins - a.wins;
             });
 
             computedPlayers.forEach(p => p.lastDelta = 0);
@@ -1623,6 +2176,442 @@
                     if (pl) pl.lastDelta = lastM.deltaB;
                 });
             }
+
+            buildAchievements();
+        }
+
+        function getCrestSvg(type, theme) {
+            const palettes = {
+                gold:   { bg1: "#451a03", bg2: "#090e1a", stroke: "#f59e0b", fg: "#fbbf24" },
+                lime:   { bg1: "#1a2e05", bg2: "#090e1a", stroke: "#a3e635", fg: "#bef264" },
+                blue:   { bg1: "#082f49", bg2: "#090e1a", stroke: "#38bdf8", fg: "#7dd3fc" },
+                crimson:{ bg1: "#450a0a", bg2: "#090e1a", stroke: "#ef4444", fg: "#f87171" },
+                purple: { bg1: "#3b0764", bg2: "#090e1a", stroke: "#e879f9", fg: "#f0abfc" }
+            };
+            const pal = palettes[theme] || palettes.gold;
+            const gradId = `crest_${type}_${theme}`;
+
+            let innerGlyph = "";
+            switch (type) {
+                case "flame_crown":
+                    innerGlyph = `<path d="M20 39h24M21 34l3-9 8 5 8-5 3 9H21Z" stroke="${pal.fg}" stroke-width="2.3" stroke-linejoin="round" fill="none"/><path d="M32 15c2.5 3.5 4 5.8 4 8.2a4 4 0 1 1-8 0c0-2.4 1.5-4.7 4-8.2Z" fill="${pal.fg}"/>`;
+                    break;
+                case "bolt_target":
+                    innerGlyph = `<circle cx="32" cy="32" r="13" stroke="${pal.fg}" stroke-width="2" stroke-dasharray="3 2" fill="none"/><polygon points="34,17 23,33 31,33 29,47 41,30 33,30" fill="${pal.fg}"/>`;
+                    break;
+                case "anchor_down":
+                    innerGlyph = `<circle cx="32" cy="21" r="3" stroke="${pal.fg}" stroke-width="2.2" fill="none"/><line x1="32" y1="24" x2="32" y2="44" stroke="${pal.fg}" stroke-width="2.4"/><line x1="25" y1="28" x2="39" y2="28" stroke="${pal.fg}" stroke-width="2.2"/><path d="M21 36c0 6 5 9 11 9s11-3 11-9" stroke="${pal.fg}" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+                    break;
+                case "knight_shield":
+                    innerGlyph = `<path d="M32 17l12 4.5v9.5c0 8-5.2 13.5-12 16-6.8-2.5-12-8-12-16v-9.5L32 17Z" stroke="${pal.fg}" stroke-width="2.3" fill="none"/><polyline points="26.5,32 30.5,36 38,27.5" stroke="${pal.fg}" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+                    break;
+                case "chef_zero":
+                    innerGlyph = `<path d="M23 31c-2.5 0-4.5-2-4.5-4.5S20.5 22 23 22c.8-3 3.5-5 6.8-5 2.7 0 5.1 1.4 6.2 3.7.7-.4 1.5-.7 2.5-.7 2.5 0 4.5 2 4.5 4.5S41 29 38.5 29" stroke="${pal.fg}" stroke-width="2.1" fill="none" stroke-linecap="round"/><rect x="23" y="31" width="18" height="12" rx="2" stroke="${pal.fg}" stroke-width="2.1" fill="none"/><circle cx="32" cy="37" r="3.2" stroke="${pal.fg}" stroke-width="2" fill="none"/>`;
+                    break;
+                case "sliced_bagel":
+                    innerGlyph = `<circle cx="32" cy="32" r="12.5" stroke="${pal.fg}" stroke-width="2.4" fill="none"/><circle cx="32" cy="32" r="4.2" stroke="${pal.fg}" stroke-width="2" fill="none"/><line x1="18" y1="29" x2="46" y2="35" stroke="${pal.fg}" stroke-width="2.2" stroke-linecap="round"/>`;
+                    break;
+                case "ecg_pulse":
+                    innerGlyph = `<polyline points="17,33 24,33 27.5,22 32.5,43 36.5,28 39.5,33 47,33" stroke="${pal.fg}" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+                    break;
+                case "crossed_swords":
+                    innerGlyph = `<line x1="20" y1="44" x2="43" y2="21" stroke="${pal.fg}" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="21" x2="43" y2="44" stroke="${pal.fg}" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="36" x2="28" y2="42" stroke="${pal.fg}" stroke-width="2.3"/><line x1="36" y1="42" x2="42" y2="36" stroke="${pal.fg}" stroke-width="2.3"/>`;
+                    break;
+                case "sniper_cross":
+                    innerGlyph = `<circle cx="32" cy="32" r="11" stroke="${pal.fg}" stroke-width="2.2" fill="none"/><circle cx="32" cy="32" r="2.5" fill="${pal.fg}"/><line x1="32" y1="16" x2="32" y2="23" stroke="${pal.fg}" stroke-width="2.2"/><line x1="32" y1="41" x2="32" y2="48" stroke="${pal.fg}" stroke-width="2.2"/><line x1="16" y1="32" x2="23" y2="32" stroke="${pal.fg}" stroke-width="2.2"/><line x1="41" y1="32" x2="48" y2="32" stroke="${pal.fg}" stroke-width="2.2"/>`;
+                    break;
+                case "mountain_flag":
+                    innerGlyph = `<polygon points="18,44 29,24 37,37 41,31 47,44" stroke="${pal.fg}" stroke-width="2.2" stroke-linejoin="round" fill="none"/><line x1="29" y1="16" x2="29" y2="24" stroke="${pal.fg}" stroke-width="2.2"/><polygon points="29,16 37,19 29,22" fill="${pal.fg}"/>`;
+                    break;
+                case "giant_slayer":
+                    innerGlyph = `<path d="M21 29l4-8 7 5 7-5 4 8H21Z" stroke="${pal.fg}" stroke-width="2.2" fill="none" stroke-linejoin="round"/><line x1="32" y1="46" x2="32" y2="21" stroke="${pal.fg}" stroke-width="2.5" stroke-linecap="round"/><polyline points="27,26 32,20 37,26" stroke="${pal.fg}" stroke-width="2.4" fill="none"/>`;
+                    break;
+                case "hourglass_iron":
+                    innerGlyph = `<path d="M23 19h18M23 45h18M25 19c0 7 7 9 7 13s-7 6-7 13M39 19c0 7-7 9-7 13s7 6 7 13" stroke="${pal.fg}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
+                    break;
+                case "balance_scales":
+                    innerGlyph = `<line x1="32" y1="18" x2="32" y2="45" stroke="${pal.fg}" stroke-width="2.3"/><line x1="21" y1="24" x2="43" y2="24" stroke="${pal.fg}" stroke-width="2.2"/><polygon points="21,25 17,34 25,34" stroke="${pal.fg}" stroke-width="1.9" fill="none"/><polygon points="43,25 39,34 47,34" stroke="${pal.fg}" stroke-width="1.9" fill="none"/><line x1="26" y1="45" x2="38" y2="45" stroke="${pal.fg}" stroke-width="2.3"/>`;
+                    break;
+                case "network_nodes":
+                    innerGlyph = `<line x1="32" y1="20" x2="22" y2="39" stroke="${pal.fg}" stroke-width="2.1"/><line x1="32" y1="20" x2="42" y2="39" stroke="${pal.fg}" stroke-width="2.1"/><line x1="22" y1="39" x2="42" y2="39" stroke="${pal.fg}" stroke-width="2.1"/><circle cx="32" cy="20" r="4" fill="${pal.fg}"/><circle cx="22" cy="39" r="4" fill="${pal.fg}"/><circle cx="42" cy="39" r="4" fill="${pal.fg}"/>`;
+                    break;
+                case "duo_racquets":
+                    innerGlyph = `<ellipse cx="26" cy="25" rx="6" ry="8" transform="rotate(-30 26 25)" stroke="${pal.fg}" stroke-width="2.2" fill="none"/><line x1="30" y1="31" x2="41" y2="45" stroke="${pal.fg}" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="38" cy="25" rx="6" ry="8" transform="rotate(30 38 25)" stroke="${pal.fg}" stroke-width="2.2" fill="none"/><line x1="34" y1="31" x2="23" y2="45" stroke="${pal.fg}" stroke-width="2.4" stroke-linecap="round"/>`;
+                    break;
+                case "steamroller":
+                    innerGlyph = `<rect x="19" y="24" width="26" height="12" rx="6" stroke="${pal.fg}" stroke-width="2.3" fill="none"/><circle cx="25" cy="30" r="2.2" fill="${pal.fg}"/><circle cx="39" cy="30" r="2.2" fill="${pal.fg}"/><line x1="16" y1="42" x2="48" y2="42" stroke="${pal.fg}" stroke-width="2.5" stroke-linecap="round"/>`;
+                    break;
+                case "marathon_fire":
+                    innerGlyph = `<circle cx="32" cy="33" r="12" stroke="${pal.fg}" stroke-width="2.2" fill="none"/><polyline points="32,26 32,33 37,36" stroke="${pal.fg}" stroke-width="2.3" stroke-linecap="round" fill="none"/><line x1="28" y1="17" x2="36" y2="17" stroke="${pal.fg}" stroke-width="2.3" stroke-linecap="round"/>`;
+                    break;
+                case "chain_links":
+                    innerGlyph = `<rect x="18" y="25" width="16" height="10" rx="5" stroke="${pal.fg}" stroke-width="2.3" fill="none"/><rect x="30" y="29" width="16" height="10" rx="5" stroke="${pal.fg}" stroke-width="2.3" fill="none"/>`;
+                    break;
+            }
+
+            return `
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="${gradId}" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="${pal.bg1}"/>
+                            <stop offset="100%" stop-color="${pal.bg2}"/>
+                        </linearGradient>
+                    </defs>
+                    <polygon points="32,3 57,17.5 57,46.5 32,61 7,46.5 7,17.5" fill="url(#${gradId})" stroke="${pal.stroke}" stroke-width="2.6"/>
+                    <polygon points="32,8 52.5,20 52.5,44 32,56 11.5,44 11.5,20" fill="none" stroke="${pal.stroke}" stroke-opacity="0.28" stroke-width="1.2"/>
+                    ${innerGlyph}
+                </svg>
+            `;
+        }
+
+        function findTopHolders(playersArr, valFn, minThreshold = 1) {
+            let maxVal = -Infinity;
+            playersArr.forEach(p => {
+                const v = valFn(p);
+                if (v !== null && v >= minThreshold && v > maxVal) {
+                    maxVal = v;
+                }
+            });
+            if (maxVal === -Infinity) return { value: 0, holders: [] };
+            const holders = playersArr.filter(p => valFn(p) === maxVal);
+            return { value: maxVal, holders };
+        }
+
+        function buildAchievements() {
+            const activePlayers = computedPlayers.filter(p => p.matches > 0);
+
+            const rWinStreak = findTopHolders(activePlayers, p => p.maxWinStreak, 1);
+            const rHotHand   = findTopHolders(activePlayers, p => p.curWinStreak, 1);
+            const rLossStreak= findTopHolders(activePlayers, p => p.maxLossStreak, 1);
+            const rUnbeaten  = findTopHolders(activePlayers, p => p.maxUnbeatenStreak, 1);
+
+            const rBagelGive = findTopHolders(activePlayers, p => p.bagelsGiven, 1);
+            const rBagelTake = findTopHolders(activePlayers, p => p.bagelsTaken, 1);
+            const rTbWon     = findTopHolders(activePlayers, p => p.tbWon, 1);
+            const rTbPlayed  = findTopHolders(activePlayers, p => p.tbPlayed, 1);
+            const rSniper    = findTopHolders(activePlayers, p => p.avgGemDiff !== null ? p.avgGemDiff : -999, -99);
+
+            const rPeakElo   = findTopHolders(activePlayers, p => p.maxElo, 1500.1);
+            const rGiantSlay = findTopHolders(activePlayers, p => p.maxSingleGain, 0.1);
+            const rIronMan   = findTopHolders(activePlayers, p => p.matches, 1);
+            const rDiplomat  = findTopHolders(activePlayers, p => p.draws, 1);
+            const rChameleon = findTopHolders(activePlayers, p => p.uniquePartnersCount, 1);
+
+            // Kategória 4: Tímové achievementy dvojíc
+            const rBestPairElo = findTopHolders(computedPairs, pr => pr.elo, 1500.1);
+            const rMostFrequentPair = findTopHolders(computedPairs, pr => pr.matches, 1);
+
+            let maxGemDiffVal = 0;
+            let steamrollerMatches = [];
+            let maxTotalGemsVal = 0;
+            let marathonMatches = [];
+
+            computedMatches.forEach(m => {
+                if (m.gemDiff > maxGemDiffVal) {
+                    maxGemDiffVal = m.gemDiff;
+                    steamrollerMatches = [m];
+                } else if (m.gemDiff === maxGemDiffVal && maxGemDiffVal > 0) {
+                    steamrollerMatches.push(m);
+                }
+
+                if (m.totalGems > maxTotalGemsVal) {
+                    maxTotalGemsVal = m.totalGems;
+                    marathonMatches = [m];
+                } else if (m.totalGems === maxTotalGemsVal && maxTotalGemsVal > 0) {
+                    marathonMatches.push(m);
+                }
+            });
+
+            const steamrollerHolders = [];
+            steamrollerMatches.forEach(m => {
+                const winTeam = m.gems1 >= m.gems2 ? [m.t1p1, m.t1p2] : [m.t2p1, m.t2p2];
+                winTeam.forEach(id => {
+                    const pl = computedPlayers.find(x => x.id === id);
+                    if (pl && !steamrollerHolders.some(h => h.id === pl.id)) steamrollerHolders.push(pl);
+                });
+            });
+
+            const marathonHolders = [];
+            marathonMatches.forEach(m => {
+                [m.t1p1, m.t1p2, m.t2p1, m.t2p2].forEach(id => {
+                    const pl = computedPlayers.find(x => x.id === id);
+                    if (pl && !marathonHolders.some(h => h.id === pl.id)) marathonHolders.push(pl);
+                });
+            });
+
+            const bestPairPlayers = [];
+            rBestPairElo.holders.forEach(pr => {
+                [pr.p1Id, pr.p2Id].forEach(id => {
+                    const pl = computedPlayers.find(x => x.id === id);
+                    if (pl && !bestPairPlayers.some(h => h.id === pl.id)) bestPairPlayers.push(pl);
+                });
+            });
+
+            const frequentPairPlayers = [];
+            rMostFrequentPair.holders.forEach(pr => {
+                [pr.p1Id, pr.p2Id].forEach(id => {
+                    const pl = computedPlayers.find(x => x.id === id);
+                    if (pl && !frequentPairPlayers.some(h => h.id === pl.id)) frequentPairPlayers.push(pl);
+                });
+            });
+
+            computedAchievements = [
+                // KATEGÓRIA 1
+                {
+                    id: "unstoppable",
+                    cat: 1,
+                    title: "Nezastaviteľný",
+                    desc: "Najdlhšia historická víťazná šnúra bez prerušenia",
+                    icon: "flame_crown",
+                    theme: "gold",
+                    valueText: `${rWinStreak.value} výhry v rade`,
+                    holders: rWinStreak.holders
+                },
+                {
+                    id: "hot_hand",
+                    cat: 1,
+                    title: "Horúca ruka",
+                    desc: "Najdlhšia práve prebiehajúca víťazná séria",
+                    icon: "bolt_target",
+                    theme: "lime",
+                    valueText: `${rHotHand.value} aktívne výhry`,
+                    holders: rHotHand.holders
+                },
+                {
+                    id: "free_fall",
+                    cat: 1,
+                    title: "Voľný pád",
+                    desc: "Najviac prehier v rade za sebou",
+                    icon: "anchor_down",
+                    theme: "crimson",
+                    valueText: `${rLossStreak.value} prehry v rade`,
+                    holders: rLossStreak.holders
+                },
+                {
+                    id: "bulletproof",
+                    cat: 1,
+                    title: "Nepriestrelný",
+                    desc: "Najdlhšia séria zápasov bez prehry (výhry + remízy)",
+                    icon: "knight_shield",
+                    theme: "blue",
+                    valueText: `${rUnbeaten.value} záp. bez prehry`,
+                    holders: rUnbeaten.holders
+                },
+
+                // KATEGÓRIA 2
+                {
+                    id: "master_baker",
+                    cat: 2,
+                    title: "Čistič",
+                    desc: "Najviac rozdaných kanárov (setov 6:0)",
+                    icon: "chef_zero",
+                    theme: "gold",
+                    valueText: `${rBagelGive.value}× set 6:0`,
+                    holders: rBagelGive.holders
+                },
+                {
+                    id: "bagel_receiver",
+                    cat: 2,
+                    title: "Ornitológ",
+                    desc: "Najviac inkasovaných kanárov (setov 0:6)",
+                    icon: "sliced_bagel",
+                    theme: "crimson",
+                    valueText: `${rBagelTake.value}× set 0:6`,
+                    holders: rBagelTake.holders
+                },
+                {
+                    id: "surgeon",
+                    cat: 2,
+                    title: "Chirurg",
+                    desc: "Kráľ tiebreakov – najviac vyhratých setov 7:6",
+                    icon: "ecg_pulse",
+                    theme: "lime",
+                    valueText: `${rTbWon.value} vyhraté TB`,
+                    holders: rTbWon.holders
+                },
+                {
+                    id: "nerves_of_steel",
+                    cat: 2,
+                    title: "Muž zo železa",
+                    desc: "Najviac odohratých tiebreakových setov (7:6 / 6:7)",
+                    icon: "crossed_swords",
+                    theme: "blue",
+                    valueText: `${rTbPlayed.value} odohratých TB`,
+                    holders: rTbPlayed.holders
+                },
+                {
+                    id: "sniper",
+                    cat: 2,
+                    title: "Sniper",
+                    desc: "Najlepšia priemerná gemová bilancia na zápas (min. 3 štarty)",
+                    icon: "sniper_cross",
+                    theme: "gold",
+                    valueText: `${rSniper.value >= 0 ? '+' : ''}${rSniper.value.toFixed(1)} gemu / záp.`,
+                    holders: rSniper.holders
+                },
+
+                // KATEGÓRIA 3
+                {
+                    id: "king_of_hill",
+                    cat: 3,
+                    title: "Kráľ hôr (Peak ELO)",
+                    desc: "Historicky najvyššie dosiahnuté ELO hodnotenie",
+                    icon: "mountain_flag",
+                    theme: "gold",
+                    valueText: `${rPeakElo.value.toFixed(1)} ELO`,
+                    holders: rPeakElo.holders
+                },
+                {
+                    id: "giant_slayer",
+                    cat: 3,
+                    title: "Lovec obrov",
+                    desc: "Najväčší bodový ELO zisk v jednom zápase",
+                    icon: "giant_slayer",
+                    theme: "lime",
+                    valueText: `+${rGiantSlay.value.toFixed(1)} ELO`,
+                    holders: rGiantSlay.holders
+                },
+                {
+                    id: "iron_man",
+                    cat: 3,
+                    title: "Železný muž kurtu",
+                    desc: "Najviac odohratých štvorhier v histórii",
+                    icon: "hourglass_iron",
+                    theme: "blue",
+                    valueText: `${rIronMan.value} zápasov`,
+                    holders: rIronMan.holders
+                },
+                {
+                    id: "diplomat",
+                    cat: 3,
+                    title: "Diplomat",
+                    desc: "Kráľ remíz – najviac nerozhodných zápasov 1:1",
+                    icon: "balance_scales",
+                    theme: "blue",
+                    valueText: `${rDiplomat.value} remíz`,
+                    holders: rDiplomat.holders
+                },
+                {
+                    id: "chameleon",
+                    cat: 3,
+                    title: "Chameleón",
+                    desc: "Najviac rôznych spoluhráčov, s ktorými nastúpil",
+                    icon: "network_nodes",
+                    theme: "lime",
+                    valueText: `${rChameleon.value} rôznych parťákov`,
+                    holders: rChameleon.holders
+                },
+
+                // KATEGÓRIA 4: TÍMOVÉ ODZNAKY PRE DVOJICE
+                {
+                    id: "dynamic_duo",
+                    cat: 4,
+                    title: "Dynamické duo",
+                    desc: `Najúspešnejšia pevná dvojica podľa párového ELO (${rBestPairElo.holders.map(x => x.name).join(", ")})`,
+                    icon: "duo_racquets",
+                    theme: "gold",
+                    valueText: `${rBestPairElo.value.toFixed(1)} Párové ELO`,
+                    holders: bestPairPlayers
+                },
+                {
+                    id: "steamroller",
+                    cat: 4,
+                    title: "Parný valec",
+                    desc: `Najvyšší rozdiel gemov v jednom zápase (${steamrollerMatches.map(m => '#' + m.index + ' ' + m.gems).join(', ')})`,
+                    icon: "steamroller",
+                    theme: "lime",
+                    valueText: `Rozdiel +${maxGemDiffVal} gemov`,
+                    holders: steamrollerHolders
+                },
+                {
+                    id: "blood_sweat",
+                    cat: 4,
+                    title: "Krv, pot a slzy",
+                    desc: `Najdlhšia bitka histórie podľa počtu gemov (${marathonMatches.map(m => '#' + m.index + ' ' + m.gems).join(', ')})`,
+                    icon: "marathon_fire",
+                    theme: "purple",
+                    valueText: `${maxTotalGemsVal} odohratých gemov`,
+                    holders: marathonHolders
+                },
+                {
+                    id: "inseparable_pair",
+                    cat: 4,
+                    title: "Nerozlučná dvojka",
+                    desc: `Najčastejšie spolu nastupujúci deblový pár (${rMostFrequentPair.holders.map(x => x.name).join(", ")})`,
+                    icon: "chain_links",
+                    theme: "blue",
+                    valueText: `${rMostFrequentPair.value} spoločných štartov`,
+                    holders: frequentPairPlayers
+                }
+            ];
+        }
+
+        function renderAchievements() {
+            const renderCat = (catNum, containerId) => {
+                const el = document.getElementById(containerId);
+                if (!el) return;
+                const items = computedAchievements.filter(a => a.cat === catNum);
+                el.innerHTML = items.map(ach => {
+                    const holdersHtml = ach.holders.length === 0
+                        ? `<span style="font-size:0.74rem; color:var(--text-muted);">Zatiaľ bez držiteľa</span>`
+                        : ach.holders.map(h => `
+                            <span class="ach-holder-chip" onclick="openPlayerDetail('${h.id}')">
+                                <span style="width:7px; height:7px; border-radius:50%; background:${h.color}; display:inline-block;"></span>
+                                ${h.name}
+                            </span>
+                        `).join("");
+
+                    let pillColor = "#fbbf24";
+                    if (ach.theme === "crimson") pillColor = "var(--loss)";
+                    else if (ach.theme === "lime") pillColor = "var(--tennis-lime)";
+                    else if (ach.theme === "blue") pillColor = "var(--blue-accent)";
+                    else if (ach.theme === "purple") pillColor = "#f0abfc";
+
+                    return `
+                        <div class="ach-card">
+                            <div class="ach-crest">
+                                ${getCrestSvg(ach.icon, ach.theme)}
+                            </div>
+                            <div class="ach-body">
+                                <div class="ach-title">${ach.title}</div>
+                                <div class="ach-desc">${ach.desc}</div>
+                                <div class="ach-record-pill" style="color:${pillColor}">
+                                    Rekord: ${ach.valueText}
+                                </div>
+                                <div class="ach-holders">
+                                    ${holdersHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+            };
+
+            renderCat(1, "ach-cat-1");
+            renderCat(2, "ach-cat-2");
+            renderCat(3, "ach-cat-3");
+            renderCat(4, "ach-cat-4");
+
+            const badgeCounts = {};
+            computedAchievements.forEach(ach => {
+                if (ach.theme === "crimson") return;
+                ach.holders.forEach(h => {
+                    badgeCounts[h.id] = (badgeCounts[h.id] || 0) + 1;
+                });
+            });
+
+            let bestPlayer = null;
+            let bestCount = 0;
+            computedPlayers.forEach(p => {
+                const c = badgeCounts[p.id] || 0;
+                if (c > bestCount) {
+                    bestCount = c;
+                    bestPlayer = p;
+                }
+            });
+
+            document.getElementById("ach-top-collector").textContent = bestPlayer ? bestPlayer.name : "—";
+            document.getElementById("ach-top-collector-count").textContent = `${bestCount} pozitívnych odznakov`;
         }
 
         function populateSelects() {
@@ -1630,7 +2619,9 @@
                 "match-t1p1", "match-t1p2", "match-t2p1", "match-t2p2",
                 "hist-t1p1", "hist-t1p2", "hist-t2p1", "hist-t2p2",
                 "h2h-t1p1", "h2h-t1p2", "h2h-t2p1", "h2h-t2p2",
-                "h2h-p1", "h2h-p2", "profile-select"
+                "h2h-p1", "h2h-p2", "profile-select",
+                "mm-p1", "mm-p2", "mm-p3", "mm-p4",
+                "edit-t1p1", "edit-t1p2", "edit-t2p1", "edit-t2p2"
             ];
             const prevValues = {};
             ids.forEach(id => {
@@ -1668,6 +2659,7 @@
             ensureUniqueFour("match-t1p1", "match-t1p2", "match-t2p1", "match-t2p2", ["vlado", "tibor", "belo", "tono"]);
             ensureUniqueFour("hist-t1p1", "hist-t1p2", "hist-t2p1", "hist-t2p2", ["vlado", "majo", "belo", "tibor"]);
             ensureUniqueFour("h2h-t1p1", "h2h-t1p2", "h2h-t2p1", "h2h-t2p2", ["belo", "tono", "majo", "peto"]);
+            ensureUniqueFour("mm-p1", "mm-p2", "mm-p3", "mm-p4", ["vlado", "tibor", "belo", "majo"]);
 
             const hp1 = document.getElementById("h2h-p1");
             const hp2 = document.getElementById("h2h-p2");
@@ -1687,71 +2679,191 @@
 
         function refreshAllViews() {
             renderLeaderboard();
+            renderMatchmaker();
             updateMatchPreview();
             renderChartChips();
             drawEloChart();
             renderH2H();
             renderPlayerProfile();
+            renderAchievements();
             renderMatchHistory();
         }
 
         function renderLeaderboard() {
-            const tbody = document.querySelector("#leaderboard-table tbody");
-            tbody.innerHTML = "";
-
-            if (computedPlayers.length > 0) {
-                document.getElementById("sum-leader-name").textContent = computedPlayers[0].name;
-                document.getElementById("sum-leader-elo").textContent = `${computedPlayers[0].elo.toFixed(1)} ELO`;
-            }
-            document.getElementById("sum-players-count").textContent = computedPlayers.length;
+            document.getElementById("sum-mode-badge").textContent = "Prepočet od 1500 ELO";
             document.getElementById("sum-matches-count").textContent = computedMatches.length;
 
-            const totalStarts = computedPlayers.reduce((acc, p) => acc + p.matches, 0);
-            document.getElementById("sum-total-starts").textContent = `Spolu ${totalStarts} štartov`;
-
-            computedPlayers.forEach((p, idx) => {
-                const rank = idx + 1;
-                const winPct = p.matches > 0
-                    ? (((p.wins + 0.5 * p.draws) / p.matches) * 100).toFixed(1)
-                    : "0.0";
-
-                let rankClass = "";
-                if (rank === 1) rankClass = "rank-1";
-                else if (rank === 2) rankClass = "rank-2";
-                else if (rank === 3) rankClass = "rank-3";
-
-                let deltaHtml = "";
-                if (p.lastDelta > 0) {
-                    deltaHtml = `<span class="delta-tag delta-up">▲+${p.lastDelta.toFixed(1)}</span>`;
-                } else if (p.lastDelta < 0) {
-                    deltaHtml = `<span class="delta-tag delta-down">▼${p.lastDelta.toFixed(1)}</span>`;
+            if (state.leaderboardMode === "players") {
+                if (computedPlayers.length > 0) {
+                    document.getElementById("sum-leader-label").textContent = "Líder jednotlivcov";
+                    document.getElementById("sum-leader-name").textContent = computedPlayers[0].name;
+                    document.getElementById("sum-leader-elo").textContent = `${computedPlayers[0].elo.toFixed(1)} ELO`;
                 }
+                document.getElementById("sum-count-label").textContent = "Deblistov v DB";
+                document.getElementById("sum-players-count").textContent = computedPlayers.length;
+                const totalStarts = computedPlayers.reduce((acc, p) => acc + p.matches, 0);
+                document.getElementById("sum-total-starts").textContent = `Spolu ${totalStarts} štartov`;
 
-                const last5 = p.form.slice(-5).reverse();
-                const formHtml = last5.length > 0
-                    ? `<div class="form-dots">` + last5.map(f => `<span class="form-dot form-${f}">${f === 'W' ? 'V' : (f === 'D' ? 'R' : 'P')}</span>`).join("") + `</div>`
-                    : `<span style="color:var(--text-muted); font-size:0.72rem;">—</span>`;
+                const tbody = document.querySelector("#leaderboard-table tbody");
+                tbody.innerHTML = "";
 
-                const tr = document.createElement("tr");
-                tr.onclick = () => openPlayerDetail(p.id);
-                tr.innerHTML = `
-                    <td><span class="rank-badge ${rankClass}">${rank}</span></td>
-                    <td>
-                        <div style="display:flex; align-items:center; gap:7px;">
-                            <span style="width:8px; height:8px; border-radius:50%; background:${p.color}; display:inline-block;"></span>
-                            <strong>${p.name}</strong>
+                computedPlayers.forEach((p, idx) => {
+                    const rank = idx + 1;
+                    const winPct = p.matches > 0
+                        ? (((p.wins + 0.5 * p.draws) / p.matches) * 100).toFixed(1)
+                        : "0.0";
+                    const totalG = p.gemsWon + p.gemsLost;
+                    const gemPct = totalG > 0 ? ((p.gemsWon / totalG) * 100).toFixed(1) + "%" : "—";
+
+                    let rankClass = "";
+                    if (rank === 1) rankClass = "rank-1";
+                    else if (rank === 2) rankClass = "rank-2";
+                    else if (rank === 3) rankClass = "rank-3";
+
+                    let deltaHtml = "";
+                    if (p.lastDelta > 0) {
+                        deltaHtml = `<span class="delta-tag delta-up">▲+${p.lastDelta.toFixed(1)}</span>`;
+                    } else if (p.lastDelta < 0) {
+                        deltaHtml = `<span class="delta-tag delta-down">▼${p.lastDelta.toFixed(1)}</span>`;
+                    }
+
+                    const last5 = p.form.slice(-5).reverse();
+                    const formHtml = last5.length > 0
+                        ? `<div class="form-dots">` + last5.map(f => `<span class="form-dot form-${f}">${f === 'W' ? 'V' : (f === 'D' ? 'R' : 'P')}</span>`).join("") + `</div>`
+                        : `<span style="color:var(--text-muted); font-size:0.72rem;">—</span>`;
+
+                    const tr = document.createElement("tr");
+                    tr.onclick = () => openPlayerDetail(p.id);
+                    tr.innerHTML = `
+                        <td><span class="rank-badge ${rankClass}">${rank}</span></td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:7px;">
+                                <span style="width:8px; height:8px; border-radius:50%; background:${p.color}; display:inline-block;"></span>
+                                <strong>${p.name}</strong>
+                            </div>
+                        </td>
+                        <td class="text-right">${deltaHtml}<span class="elo-pill">${p.elo.toFixed(1)}</span></td>
+                        <td class="text-right">${p.matches}</td>
+                        <td class="text-right" style="color:var(--win); font-weight:700;">${p.wins}</td>
+                        <td class="text-right" style="color:var(--loss);">${p.losses}</td>
+                        <td class="text-right" style="color:var(--draw);">${p.draws}</td>
+                        <td class="text-right" style="color:var(--text-muted);">${gemPct}</td>
+                        <td class="text-right" style="font-weight:700;">${winPct}%</td>
+                        <td class="text-center">${formHtml}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } else {
+                // Rebríček pevných dvojíc
+                if (computedPairs.length > 0) {
+                    document.getElementById("sum-leader-label").textContent = "Líder dvojíc";
+                    document.getElementById("sum-leader-name").textContent = computedPairs[0].name;
+                    document.getElementById("sum-leader-elo").textContent = `${computedPairs[0].elo.toFixed(1)} ELO`;
+                }
+                document.getElementById("sum-count-label").textContent = "Unikátnych párov";
+                document.getElementById("sum-players-count").textContent = computedPairs.length;
+
+                const tbody = document.querySelector("#pairs-leaderboard-table tbody");
+                tbody.innerHTML = "";
+
+                computedPairs.forEach((pr, idx) => {
+                    const rank = idx + 1;
+                    const winPct = pr.matches > 0
+                        ? (((pr.wins + 0.5 * pr.draws) / pr.matches) * 100).toFixed(1)
+                        : "0.0";
+
+                    let rankClass = "";
+                    if (rank === 1) rankClass = "rank-1";
+                    else if (rank === 2) rankClass = "rank-2";
+                    else if (rank === 3) rankClass = "rank-3";
+
+                    const last5 = pr.form.slice(-5).reverse();
+                    const formHtml = last5.length > 0
+                        ? `<div class="form-dots">` + last5.map(f => `<span class="form-dot form-${f}">${f === 'W' ? 'V' : (f === 'D' ? 'R' : 'P')}</span>`).join("") + `</div>`
+                        : `<span style="color:var(--text-muted); font-size:0.72rem;">—</span>`;
+
+                    const tr = document.createElement("tr");
+                    tr.onclick = () => openPlayerDetail(pr.p1Id);
+                    tr.innerHTML = `
+                        <td><span class="rank-badge ${rankClass}">${rank}</span></td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:5px;">
+                                <span style="width:7px; height:7px; border-radius:50%; background:${pr.color1}; display:inline-block;"></span>
+                                <span style="width:7px; height:7px; border-radius:50%; background:${pr.color2}; display:inline-block;"></span>
+                                <strong>${pr.name}</strong>
+                            </div>
+                        </td>
+                        <td class="text-right"><span class="elo-pill">${pr.elo.toFixed(1)}</span></td>
+                        <td class="text-right">${pr.matches}</td>
+                        <td class="text-right"><span style="color:var(--win); font-weight:700;">${pr.wins}</span>-${pr.losses}-${pr.draws}</td>
+                        <td class="text-right">${pr.setsWon}:${pr.setsLost}</td>
+                        <td class="text-right" style="color:var(--text-muted);">${pr.gemsWon}:${pr.gemsLost}</td>
+                        <td class="text-right" style="font-weight:700;">${winPct}%</td>
+                        <td class="text-center">${formHtml}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        function renderMatchmaker() {
+            const box = document.getElementById("matchmaker-results");
+            if (!box) return;
+            const ids = ["mm-p1", "mm-p2", "mm-p3", "mm-p4"].map(id => document.getElementById(id).value);
+            if (new Set(ids).size < 4) {
+                box.innerHTML = `<div style="color:var(--loss); font-size:0.8rem; font-weight:700;">Vyber 4 rôznych tenistov pre výpočet najvyrovnanejšieho rozdelenia dvojíc.</div>`;
+                return;
+            }
+
+            const pls = ids.map(id => computedPlayers.find(p => p.id === id));
+            if (pls.some(p => !p)) return;
+
+            const D = Number(state.config.D) || 200;
+            const combos = [
+                { a1: pls[0], a2: pls[1], b1: pls[2], b2: pls[3] },
+                { a1: pls[0], a2: pls[2], b1: pls[1], b2: pls[3] },
+                { a1: pls[0], a2: pls[3], b1: pls[1], b2: pls[2] }
+            ].map(c => {
+                const avgA = (c.a1.elo + c.a2.elo) / 2;
+                const avgB = (c.b1.elo + c.b2.elo) / 2;
+                const diff = Math.abs(avgA - avgB);
+                const probA = 1 / (1 + Math.pow(10, (avgB - avgA) / D));
+                return { ...c, avgA, avgB, diff, probA, probB: 1 - probA };
+            }).sort((x, y) => x.diff - y.diff);
+
+            box.innerHTML = combos.map((c, idx) => {
+                const isBest = idx === 0;
+                return `
+                    <div class="mm-option-card ${isBest ? 'best-balance' : ''}">
+                        <div>
+                            <div style="font-size:0.7rem; font-weight:800; color:${isBest ? 'var(--tennis-lime)' : 'var(--text-muted)'}; text-transform:uppercase;">
+                                ${isBest ? '★ Najvyrovnanejší zápas (Odporúčané)' : `Alternatíva #${idx + 1}`} · Rozdiel Ø ${c.diff.toFixed(1)} ELO
+                            </div>
+                            <div style="font-size:0.88rem; font-weight:700; margin-top:2px;">
+                                ${c.a1.name} / ${c.a2.name} <span style="color:var(--text-muted); font-size:0.76rem;">(Ø ${c.avgA.toFixed(1)})</span>
+                                <span style="color:var(--clay-light); margin:0 5px;">VS</span>
+                                ${c.b1.name} / ${c.b2.name} <span style="color:var(--text-muted); font-size:0.76rem;">(Ø ${c.avgB.toFixed(1)})</span>
+                            </div>
+                            <div style="font-size:0.74rem; color:var(--text-muted); margin-top:2px;">
+                                Šanca na výhru: <strong>${(c.probA*100).toFixed(1)}%</strong> : <strong>${(c.probB*100).toFixed(1)}%</strong>
+                            </div>
                         </div>
-                    </td>
-                    <td class="text-right">${deltaHtml}<span class="elo-pill">${p.elo.toFixed(1)}</span></td>
-                    <td class="text-right">${p.matches}</td>
-                    <td class="text-right" style="color:var(--win); font-weight:700;">${p.wins}</td>
-                    <td class="text-right" style="color:var(--loss);">${p.losses}</td>
-                    <td class="text-right" style="color:var(--draw);">${p.draws}</td>
-                    <td class="text-right" style="font-weight:700;">${winPct}%</td>
-                    <td class="text-center">${formHtml}</td>
+                        <button type="button" class="preset-btn" style="flex:0; white-space:nowrap; padding:7px 11px;" onclick="applyMatchmakerCombo('${c.a1.id}','${c.a2.id}','${c.b1.id}','${c.b2.id}')">
+                            Použiť v zápise ↓
+                        </button>
+                    </div>
                 `;
-                tbody.appendChild(tr);
-            });
+            }).join("");
+        }
+
+        function applyMatchmakerCombo(a1, a2, b1, b2) {
+            document.getElementById("match-t1p1").value = a1;
+            document.getElementById("match-t1p2").value = a2;
+            document.getElementById("match-t2p1").value = b1;
+            document.getElementById("match-t2p2").value = b2;
+            updateMatchPreview();
+            document.getElementById("new-match-form-card").scrollIntoView({ behavior: "smooth" });
+            showToast("Dvojice boli prenesené do zápisu zápasu!");
         }
 
         function openPlayerDetail(playerId) {
@@ -1906,7 +3018,7 @@
             refreshAllViews();
 
             const lastMatch = computedMatches[computedMatches.length - 1];
-            const sA = lastMatch.deltaA >= 0 ? `+${lastMatch.deltaA.toFixed(1)}` : lastMatch.deltaA.toFixed(1);
+            const sA = lastMatch ? (lastMatch.deltaA >= 0 ? `+${lastMatch.deltaA.toFixed(1)}` : lastMatch.deltaA.toFixed(1)) : "";
             showToast(`Štvorhra uložená! Posun Tímu A: ${sA} ELO`);
 
             const firstTabBtn = document.querySelectorAll(".bottom-nav .nav-item")[0];
@@ -1956,6 +3068,58 @@
             const inserted = computedMatches.find(m => m.id === newId);
             const pos = inserted ? inserted.index : computedMatches.length;
             showToast(`Štvorhra zaradená na pozíciu #${pos} (${date}) a ELO prepočítané!`);
+        }
+
+        function openEditMatchModal(matchId) {
+            const m = state.matches.find(x => x.id === matchId);
+            if (!m) return;
+            document.getElementById("edit-match-id").value = m.id;
+            document.getElementById("edit-date").value = m.date;
+            document.getElementById("edit-t1p1").value = m.t1p1;
+            document.getElementById("edit-t1p2").value = m.t1p2;
+            document.getElementById("edit-t2p1").value = m.t2p1;
+            document.getElementById("edit-t2p2").value = m.t2p2;
+            document.getElementById("edit-sets1").value = m.sets1;
+            document.getElementById("edit-sets2").value = m.sets2;
+            document.getElementById("edit-gems").value = m.gems || "";
+            document.getElementById("edit-match-modal").classList.add("open");
+        }
+
+        function closeEditMatchModal() {
+            document.getElementById("edit-match-modal").classList.remove("open");
+        }
+
+        function saveEditedMatch() {
+            const id = document.getElementById("edit-match-id").value;
+            const date = document.getElementById("edit-date").value;
+            const t1p1 = document.getElementById("edit-t1p1").value;
+            const t1p2 = document.getElementById("edit-t1p2").value;
+            const t2p1 = document.getElementById("edit-t2p1").value;
+            const t2p2 = document.getElementById("edit-t2p2").value;
+            const sets1 = parseInt(document.getElementById("edit-sets1").value, 10);
+            const sets2 = parseInt(document.getElementById("edit-sets2").value, 10);
+            const gems = document.getElementById("edit-gems").value.trim();
+
+            if (!date || new Set([t1p1, t1p2, t2p1, t2p2]).size < 4) {
+                showToast("Vyber 4 rôznych tenistov a platný dátum!", true);
+                return;
+            }
+            if (isNaN(sets1) || isNaN(sets2) || sets1 < 0 || sets2 < 0 || (sets1 === 0 && sets2 === 0)) {
+                showToast("Zadaj platný stav na sety!", true);
+                return;
+            }
+
+            const idx = state.matches.findIndex(x => x.id === id);
+            if (idx === -1) return;
+
+            state.matches[idx] = { id, date, t1p1, t1p2, t2p1, t2p2, sets1, sets2, gems };
+            closeEditMatchModal();
+            sortMatchesChronologically();
+            saveState();
+            recalculateAll();
+            populateSelects();
+            refreshAllViews();
+            showToast("Zápas bol upravený a celá história prepočítaná!");
         }
 
         function moveMatchOrder(matchId, direction) {
@@ -2425,46 +3589,79 @@
             const netChange = (p.elo - startVal).toFixed(1);
             const netSign = netChange >= 0 ? `+${netChange}` : netChange;
 
-            // Výpočet spoluhráčskej chémie
+            const ownedBadges = computedAchievements.filter(a => a.holders.some(h => h.id === id));
+            const ownedBadgesHtml = ownedBadges.length === 0
+                ? ""
+                : `
+                    <div style="margin-top:10px;">
+                        <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; color:var(--text-muted);">Držiteľ odznakov (${ownedBadges.length})</div>
+                        <div class="profile-badges-wrap">
+                            ${ownedBadges.map(b => `
+                                <span class="profile-mini-badge" style="border-color:${b.theme === 'crimson' ? 'rgba(239,68,68,0.4)' : 'rgba(249,115,22,0.35)'}">
+                                    🏆 ${b.title} <span style="color:var(--text-muted); font-weight:600;">(${b.valueText})</span>
+                                </span>
+                            `).join("")}
+                        </div>
+                    </div>
+                `;
+
+            // Spoluhráčska chémia & Bilancia proti súperom (Nemesis / Obľúbený súper)
             const partnersMap = {};
+            const opponentsMap = {};
+
             computedMatches.forEach(m => {
                 let partnerId = null;
+                let oppIds = [];
                 let isTeam1 = false;
-                if (m.t1p1 === id) { partnerId = m.t1p2; isTeam1 = true; }
-                else if (m.t1p2 === id) { partnerId = m.t1p1; isTeam1 = true; }
-                else if (m.t2p1 === id) { partnerId = m.t2p2; isTeam1 = false; }
-                else if (m.t2p2 === id) { partnerId = m.t2p1; isTeam1 = false; }
+
+                if (m.t1p1 === id) { partnerId = m.t1p2; oppIds = [m.t2p1, m.t2p2]; isTeam1 = true; }
+                else if (m.t1p2 === id) { partnerId = m.t1p1; oppIds = [m.t2p1, m.t2p2]; isTeam1 = true; }
+                else if (m.t2p1 === id) { partnerId = m.t2p2; oppIds = [m.t1p1, m.t1p2]; isTeam1 = false; }
+                else if (m.t2p2 === id) { partnerId = m.t2p1; oppIds = [m.t1p1, m.t1p2]; isTeam1 = false; }
 
                 if (!partnerId) return;
+
+                const sA = isTeam1 ? Number(m.sets1) : Number(m.sets2);
+                const sB = isTeam1 ? Number(m.sets2) : Number(m.sets1);
+                const dElo = isTeam1 ? m.deltaA : m.deltaB;
+
                 if (!partnersMap[partnerId]) {
                     const partObj = computedPlayers.find(x => x.id === partnerId);
                     partnersMap[partnerId] = {
                         id: partnerId,
                         name: partObj ? partObj.name : partnerId,
                         color: partObj ? partObj.color : "#94a3b8",
-                        matches: 0,
-                        wins: 0,
-                        losses: 0,
-                        draws: 0,
-                        setsWon: 0,
-                        setsLost: 0,
-                        netElo: 0
+                        matches: 0, wins: 0, losses: 0, draws: 0, setsWon: 0, setsLost: 0, netElo: 0
                     };
                 }
-
                 const rec = partnersMap[partnerId];
                 rec.matches++;
-                const sA = isTeam1 ? Number(m.sets1) : Number(m.sets2);
-                const sB = isTeam1 ? Number(m.sets2) : Number(m.sets1);
-                const dElo = isTeam1 ? m.deltaA : m.deltaB;
-
                 rec.setsWon += sA;
                 rec.setsLost += sB;
                 rec.netElo = Math.round((rec.netElo + dElo) * 10) / 10;
-
                 if (sA > sB) rec.wins++;
                 else if (sB > sA) rec.losses++;
                 else rec.draws++;
+
+                oppIds.forEach(oppId => {
+                    if (!opponentsMap[oppId]) {
+                        const oppObj = computedPlayers.find(x => x.id === oppId);
+                        opponentsMap[oppId] = {
+                            id: oppId,
+                            name: oppObj ? oppObj.name : oppId,
+                            color: oppObj ? oppObj.color : "#94a3b8",
+                            matches: 0, wins: 0, losses: 0, draws: 0, setsWon: 0, setsLost: 0, netElo: 0
+                        };
+                    }
+                    const opRec = opponentsMap[oppId];
+                    opRec.matches++;
+                    opRec.setsWon += sA;
+                    opRec.setsLost += sB;
+                    opRec.netElo = Math.round((opRec.netElo + dElo) * 10) / 10;
+                    if (sA > sB) opRec.wins++;
+                    else if (sB > sA) opRec.losses++;
+                    else opRec.draws++;
+                });
             });
 
             const partnersList = Object.values(partnersMap).sort((a, b) => {
@@ -2472,12 +3669,52 @@
                 return b.netElo - a.netElo;
             });
 
+            const opponentsList = Object.values(opponentsMap).sort((a, b) => {
+                if (b.matches !== a.matches) return b.matches - a.matches;
+                return a.netElo - b.netElo;
+            });
+
+            // Nemesis a Obľúbený súper
+            let nemesis = null;
+            let favoriteOpp = null;
+            Object.values(opponentsMap).forEach(op => {
+                if (!nemesis || op.losses > nemesis.losses || (op.losses === nemesis.losses && op.netElo < nemesis.netElo)) {
+                    if (op.losses > 0 || op.netElo < 0) nemesis = op;
+                }
+                if (!favoriteOpp || op.wins > favoriteOpp.wins || (op.wins === favoriteOpp.wins && op.netElo > favoriteOpp.netElo)) {
+                    if (op.wins > 0 || op.netElo > 0) favoriteOpp = op;
+                }
+            });
+
+            const nemesisBannerHtml = (nemesis || favoriteOpp) ? `
+                <div class="grid-2" style="margin-top:10px;">
+                    <div class="stat-tile" style="text-align:left; border-color:rgba(16,185,129,0.3);">
+                        <div class="stat-tile-label" style="color:var(--win);">🎯 Obľúbený súper</div>
+                        <div style="font-weight:800; font-size:0.92rem; margin-top:3px;">
+                            ${favoriteOpp ? `${favoriteOpp.name} (${favoriteOpp.wins}V-${favoriteOpp.losses}P-${favoriteOpp.draws}R)` : '—'}
+                        </div>
+                        <div style="font-size:0.72rem; color:var(--text-muted);">
+                            ${favoriteOpp ? `Zisk proti nemu: +${favoriteOpp.netElo.toFixed(1)} ELO` : 'Zatiaľ bez výhry'}
+                        </div>
+                    </div>
+                    <div class="stat-tile" style="text-align:left; border-color:rgba(239,68,68,0.3);">
+                        <div class="stat-tile-label" style="color:var(--loss);">⚡ Nemesis (Najťažší súper)</div>
+                        <div style="font-weight:800; font-size:0.92rem; margin-top:3px;">
+                            ${nemesis ? `${nemesis.name} (${nemesis.wins}V-${nemesis.losses}P-${nemesis.draws}R)` : '—'}
+                        </div>
+                        <div style="font-size:0.72rem; color:var(--text-muted);">
+                            ${nemesis ? `Bilancia ELO: ${nemesis.netElo >= 0 ? '+' : ''}${nemesis.netElo.toFixed(1)} ELO` : 'Neporazený'}
+                        </div>
+                    </div>
+                </div>
+            ` : "";
+
             const partnersHtml = partnersList.length === 0
                 ? `<div style="color:var(--text-muted); font-size:0.8rem; margin-top:8px;">Žiadne odohraté zápasy so spoluhráčmi.</div>`
                 : `
-                    <div style="margin-top:12px;">
-                        <div style="font-size:0.76rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px;">
-                            Spoluhráčska chémia (Bilancia podľa parťákov)
+                    <div style="margin-top:14px;">
+                        <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px;">
+                            🤝 Spoluhráčska chémia (Bilancia podľa parťákov)
                         </div>
                         <div class="table-wrap">
                             <table class="elo-table">
@@ -2515,6 +3752,47 @@
                     </div>
                 `;
 
+            const opponentsHtml = opponentsList.length === 0 ? "" : `
+                <div style="margin-top:14px;">
+                    <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px;">
+                        ⚔️ Bilancia proti súperom na druhej strane siete
+                    </div>
+                    <div class="table-wrap">
+                        <table class="elo-table">
+                            <thead>
+                                <tr>
+                                    <th>Súper</th>
+                                    <th class="text-right">Záp.</th>
+                                    <th class="text-right">Bilancia (V-P-R)</th>
+                                    <th class="text-right">Sety</th>
+                                    <th class="text-right">Úsp. (%)</th>
+                                    <th class="text-right">ELO bilancia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${opponentsList.map(op => {
+                                    const pct = (((op.wins + 0.5 * op.draws) / op.matches) * 100).toFixed(1);
+                                    const netStr = op.netElo >= 0 ? `+${op.netElo.toFixed(1)}` : op.netElo.toFixed(1);
+                                    return `
+                                        <tr>
+                                            <td>
+                                                <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${op.color}; margin-right:6px;"></span>
+                                                <strong>${op.name}</strong>
+                                            </td>
+                                            <td class="text-right">${op.matches}</td>
+                                            <td class="text-right"><span style="color:var(--win); font-weight:700;">${op.wins}</span>-${op.losses}-${op.draws}</td>
+                                            <td class="text-right">${op.setsWon}:${op.setsLost}</td>
+                                            <td class="text-right"><strong>${pct}%</strong></td>
+                                            <td class="text-right" style="color:${op.netElo >= 0 ? 'var(--win)' : 'var(--loss)'}; font-weight:700;">${netStr}</td>
+                                        </tr>
+                                    `;
+                                }).join("")}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
             box.innerHTML = `
                 <div class="grid-3" style="margin-bottom:10px;">
                     <div class="stat-tile">
@@ -2538,7 +3816,10 @@
                     <span>Úspešnosť: <strong style="color:var(--clay-light)">${winPct}%</strong></span>
                     <span>Sety: <strong>${p.setsWon}:${p.setsLost}</strong> · Gemy: <strong>${p.gemsWon}:${p.gemsLost}</strong></span>
                 </div>
+                ${nemesisBannerHtml}
+                ${ownedBadgesHtml}
                 ${partnersHtml}
+                ${opponentsHtml}
             `;
         }
 
@@ -2606,6 +3887,7 @@
                         </div>
                         <div class="match-actions">
                             ${orderBtns}
+                            <button class="icon-btn-alt" onclick="openEditMatchModal('${m.id}')" title="Upraviť zápas">✎</button>
                             <button class="icon-btn" onclick="deleteMatch('${m.id}')" title="Vymazať zápas a prepočítať ELO">✕</button>
                         </div>
                     </div>
@@ -2665,7 +3947,7 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
             const a = document.createElement("a");
             a.href = dataStr;
-            a.download = `ELO4MASTER_v1_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            a.download = `ELO4MASTER_v1.05_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             a.click();
         }
 
@@ -2682,7 +3964,9 @@
                             players: imported.players,
                             matches: imported.matches || [],
                             chartVisiblePlayers: imported.chartVisiblePlayers || {},
-                            h2hMode: imported.h2hMode || "teams"
+                            h2hMode: imported.h2hMode || "teams",
+                            leaderboardMode: "players",
+                                            tvMode: "players"
                         };
                         sortMatchesChronologically();
                         saveState();
@@ -2710,8 +3994,16 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `ELO4MASTER_v1_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
+            a.download = `ELO4MASTER_v1.05_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
             a.click();
+        }
+
+        function setTvMode(mode) {
+            state.tvMode = mode;
+            document.getElementById("tv-mode-players").classList.toggle("active", mode === "players");
+            document.getElementById("tv-mode-pairs").classList.toggle("active", mode === "pairs");
+            document.getElementById("tv-mode-last").classList.toggle("active", mode === "last");
+            renderTvCanvas();
         }
 
         function openTvModal() {
@@ -2736,7 +4028,6 @@
             ctx.fillStyle = bgGrad;
             ctx.fillRect(0, 0, W, H);
 
-            // Čiary antukového dvorca pre štvorhru
             ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
             ctx.lineWidth = 4;
             ctx.beginPath();
@@ -2759,6 +4050,47 @@
             const tableX = 80;
             const tableW = W - 160;
             const topY = 42;
+            const todayStr = new Date().toLocaleDateString("sk-SK");
+
+            if (state.tvMode === "last" && computedMatches.length > 0) {
+                const m = computedMatches[computedMatches.length - 1];
+                ctx.fillStyle = "rgba(15, 23, 42, 0.94)";
+                ctx.fillRect(tableX, 80, tableW, 740);
+                ctx.fillStyle = "#f97316";
+                ctx.fillRect(tableX, 80, 12, 740);
+
+                ctx.fillStyle = "#94a3b8";
+                ctx.font = "bold 26px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(`ELO4MASTER · OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index} (${m.date})`, W / 2, 160);
+
+                ctx.fillStyle = "#f8fafc";
+                ctx.font = "bold 54px sans-serif";
+                ctx.fillText(`${m.teamNameA}`, W / 2, 275);
+
+                ctx.fillStyle = "#f97316";
+                ctx.font = "bold 92px sans-serif";
+                ctx.fillText(`${m.sets1} : ${m.sets2}`, W / 2, 405);
+
+                ctx.fillStyle = "#a3e635";
+                ctx.font = "bold 38px sans-serif";
+                ctx.fillText(`GEMY: ${m.gems || '—'}`, W / 2, 475);
+
+                ctx.fillStyle = "#38bdf8";
+                ctx.font = "bold 54px sans-serif";
+                ctx.fillText(`${m.teamNameB}`, W / 2, 590);
+
+                const sA = m.deltaA >= 0 ? `+${m.deltaA.toFixed(1)}` : m.deltaA.toFixed(1);
+                const sB = m.deltaB >= 0 ? `+${m.deltaB.toFixed(1)}` : m.deltaB.toFixed(1);
+
+                ctx.fillStyle = "#cbd5e1";
+                ctx.font = "bold 28px sans-serif";
+                ctx.fillText(
+                    `POSUN ELO: ${m.teamNameA} (${sA})   |   ${m.teamNameB} (${sB})`,
+                    W / 2, 710
+                );
+                return;
+            }
 
             ctx.fillStyle = "rgba(15, 23, 42, 0.94)";
             ctx.fillRect(tableX, topY, tableW, 56);
@@ -2768,12 +4100,14 @@
             ctx.fillStyle = "#ffffff";
             ctx.font = "bold 26px sans-serif";
             ctx.textAlign = "left";
-            ctx.fillText("ELO4MASTER | DEBLOVÝ REBRÍČEK ŠTVORHRY", tableX + 28, topY + 37);
+            const headerTitle = state.tvMode === "pairs"
+                ? "ELO4MASTER | REBRÍČEK DEBLOVÝCH DVOJÍC (TOP PÁRY)"
+                : "ELO4MASTER | DEBLOVÝ REBRÍČEK ŠTVORHRY (12 HRÁČOV)";
+            ctx.fillText(headerTitle, tableX + 28, topY + 37);
 
             ctx.fillStyle = "#94a3b8";
             ctx.font = "bold 19px sans-serif";
             ctx.textAlign = "right";
-            const todayStr = new Date().toLocaleDateString("sk-SK");
             ctx.fillText(`ZÁPASOV: ${computedMatches.length} · AKTUALIZÁCIA: ${todayStr}`, tableX + tableW - 24, topY + 36);
 
             const headY = topY + 64;
@@ -2783,13 +4117,13 @@
 
             const cols = [
                 { label: "POR", x: tableX + 50, align: "center" },
-                { label: "MENO", x: tableX + 130, align: "left" },
-                { label: "ELO", x: tableX + 530, align: "center" },
-                { label: "ZÁPASY", x: tableX + 710, align: "center" },
-                { label: "VÝHRY", x: tableX + 870, align: "center" },
-                { label: "PREHRY", x: tableX + 1030, align: "center" },
-                { label: "REMÍZY", x: tableX + 1185, align: "center" },
-                { label: "ÚSPEŠNOSŤ (%)", x: tableX + 1345, align: "center" }
+                { label: state.tvMode === "pairs" ? "DVOJICA" : "MENO", x: tableX + 130, align: "left" },
+                { label: "ELO", x: tableX + 560, align: "center" },
+                { label: "ZÁPASY", x: tableX + 730, align: "center" },
+                { label: "VÝHRY", x: tableX + 885, align: "center" },
+                { label: "PREHRY", x: tableX + 1040, align: "center" },
+                { label: "REMÍZY", x: tableX + 1190, align: "center" },
+                { label: "ÚSPEŠNOSŤ (%)", x: tableX + 1350, align: "center" }
             ];
 
             ctx.fillStyle = "#cbd5e1";
@@ -2799,19 +4133,19 @@
                 ctx.fillText(c.label, c.x, headY + 29);
             });
 
-            // Prispôsobené pre všetkých 12 hráčov na jednej HD obrazovke
-            const maxRows = Math.min(computedPlayers.length, 12);
+            const rowsSource = state.tvMode === "pairs" ? computedPairs : computedPlayers;
+            const maxRows = Math.min(rowsSource.length, 12);
             const gap = 5;
             const availableH = H - (headY + headH) - 36;
             const rowH = Math.min(54, Math.floor((availableH - gap * maxRows) / maxRows));
 
-            computedPlayers.slice(0, maxRows).forEach((p, i) => {
+            rowsSource.slice(0, maxRows).forEach((p, i) => {
                 const ry = headY + headH + gap + i * (rowH + gap);
                 ctx.fillStyle = i % 2 === 0 ? "rgba(226, 232, 240, 0.93)" : "rgba(203, 213, 225, 0.91)";
                 ctx.fillRect(tableX, ry, tableW, rowH);
 
                 ctx.fillStyle = "rgba(186, 230, 253, 0.68)";
-                ctx.fillRect(tableX + 440, ry, 180, rowH);
+                ctx.fillRect(tableX + 470, ry, 180, rowH);
 
                 const winPct = p.matches > 0 ? (((p.wins + 0.5 * p.draws) / p.matches) * 100).toFixed(1) : "0.0";
                 const textY = ry + rowH / 2 + 9;
@@ -2842,7 +4176,7 @@
             const canvas = document.getElementById("tvCanvas");
             const a = document.createElement("a");
             a.href = canvas.toDataURL("image/png");
-            a.download = `ELO4MASTER_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            a.download = `ELO4MASTER_v1.05_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
             a.click();
         }
 
