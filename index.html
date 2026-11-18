@@ -1200,7 +1200,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.12</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.13</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -1224,8 +1224,9 @@
             </button>
             <div class="stat-tile" id="last-match-banner" style="margin-bottom: 14px; padding: 12px 16px;">
                 <div class="stat-tile-label" id="last-match-label">Posledný odohratý zápas</div>
-                <div class="stat-tile-value" id="last-match-result" style="margin-top: 4px; font-size: 1.04rem;">—</div>
-                <div class="stat-tile-sub" id="last-match-meta" style="margin-top: 3px;">—</div>
+                <div class="stat-tile-value" id="last-match-teams" style="margin-top: 6px; font-size: 1.04rem;">—</div>
+                <div id="last-match-score" style="margin-top: 6px; font-size: 0.96rem;">—</div>
+                <div class="stat-tile-sub" id="last-match-meta" style="margin-top: 6px;">—</div>
             </div>
 
             <div class="card">
@@ -1609,7 +1610,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.12)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.13)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -1748,7 +1749,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.12_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.13_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -3109,7 +3110,8 @@
 
         function renderLeaderboard() {
             const lmLabel = document.getElementById("last-match-label");
-            const lmResult = document.getElementById("last-match-result");
+            const lmTeams = document.getElementById("last-match-teams");
+            const lmScore = document.getElementById("last-match-score");
             const lmMeta = document.getElementById("last-match-meta");
 
             if (computedMatches.length > 0) {
@@ -3118,11 +3120,13 @@
                 const signA = lastM.deltaA >= 0 ? `+${lastM.deltaA.toFixed(1)}` : lastM.deltaA.toFixed(1);
                 const signB = lastM.deltaB >= 0 ? `+${lastM.deltaB.toFixed(1)}` : lastM.deltaB.toFixed(1);
                 lmLabel.textContent = `Posledný odohratý zápas (#${lastM.index}) · ${lastM.date}`;
-                lmResult.innerHTML = `${lastM.teamNameA} <span style="color:var(--text-muted); font-weight:500;">vs</span> ${lastM.teamNameB} <span class="match-score-pill" style="font-size:0.92rem;">${lastM.sets1}:${lastM.sets2}</span> <span style="color:var(--text-muted); font-weight:600; font-size:0.88rem;">${gemsText}</span>`;
+                lmTeams.innerHTML = `${lastM.teamNameA} <span style="color:var(--text-muted); font-weight:500;">vs</span> ${lastM.teamNameB}`;
+                lmScore.innerHTML = `<span class="match-score-pill" style="font-size:0.96rem; margin-left:0;">${lastM.sets1}:${lastM.sets2}</span> <span style="color:var(--text-muted); font-weight:600; font-size:0.9rem;">${gemsText}</span>`;
                 lmMeta.textContent = `Posun ELO: ${lastM.teamNameA} (${signA}) · ${lastM.teamNameB} (${signB})`;
             } else {
                 lmLabel.textContent = "Posledný odohratý zápas";
-                lmResult.textContent = "Zatiaľ žiadny odohratý zápas";
+                lmTeams.textContent = "Zatiaľ žiadny odohratý zápas";
+                lmScore.textContent = "—";
                 lmMeta.textContent = "Pridaj prvý zápas v sekcii Zápas & Kurt";
             }
 
@@ -4352,7 +4356,7 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
             const a = document.createElement("a");
             a.href = dataStr;
-            a.download = customFilename || `ELO4MASTER_v1.12_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            a.download = customFilename || `ELO4MASTER_v1.13_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             a.click();
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -4405,7 +4409,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `ELO4MASTER_v1.12_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
+            a.download = `ELO4MASTER_v1.13_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
             a.click();
         }
 
@@ -4633,7 +4637,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.12 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.13 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -4705,8 +4709,8 @@
             ctx.font = "800 29px sans-serif";
             ctx.textAlign = "left";
             const headerTitle = state.tvMode === "pairs"
-                ? `ELO4MASTER V1.12 | REBRÍČEK DEBLOVÝCH DVOJÍC (${computedPairs.length} PÁROV)`
-                : `ELO4MASTER V1.12 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                ? `ELO4MASTER V1.13 | REBRÍČEK DEBLOVÝCH DVOJÍC (${computedPairs.length} PÁROV)`
+                : `ELO4MASTER V1.13 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
             ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
@@ -4890,7 +4894,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.12_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.13_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
