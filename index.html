@@ -1018,6 +1018,103 @@
             margin-bottom: 12px;
         }
 
+
+        /* PC KONTEXTOVÉ OKNÁ (POPOVERS / TOOLTIPS) PRE TLAČIDLÁ ZÁLOH V KARTE HISTÓRIA */
+        .ctx-btn-wrap {
+            position: relative;
+            width: 100%;
+            display: flex;
+        }
+
+        .ctx-popover {
+            display: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) and (min-width: 768px) {
+            .ctx-popover {
+                display: block;
+                position: absolute;
+                bottom: calc(100% + 12px);
+                left: 50%;
+                transform: translateX(-50%) translateY(8px) scale(0.97);
+                width: 310px;
+                background: rgba(0, 34, 29, 0.96);
+                backdrop-filter: blur(18px) saturate(180%);
+                -webkit-backdrop-filter: blur(18px) saturate(180%);
+                border: 1px solid rgba(190, 242, 100, 0.45);
+                border-radius: 13px;
+                padding: 12px 14px;
+                color: #ffffff;
+                font-size: 0.76rem;
+                font-weight: 500;
+                line-height: 1.45;
+                text-align: left;
+                box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.22);
+                z-index: 1250;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+            }
+
+            .ctx-popover::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                border-width: 7px;
+                border-style: solid;
+                border-color: rgba(190, 242, 100, 0.45) transparent transparent transparent;
+            }
+
+            .ctx-btn-wrap:hover .ctx-popover,
+            .ctx-btn-wrap:focus-within .ctx-popover {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+
+            .ctx-popover-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 6px;
+                font-weight: 800;
+                font-size: 0.81rem;
+                color: var(--tennis-lime);
+                margin-bottom: 5px;
+                padding-bottom: 5px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            }
+
+            .ctx-popover-badge {
+                font-size: 0.65rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                padding: 2px 6px;
+                border-radius: 6px;
+                background: rgba(190, 242, 100, 0.16);
+                color: var(--tennis-lime);
+                border: 1px solid rgba(190, 242, 100, 0.35);
+                letter-spacing: 0.4px;
+            }
+
+            .ctx-popover-desc {
+                color: rgba(255, 255, 255, 0.88);
+                margin-bottom: 6px;
+            }
+
+            .ctx-popover-tip {
+                font-size: 0.7rem;
+                color: var(--blue-accent);
+                background: rgba(125, 211, 252, 0.10);
+                border-left: 2px solid var(--blue-accent);
+                padding: 4px 7px;
+                border-radius: 4px;
+            }
+        }
+
         @media (max-width: 560px) {
             .ach-grid {
                 grid-template-columns: 1fr;
@@ -1054,7 +1151,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.09</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.1</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -1459,7 +1556,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.09)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.1)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -1577,25 +1674,95 @@
                 </div>
 
                 <div style="margin-bottom: 10px;">
-                    <button class="btn btn-primary" onclick="exportBackupJSON('databaza.json')">Stiahnuť databaza.json (pre GitHub)</button>
+                    <div class="ctx-btn-wrap">
+                        <button class="btn btn-primary" onclick="exportBackupJSON('databaza.json')">Stiahnuť databaza.json (pre GitHub)</button>
+                        <div class="ctx-popover" role="tooltip">
+                            <div class="ctx-popover-head">
+                                <span><i class="fa-solid fa-cloud-arrow-up"></i> Hlavná databáza pre GitHub</span>
+                                <span class="ctx-popover-badge">JSON</span>
+                            </div>
+                            <div class="ctx-popover-desc">Exportuje kompletný stav deblového rebríčka (hráčov, celú históriu štvorhier a parametre K/D) pod presným názvom <strong>databaza.json</strong>.</div>
+                            <div class="ctx-popover-tip">Nahraj tento súbor na GitHub do rovnakého priečinka ako HTML súbor, aby sa nové výsledky automaticky zobrazili všetkým hráčom.</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid-2" style="margin-bottom: 10px;">
-                    <button class="btn btn-secondary" onclick="exportBackupJSON()">Stiahnuť JSON s dátumom</button>
-                    <button class="btn btn-secondary" onclick="document.getElementById('import-json-input').click()">Načítať JSON zo súboru</button>
+                    <div class="ctx-btn-wrap">
+                        <button class="btn btn-secondary" onclick="exportBackupJSON()">Stiahnuť JSON s dátumom</button>
+                        <div class="ctx-popover" role="tooltip">
+                            <div class="ctx-popover-head">
+                                <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
+                                <span class="ctx-popover-badge">JSON</span>
+                            </div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.1_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
+                        </div>
+                    </div>
+                    <div class="ctx-btn-wrap">
+                        <button class="btn btn-secondary" onclick="document.getElementById('import-json-input').click()">Načítať JSON zo súboru</button>
+                        <div class="ctx-popover" role="tooltip">
+                            <div class="ctx-popover-head">
+                                <span><i class="fa-solid fa-folder-open"></i> Obnova zo súboru JSON</span>
+                                <span class="ctx-popover-badge">Import JSON</span>
+                            </div>
+                            <div class="ctx-popover-desc">Otvorí výber súboru v PC a načíta predtým uloženú zálohu (<strong>.json</strong>). Okamžite prepočíta tabuľku jednotlivcov, dvojíc aj odznaky.</div>
+                            <div class="ctx-popover-tip">Pozor: Prepíše aktuálne dáta uložené v pamäti tvojho prehliadača.</div>
+                        </div>
+                    </div>
                     <input type="file" id="import-json-input" accept=".json" style="display:none" onchange="importBackupJSON(event)">
                 </div>
 
                 <div style="margin-bottom: 10px;">
-                    <button class="btn btn-secondary" onclick="syncFromRemoteJSON(true)">↻ Vynútiť načítanie databaza.json z GitHubu</button>
+                    <div class="ctx-btn-wrap">
+                        <button class="btn btn-secondary" onclick="syncFromRemoteJSON(true)">↻ Vynútiť načítanie databaza.json z GitHubu</button>
+                        <div class="ctx-popover" role="tooltip">
+                            <div class="ctx-popover-head">
+                                <span><i class="fa-solid fa-rotate"></i> Manuálny GitHub Sync</span>
+                                <span class="ctx-popover-badge">Remote JSON</span>
+                            </div>
+                            <div class="ctx-popover-desc">Okamžite stiahne najnovší súbor <strong>databaza.json</strong> zo servera (GitHubu) bez ohľadu na lokálnu vyrovnávaciu pamäť.</div>
+                            <div class="ctx-popover-tip">Použi, ak iný správca práve aktualizoval štvorhry na GitHube a chceš hneď vidieť zmeny.</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid-2" style="margin-bottom: 10px;">
-                    <button class="btn btn-secondary" onclick="exportTableCSV()">Export tabuľky (CSV)</button>
-                    <button class="btn btn-secondary" onclick="freezeCurrentAsBaseline()">Zafixovať ELO ako čistý štart</button>
+                    <div class="ctx-btn-wrap">
+                        <button class="btn btn-secondary" onclick="exportTableCSV()">Export tabuľky (CSV)</button>
+                        <div class="ctx-popover" role="tooltip">
+                            <div class="ctx-popover-head">
+                                <span><i class="fa-solid fa-file-csv"></i> Export rebríčka pre Excel</span>
+                                <span class="ctx-popover-badge">CSV</span>
+                            </div>
+                            <div class="ctx-popover-desc">Vygeneruje tabuľku poradia, ELO bodov, zápasov, výhier, prehier a percentuálnej úspešnosti vo formáte <strong>.csv</strong> (oddelené bodkočiarkou).</div>
+                            <div class="ctx-popover-tip">Obsahuje kódovanie UTF-8 s BOM, takže slovenská diakritika sa v MS Excel zobrazí správne.</div>
+                        </div>
+                    </div>
+                    <div class="ctx-btn-wrap">
+                        <button class="btn btn-secondary" onclick="freezeCurrentAsBaseline()">Zafixovať ELO ako čistý štart</button>
+                        <div class="ctx-popover" role="tooltip">
+                            <div class="ctx-popover-head">
+                                <span><i class="fa-solid fa-snowflake"></i> Zafixovať štartovaciu čiaru</span>
+                                <span class="ctx-popover-badge" style="color:#fde047; border-color:rgba(253,224,71,0.4); background:rgba(253,224,71,0.12);">Sezónny štart</span>
+                            </div>
+                            <div class="ctx-popover-desc">Uloží súčasné ELO hráčov ako ich nové východiskové ELO a vymaže históriu doterajších štvorhier pre novú sezónu.</div>
+                            <div class="ctx-popover-tip">Odporúčame najprv stiahnuť zálohu JSON s dátumom.</div>
+                        </div>
+                    </div>
                 </div>
 
-                <button class="btn btn-danger" onclick="resetToThreadDefault()">Obnoviť pôvodných 24 zápasov (Reset)</button>
+                <div class="ctx-btn-wrap">
+                    <button class="btn btn-danger" onclick="resetToThreadDefault()">Obnoviť pôvodných 24 zápasov (Reset)</button>
+                    <div class="ctx-popover" role="tooltip">
+                        <div class="ctx-popover-head">
+                            <span><i class="fa-solid fa-triangle-exclamation"></i> Továrenský reset databázy</span>
+                            <span class="ctx-popover-badge" style="color:#fca5a5; border-color:rgba(252,165,165,0.4); background:rgba(252,165,165,0.15);">Reset</span>
+                        </div>
+                        <div class="ctx-popover-desc">Vymaže lokálnu pamäť prehliadača a obnoví vstavanú východiskovú databázu 24 historických štvorhier.</div>
+                        <div class="ctx-popover-tip">Všetky neuložené lokálne zmeny budú odstránené.</div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -4114,7 +4281,7 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
             const a = document.createElement("a");
             a.href = dataStr;
-            a.download = customFilename || `ELO4MASTER_v1.09_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            a.download = customFilename || `ELO4MASTER_v1.1_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             a.click();
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -4167,7 +4334,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `ELO4MASTER_v1.09_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
+            a.download = `ELO4MASTER_v1.1_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
             a.click();
         }
 
@@ -4349,7 +4516,7 @@
             const canvas = document.getElementById("tvCanvas");
             const a = document.createElement("a");
             a.href = canvas.toDataURL("image/png");
-            a.download = `ELO4MASTER_v1.09_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            a.download = `ELO4MASTER_v1.1_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
             a.click();
         }
 
