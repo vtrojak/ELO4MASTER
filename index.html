@@ -1054,7 +1054,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.08</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.09</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -1289,7 +1289,6 @@
                         <span class="card-title-dot"></span>
                         Vývoj deblového ELO v čase (<span id="chart-steps-count">0</span> krokov)
                     </div>
-                    <button class="preset-btn" style="flex:0; padding:4px 10px; font-size:0.72rem;" onclick="toggleAllChartPlayers()">Všetci / Top 6</button>
                 </div>
 
                 <div class="chart-controls" id="chart-player-chips"></div>
@@ -1455,19 +1454,19 @@
         <!-- SEKCIA 6: HISTÓRIA ZÁPASOV, EDITÁCIA, DODATOČNÝ ZÁPIS & PARAMETRE -->
         <section id="sec-history" class="section">
 
-            <!-- KARTA 1: INFO O REŽIME -->
+            <!-- KARTA 1: INFO O REŽIME & GITHUB SYNC -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie (ELO4MASTER v1.08)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.09)
                     </div>
-                    <span class="param-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
+                    <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
 
                 <div class="mode-box">
-                    <div style="font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; color: var(--tennis-lime);">Kompletná história 24 štvorhier (12 hráčov + Tímové ELO dvojíc)</div>
-                    <div style="font-size: 0.78rem; color: var(--text-muted);">Všetkých 12 deblistov začína na štarte s hodnotou 1500.0 ELO. Každý zápas v histórii môžeš priamo upraviť tlačidlom ✎ alebo posunúť v rámci rovnakého dňa.</div>
+                    <div id="sync-status-title" style="font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; color: var(--tennis-lime);">Automatická synchronizácia (databaza.json)</div>
+                    <div id="sync-status-desc" style="font-size: 0.78rem; color: var(--text-muted);">Pri načítaní stránky aplikácia automaticky hľadá súbor <strong>databaza.json</strong> v rovnakom priečinku na GitHube. Ak je novší ako lokálne dáta, načíta ho všetkým návštevníkom.</div>
                 </div>
             </div>
 
@@ -1577,10 +1576,18 @@
                     </div>
                 </div>
 
+                <div style="margin-bottom: 10px;">
+                    <button class="btn btn-primary" onclick="exportBackupJSON('databaza.json')">Stiahnuť databaza.json (pre GitHub)</button>
+                </div>
+
                 <div class="grid-2" style="margin-bottom: 10px;">
-                    <button class="btn btn-secondary" onclick="exportBackupJSON()">Stiahnuť JSON zálohu</button>
-                    <button class="btn btn-secondary" onclick="document.getElementById('import-json-input').click()">Načítať JSON zálohu</button>
+                    <button class="btn btn-secondary" onclick="exportBackupJSON()">Stiahnuť JSON s dátumom</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('import-json-input').click()">Načítať JSON zo súboru</button>
                     <input type="file" id="import-json-input" accept=".json" style="display:none" onchange="importBackupJSON(event)">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <button class="btn btn-secondary" onclick="syncFromRemoteJSON(true)">↻ Vynútiť načítanie databaza.json z GitHubu</button>
                 </div>
 
                 <div class="grid-2" style="margin-bottom: 10px;">
@@ -1710,6 +1717,7 @@
 
     <script>
         const STORAGE_KEY = "ELO4MASTER_DB_V1";
+        const REMOTE_JSON_FILES = ["databaza.json", "data.json"];
 
         const PLAYER_COLORS = [
             "#f97316", // Vlado
@@ -1776,7 +1784,8 @@
             chartVisiblePlayers: {},
             h2hMode: "teams",
             leaderboardMode: "players",
-            tvMode: "players"
+            tvMode: "players",
+            updatedAt: 0
         };
 
         let computedPlayers = [];
@@ -1786,25 +1795,7 @@
         let timelinePoints = [];
         let interactiveHitPoints = [];
 
-        function initApp() {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (raw) {
-                try {
-                    const parsed = JSON.parse(raw);
-                    state.config = { K: 32, D: 200, calcFrom1500: true, ...(parsed.config || {}) };
-                    state.players = parsed.players || JSON.parse(JSON.stringify(INITIAL_PLAYERS));
-                    state.matches = parsed.matches || JSON.parse(JSON.stringify(INITIAL_MATCHES));
-                    state.chartVisiblePlayers = parsed.chartVisiblePlayers || {};
-                    state.h2hMode = parsed.h2hMode || "teams";
-                    state.leaderboardMode = parsed.leaderboardMode || "players";
-                    state.tvMode = "players";
-                } catch (e) {
-                    loadDefaults();
-                }
-            } else {
-                loadDefaults();
-            }
-
+        function normalizeStatePlayers() {
             INITIAL_PLAYERS.forEach(ip => {
                 if (!state.players.some(p => p.id === ip.id)) {
                     state.players.push(JSON.parse(JSON.stringify(ip)));
@@ -1817,6 +1808,140 @@
                     state.chartVisiblePlayers[p.id] = true;
                 }
             });
+        }
+
+        function updateSyncBanner(mode, detailText) {
+            const pill = document.getElementById("sync-status-pill");
+            const title = document.getElementById("sync-status-title");
+            const desc = document.getElementById("sync-status-desc");
+            if (!pill || !title || !desc) return;
+
+            if (mode === "remote") {
+                pill.textContent = "GitHub Sync ✓";
+                pill.style.background = "rgba(110, 231, 183, 0.18)";
+                pill.style.color = "var(--win)";
+                pill.style.borderColor = "rgba(110, 231, 183, 0.45)";
+                title.textContent = "Načítané dáta zo servera (databaza.json)";
+                title.style.color = "var(--win)";
+                desc.innerHTML = detailText;
+            } else if (mode === "local") {
+                pill.textContent = "Lokálna pamäť";
+                pill.style.background = "rgba(125, 211, 252, 0.18)";
+                pill.style.color = "var(--blue-accent)";
+                pill.style.borderColor = "rgba(125, 211, 252, 0.45)";
+                title.textContent = "Používajú sa novšie lokálne dáta v prehliadači";
+                title.style.color = "var(--blue-accent)";
+                desc.innerHTML = detailText;
+            } else {
+                pill.textContent = "Vstavané dáta";
+                pill.style.background = "rgba(163, 230, 53, 0.15)";
+                pill.style.color = "var(--tennis-lime)";
+                pill.style.borderColor = "rgba(163, 230, 53, 0.35)";
+                title.textContent = `História ${state.matches.length} štvorhier (lokálny režim)`;
+                title.style.color = "var(--tennis-lime)";
+                desc.innerHTML = detailText;
+            }
+        }
+
+        async function syncFromRemoteJSON(forceOverwrite = false) {
+            let remoteData = null;
+            let loadedFileName = "";
+
+            for (const fileName of REMOTE_JSON_FILES) {
+                try {
+                    const response = await fetch(`./${fileName}?t=${Date.now()}`, { cache: "no-store" });
+                    if (response.ok) {
+                        const parsed = await response.json();
+                        if (parsed && Array.isArray(parsed.players) && Array.isArray(parsed.matches)) {
+                            remoteData = parsed;
+                            loadedFileName = fileName;
+                            break;
+                        }
+                    }
+                } catch (err) {
+                    // Continue to next candidate or fallback silently when offline / file://
+                }
+            }
+
+            if (!remoteData) {
+                if (forceOverwrite) {
+                    showToast("Súbor databaza.json sa na serveri nenašiel (alebo aplikácia beží offline).", true);
+                } else {
+                    updateSyncBanner("default", "Súbor <strong>databaza.json</strong> zatiaľ nebol nájdený vedľa HTML súboru. Používajú sa dáta uložené v prehliadači. Pre zdieľanie výsledkov stiahni <em>databaza.json</em> a nahraj ho na GitHub.");
+                }
+                return false;
+            }
+
+            const remoteMatchesCount = remoteData.matches.length;
+            const localMatchesCount = (state.matches || []).length;
+            const remoteUpdated = Number(remoteData.updatedAt) || 0;
+            const localUpdated = Number(state.updatedAt) || 0;
+
+            let shouldApply = false;
+            if (forceOverwrite) {
+                shouldApply = true;
+            } else if (remoteUpdated > 0 && localUpdated > 0) {
+                shouldApply = remoteUpdated >= localUpdated;
+            } else if (remoteUpdated > 0 && localUpdated === 0) {
+                shouldApply = remoteMatchesCount >= localMatchesCount;
+            } else {
+                shouldApply = remoteMatchesCount >= localMatchesCount;
+            }
+
+            if (shouldApply) {
+                const preservedCharts = state.chartVisiblePlayers || {};
+                state = {
+                    config: { K: 32, D: 200, calcFrom1500: true, ...(remoteData.config || {}) },
+                    players: remoteData.players,
+                    matches: remoteData.matches,
+                    chartVisiblePlayers: { ...(remoteData.chartVisiblePlayers || {}), ...preservedCharts },
+                    h2hMode: state.h2hMode || remoteData.h2hMode || "teams",
+                    leaderboardMode: state.leaderboardMode || "players",
+                    tvMode: state.tvMode || "players",
+                    updatedAt: remoteUpdated || Date.now()
+                };
+                normalizeStatePlayers();
+                document.getElementById("cfg-k").value = state.config.K;
+                document.getElementById("cfg-d").value = state.config.D;
+                sortMatchesChronologically();
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                recalculateAll();
+                populateSelects();
+                refreshAllViews();
+
+                const syncTimeStr = remoteUpdated ? new Date(remoteUpdated).toLocaleString("sk-SK") : "bez časovej pečiatky";
+                updateSyncBanner("remote", `Úspešne synchronizované zo súboru <strong>${loadedFileName}</strong> (${state.matches.length} štvorhier · verzia zálohy: ${syncTimeStr}).`);
+                if (forceOverwrite) {
+                    showToast(`Dáta zo súboru ${loadedFileName} (${state.matches.length} štvorhier) boli načítané!`);
+                }
+                return true;
+            } else {
+                updateSyncBanner("local", `V tvojom prehliadači sú novšie zmeny (${localMatchesCount} štvorhier) než na GitHube v <strong>${loadedFileName}</strong> (${remoteMatchesCount} štvorhier). Pre zverejnenie stiahni <em>databaza.json</em> a nahraj ho na GitHub.`);
+                return false;
+            }
+        }
+
+        async function initApp() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+                try {
+                    const parsed = JSON.parse(raw);
+                    state.config = { K: 32, D: 200, calcFrom1500: true, ...(parsed.config || {}) };
+                    state.players = parsed.players || JSON.parse(JSON.stringify(INITIAL_PLAYERS));
+                    state.matches = parsed.matches || JSON.parse(JSON.stringify(INITIAL_MATCHES));
+                    state.chartVisiblePlayers = parsed.chartVisiblePlayers || {};
+                    state.h2hMode = parsed.h2hMode || "teams";
+                    state.leaderboardMode = parsed.leaderboardMode || "players";
+                    state.tvMode = "players";
+                    state.updatedAt = Number(parsed.updatedAt) || 0;
+                } catch (e) {
+                    loadDefaults();
+                }
+            } else {
+                loadDefaults();
+            }
+
+            normalizeStatePlayers();
 
             const todayIso = new Date().toISOString().split("T")[0];
             document.getElementById("match-date").value = todayIso;
@@ -1829,6 +1954,9 @@
             populateSelects();
             refreshAllViews();
             setupCanvasEvents();
+
+            // Automaticky skontrolovať externý databaza.json na GitHube
+            await syncFromRemoteJSON(false);
         }
 
         function loadDefaults() {
@@ -1839,14 +1967,16 @@
             state.h2hMode = "teams";
             state.leaderboardMode = "players";
             state.tvMode = "players";
+            state.updatedAt = 0;
             state.players.forEach((p, idx) => {
                 p.color = PLAYER_COLORS[idx % PLAYER_COLORS.length];
                 state.chartVisiblePlayers[p.id] = true;
             });
-            saveState();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         }
 
         function saveState() {
+            state.updatedAt = Date.now();
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         }
 
@@ -3209,23 +3339,6 @@
             });
         }
 
-        function toggleAllChartPlayers() {
-            const allShown = computedPlayers.every(p => state.chartVisiblePlayers[p.id] !== false);
-            if (allShown) {
-                const top6Ids = new Set(computedPlayers.slice(0, 6).map(p => p.id));
-                computedPlayers.forEach(p => {
-                    state.chartVisiblePlayers[p.id] = top6Ids.has(p.id);
-                });
-            } else {
-                computedPlayers.forEach(p => {
-                    state.chartVisiblePlayers[p.id] = true;
-                });
-            }
-            saveState();
-            renderChartChips();
-            drawEloChart();
-        }
-
         function drawEloChart(highlightStep = null) {
             const canvas = document.getElementById("eloCanvas");
             if (!canvas) return;
@@ -3991,12 +4104,21 @@
             showToast("Dáta boli obnovené na predvolených 24 štvorhier!");
         }
 
-        function exportBackupJSON() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+        function exportBackupJSON(customFilename = null) {
+            if (!state.updatedAt) state.updatedAt = Date.now();
+            const exportPayload = {
+                ...state,
+                updatedAt: state.updatedAt,
+                exportedAtIso: new Date().toISOString()
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
             const a = document.createElement("a");
             a.href = dataStr;
-            a.download = `ELO4MASTER_v1.08_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            a.download = customFilename || `ELO4MASTER_v1.09_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             a.click();
+            if (customFilename === "databaza.json") {
+                showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
+            }
         }
 
         function importBackupJSON(ev) {
@@ -4014,8 +4136,10 @@
                             chartVisiblePlayers: imported.chartVisiblePlayers || {},
                             h2hMode: imported.h2hMode || "teams",
                             leaderboardMode: "players",
-                                            tvMode: "players"
+                            tvMode: "players",
+                            updatedAt: Date.now()
                         };
+                        normalizeStatePlayers();
                         sortMatchesChronologically();
                         saveState();
                         recalculateAll();
@@ -4028,6 +4152,7 @@
                 } catch (err) {
                     showToast("Chyba pri čítaní súboru!", true);
                 }
+                ev.target.value = "";
             };
             reader.readAsText(file);
         }
@@ -4042,7 +4167,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `ELO4MASTER_v1.08_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
+            a.download = `ELO4MASTER_v1.09_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
             a.click();
         }
 
@@ -4224,7 +4349,7 @@
             const canvas = document.getElementById("tvCanvas");
             const a = document.createElement("a");
             a.href = canvas.toDataURL("image/png");
-            a.download = `ELO4MASTER_v1.08_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            a.download = `ELO4MASTER_v1.09_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
             a.click();
         }
 
