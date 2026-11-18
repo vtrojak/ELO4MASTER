@@ -219,6 +219,55 @@
             display: inline-block;
         }
 
+
+        /* TLAČIDLO NAČÍTANIA DATABÁZY V KARTE TABUĽKA */
+        .btn-db-sync {
+            width: 100%;
+            padding: 13px 16px;
+            margin-bottom: 14px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 0.94rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            transition: all 0.22s ease;
+            /* Krikľavo zelený glass stav (predvolený / pri lokálnej zmene) */
+            background: linear-gradient(135deg, rgba(163, 255, 18, 0.88), rgba(110, 230, 0, 0.72));
+            color: #051a05;
+            border: 1px solid rgba(220, 255, 150, 0.78);
+            box-shadow: 0 6px 24px rgba(132, 255, 0, 0.38), inset 0 1px 2px rgba(255, 255, 255, 0.65);
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+
+        .btn-db-sync:hover {
+            background: linear-gradient(135deg, rgba(180, 255, 50, 0.96), rgba(128, 245, 10, 0.84));
+            box-shadow: 0 8px 28px rgba(132, 255, 0, 0.52), inset 0 1px 2px rgba(255, 255, 255, 0.80);
+            transform: translateY(-1px);
+        }
+
+        .btn-db-sync:active {
+            transform: scale(0.985);
+        }
+
+        /* Tmavozelený glass stav po načítaní oficiálnej databázy */
+        .btn-db-sync.synced {
+            background: linear-gradient(135deg, rgba(4, 78, 52, 0.82), rgba(2, 48, 34, 0.68));
+            color: #ffffff;
+            border: 1px solid rgba(110, 231, 183, 0.45);
+            box-shadow: 0 6px 20px rgba(0, 30, 22, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+        }
+
+        .btn-db-sync.synced:hover {
+            background: linear-gradient(135deg, rgba(6, 95, 64, 0.90), rgba(4, 62, 44, 0.78));
+            border-color: rgba(110, 231, 183, 0.65);
+        }
+
         /* SUMMARY STRIP */
         .summary-grid {
             display: grid;
@@ -1151,7 +1200,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.1</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.11</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -1169,6 +1218,10 @@
     <main class="container">
         <!-- SEKCIA 1: TABUĽKA (JEDNOTLIVCI / PEVNÉ DVOJICE) -->
         <section id="sec-table" class="section active">
+            <button id="table-sync-db-btn" class="btn-db-sync" onclick="syncFromRemoteJSON(true)">
+                <i class="fa-solid fa-rotate"></i>
+                <span>Načítať aktuálnu databázu</span>
+            </button>
             <div class="stat-tile" id="last-match-banner" style="margin-bottom: 14px; padding: 12px 16px;">
                 <div class="stat-tile-label" id="last-match-label">Posledný odohratý zápas</div>
                 <div class="stat-tile-value" id="last-match-result" style="margin-top: 4px; font-size: 1.04rem;">—</div>
@@ -1556,7 +1609,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.1)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.11)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -1695,7 +1748,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.1_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.11_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -1977,6 +2030,16 @@
             });
         }
 
+        function setDbButtonSyncedState(isSynced) {
+            const btn = document.getElementById("table-sync-db-btn");
+            if (!btn) return;
+            if (isSynced) {
+                btn.classList.add("synced");
+            } else {
+                btn.classList.remove("synced");
+            }
+        }
+
         function updateSyncBanner(mode, detailText) {
             const pill = document.getElementById("sync-status-pill");
             const title = document.getElementById("sync-status-title");
@@ -2076,6 +2139,7 @@
                 populateSelects();
                 refreshAllViews();
 
+                setDbButtonSyncedState(true);
                 const syncTimeStr = remoteUpdated ? new Date(remoteUpdated).toLocaleString("sk-SK") : "bez časovej pečiatky";
                 updateSyncBanner("remote", `Úspešne synchronizované zo súboru <strong>${loadedFileName}</strong> (${state.matches.length} štvorhier · verzia zálohy: ${syncTimeStr}).`);
                 if (forceOverwrite) {
@@ -2083,6 +2147,7 @@
                 }
                 return true;
             } else {
+                setDbButtonSyncedState(false);
                 updateSyncBanner("local", `V tvojom prehliadači sú novšie zmeny (${localMatchesCount} štvorhier) než na GitHube v <strong>${loadedFileName}</strong> (${remoteMatchesCount} štvorhier). Pre zverejnenie stiahni <em>databaza.json</em> a nahraj ho na GitHub.`);
                 return false;
             }
@@ -2142,8 +2207,12 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         }
 
-        function saveState() {
-            state.updatedAt = Date.now();
+        function saveState(isDataChange = true) {
+            if (isDataChange) {
+                state.updatedAt = Date.now();
+                setDbButtonSyncedState(false);
+                updateSyncBanner("local", `V prehliadači boli vykonané lokálne úpravy (${state.matches.length} štvorhier). Pre návrat k oficiálnej verzii zo servera klikni na <strong>Načítať aktuálnu databázu</strong>.`);
+            }
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         }
 
@@ -4264,6 +4333,7 @@
             if (!confirm("Obnoviť pôvodnú históriu 24 štvorhier? Všetky neskôr pridané zmeny sa vymažú.")) return;
             localStorage.removeItem(STORAGE_KEY);
             loadDefaults();
+            setDbButtonSyncedState(false);
             sortMatchesChronologically();
             recalculateAll();
             populateSelects();
@@ -4281,7 +4351,7 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
             const a = document.createElement("a");
             a.href = dataStr;
-            a.download = customFilename || `ELO4MASTER_v1.1_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            a.download = customFilename || `ELO4MASTER_v1.11_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             a.click();
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -4334,7 +4404,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `ELO4MASTER_v1.1_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
+            a.download = `ELO4MASTER_v1.11_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
             a.click();
         }
 
@@ -4516,7 +4586,7 @@
             const canvas = document.getElementById("tvCanvas");
             const a = document.createElement("a");
             a.href = canvas.toDataURL("image/png");
-            a.download = `ELO4MASTER_v1.1_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            a.download = `ELO4MASTER_v1.11_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
             a.click();
         }
 
