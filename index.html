@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>ELO4MASTER | Deblový Tenisový ELO Systém & Štatistiky</title>
     <style>
         :root {
@@ -741,19 +742,39 @@
         }
 
         .ach-crest {
-            width: 54px;
-            height: 54px;
+            width: 56px;
+            height: 56px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.48));
         }
 
-        .ach-crest svg {
+        .hex-outer {
             width: 54px;
             height: 54px;
-            display: block;
-            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+            clip-path: polygon(50% 3%, 93% 26%, 93% 74%, 50% 97%, 7% 74%, 7% 26%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5px;
+        }
+
+        .hex-inner {
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(50% 3%, 93% 26%, 93% 74%, 50% 97%, 7% 74%, 7% 26%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hex-inner i {
+            font-size: 1.28rem;
+            line-height: 1;
+            display: inline-block;
         }
 
         .ach-body {
@@ -973,7 +994,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.05</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.07</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -991,22 +1012,10 @@
     <main class="container">
         <!-- SEKCIA 1: TABUĽKA (JEDNOTLIVCI / PEVNÉ DVOJICE) -->
         <section id="sec-table" class="section active">
-            <div class="summary-grid">
-                <div class="stat-tile">
-                    <div class="stat-tile-label" id="sum-leader-label">Líder štvorhry</div>
-                    <div class="stat-tile-value" id="sum-leader-name">Tibor</div>
-                    <div class="stat-tile-sub" id="sum-leader-elo">1500 ELO</div>
-                </div>
-                <div class="stat-tile">
-                    <div class="stat-tile-label" id="sum-count-label">Deblistov / Párov</div>
-                    <div class="stat-tile-value" id="sum-players-count">12</div>
-                    <div class="stat-tile-sub" id="sum-mode-badge">Prepočet od 1500 ELO</div>
-                </div>
-                <div class="stat-tile">
-                    <div class="stat-tile-label">Štvorhry v histórii</div>
-                    <div class="stat-tile-value" id="sum-matches-count">24</div>
-                    <div class="stat-tile-sub" id="sum-total-starts">Celkovo štartov</div>
-                </div>
+            <div class="stat-tile" id="last-match-banner" style="margin-bottom: 14px; padding: 12px 16px;">
+                <div class="stat-tile-label" id="last-match-label">Posledný odohratý zápas</div>
+                <div class="stat-tile-value" id="last-match-result" style="margin-top: 4px; font-size: 1.04rem;">—</div>
+                <div class="stat-tile-sub" id="last-match-meta" style="margin-top: 3px;">—</div>
             </div>
 
             <div class="card">
@@ -1077,7 +1086,7 @@
                         <input type="text" id="new-player-name" placeholder="napr. Marcel / Šulo">
                     </div>
                     <div class="form-group">
-                        <label for="new-player-elo">Počiatočné ELO (default 1500)</label>
+                        <label for="new-player-elo">Počiatočné ELO</label>
                         <input type="number" id="new-player-elo" value="1500" step="0.1">
                     </div>
                 </div>
@@ -1391,7 +1400,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie (ELO4MASTER v1.05)
+                        Aktívny režim histórie (ELO4MASTER v1.07)
                     </div>
                     <span class="param-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2182,85 +2191,67 @@
 
         function getCrestSvg(type, theme) {
             const palettes = {
-                gold:   { bg1: "#451a03", bg2: "#090e1a", stroke: "#f59e0b", fg: "#fbbf24" },
-                lime:   { bg1: "#1a2e05", bg2: "#090e1a", stroke: "#a3e635", fg: "#bef264" },
-                blue:   { bg1: "#082f49", bg2: "#090e1a", stroke: "#38bdf8", fg: "#7dd3fc" },
-                crimson:{ bg1: "#450a0a", bg2: "#090e1a", stroke: "#ef4444", fg: "#f87171" },
-                purple: { bg1: "#3b0764", bg2: "#090e1a", stroke: "#e879f9", fg: "#f0abfc" }
+                gold:   { bg1: "#451a03", bg2: "#090e1a", border: "#f59e0b", fg: "#fbbf24" },
+                lime:   { bg1: "#1a2e05", bg2: "#090e1a", border: "#a3e635", fg: "#bef264" },
+                blue:   { bg1: "#082f49", bg2: "#090e1a", border: "#38bdf8", fg: "#7dd3fc" },
+                crimson:{ bg1: "#450a0a", bg2: "#090e1a", border: "#ef4444", fg: "#f87171" },
+                purple: { bg1: "#3b0764", bg2: "#090e1a", border: "#e879f9", fg: "#f0abfc" }
             };
             const pal = palettes[theme] || palettes.gold;
-            const gradId = `crest_${type}_${theme}`;
 
-            let innerGlyph = "";
-            switch (type) {
-                case "flame_crown":
-                    innerGlyph = `<path d="M20 39h24M21 34l3-9 8 5 8-5 3 9H21Z" stroke="${pal.fg}" stroke-width="2.3" stroke-linejoin="round" fill="none"/><path d="M32 15c2.5 3.5 4 5.8 4 8.2a4 4 0 1 1-8 0c0-2.4 1.5-4.7 4-8.2Z" fill="${pal.fg}"/>`;
-                    break;
-                case "bolt_target":
-                    innerGlyph = `<circle cx="32" cy="32" r="13" stroke="${pal.fg}" stroke-width="2" stroke-dasharray="3 2" fill="none"/><polygon points="34,17 23,33 31,33 29,47 41,30 33,30" fill="${pal.fg}"/>`;
-                    break;
-                case "anchor_down":
-                    innerGlyph = `<circle cx="32" cy="21" r="3" stroke="${pal.fg}" stroke-width="2.2" fill="none"/><line x1="32" y1="24" x2="32" y2="44" stroke="${pal.fg}" stroke-width="2.4"/><line x1="25" y1="28" x2="39" y2="28" stroke="${pal.fg}" stroke-width="2.2"/><path d="M21 36c0 6 5 9 11 9s11-3 11-9" stroke="${pal.fg}" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
-                    break;
-                case "knight_shield":
-                    innerGlyph = `<path d="M32 17l12 4.5v9.5c0 8-5.2 13.5-12 16-6.8-2.5-12-8-12-16v-9.5L32 17Z" stroke="${pal.fg}" stroke-width="2.3" fill="none"/><polyline points="26.5,32 30.5,36 38,27.5" stroke="${pal.fg}" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
-                    break;
-                case "chef_zero":
-                    innerGlyph = `<path d="M23 31c-2.5 0-4.5-2-4.5-4.5S20.5 22 23 22c.8-3 3.5-5 6.8-5 2.7 0 5.1 1.4 6.2 3.7.7-.4 1.5-.7 2.5-.7 2.5 0 4.5 2 4.5 4.5S41 29 38.5 29" stroke="${pal.fg}" stroke-width="2.1" fill="none" stroke-linecap="round"/><rect x="23" y="31" width="18" height="12" rx="2" stroke="${pal.fg}" stroke-width="2.1" fill="none"/><circle cx="32" cy="37" r="3.2" stroke="${pal.fg}" stroke-width="2" fill="none"/>`;
-                    break;
-                case "sliced_bagel":
-                    innerGlyph = `<circle cx="32" cy="32" r="12.5" stroke="${pal.fg}" stroke-width="2.4" fill="none"/><circle cx="32" cy="32" r="4.2" stroke="${pal.fg}" stroke-width="2" fill="none"/><line x1="18" y1="29" x2="46" y2="35" stroke="${pal.fg}" stroke-width="2.2" stroke-linecap="round"/>`;
-                    break;
-                case "ecg_pulse":
-                    innerGlyph = `<polyline points="17,33 24,33 27.5,22 32.5,43 36.5,28 39.5,33 47,33" stroke="${pal.fg}" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
-                    break;
-                case "crossed_swords":
-                    innerGlyph = `<line x1="20" y1="44" x2="43" y2="21" stroke="${pal.fg}" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="21" x2="43" y2="44" stroke="${pal.fg}" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="36" x2="28" y2="42" stroke="${pal.fg}" stroke-width="2.3"/><line x1="36" y1="42" x2="42" y2="36" stroke="${pal.fg}" stroke-width="2.3"/>`;
-                    break;
-                case "sniper_cross":
-                    innerGlyph = `<circle cx="32" cy="32" r="11" stroke="${pal.fg}" stroke-width="2.2" fill="none"/><circle cx="32" cy="32" r="2.5" fill="${pal.fg}"/><line x1="32" y1="16" x2="32" y2="23" stroke="${pal.fg}" stroke-width="2.2"/><line x1="32" y1="41" x2="32" y2="48" stroke="${pal.fg}" stroke-width="2.2"/><line x1="16" y1="32" x2="23" y2="32" stroke="${pal.fg}" stroke-width="2.2"/><line x1="41" y1="32" x2="48" y2="32" stroke="${pal.fg}" stroke-width="2.2"/>`;
-                    break;
-                case "mountain_flag":
-                    innerGlyph = `<polygon points="18,44 29,24 37,37 41,31 47,44" stroke="${pal.fg}" stroke-width="2.2" stroke-linejoin="round" fill="none"/><line x1="29" y1="16" x2="29" y2="24" stroke="${pal.fg}" stroke-width="2.2"/><polygon points="29,16 37,19 29,22" fill="${pal.fg}"/>`;
-                    break;
-                case "giant_slayer":
-                    innerGlyph = `<path d="M21 29l4-8 7 5 7-5 4 8H21Z" stroke="${pal.fg}" stroke-width="2.2" fill="none" stroke-linejoin="round"/><line x1="32" y1="46" x2="32" y2="21" stroke="${pal.fg}" stroke-width="2.5" stroke-linecap="round"/><polyline points="27,26 32,20 37,26" stroke="${pal.fg}" stroke-width="2.4" fill="none"/>`;
-                    break;
-                case "hourglass_iron":
-                    innerGlyph = `<path d="M23 19h18M23 45h18M25 19c0 7 7 9 7 13s-7 6-7 13M39 19c0 7-7 9-7 13s7 6 7 13" stroke="${pal.fg}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
-                    break;
-                case "balance_scales":
-                    innerGlyph = `<line x1="32" y1="18" x2="32" y2="45" stroke="${pal.fg}" stroke-width="2.3"/><line x1="21" y1="24" x2="43" y2="24" stroke="${pal.fg}" stroke-width="2.2"/><polygon points="21,25 17,34 25,34" stroke="${pal.fg}" stroke-width="1.9" fill="none"/><polygon points="43,25 39,34 47,34" stroke="${pal.fg}" stroke-width="1.9" fill="none"/><line x1="26" y1="45" x2="38" y2="45" stroke="${pal.fg}" stroke-width="2.3"/>`;
-                    break;
-                case "network_nodes":
-                    innerGlyph = `<line x1="32" y1="20" x2="22" y2="39" stroke="${pal.fg}" stroke-width="2.1"/><line x1="32" y1="20" x2="42" y2="39" stroke="${pal.fg}" stroke-width="2.1"/><line x1="22" y1="39" x2="42" y2="39" stroke="${pal.fg}" stroke-width="2.1"/><circle cx="32" cy="20" r="4" fill="${pal.fg}"/><circle cx="22" cy="39" r="4" fill="${pal.fg}"/><circle cx="42" cy="39" r="4" fill="${pal.fg}"/>`;
-                    break;
-                case "duo_racquets":
-                    innerGlyph = `<ellipse cx="26" cy="25" rx="6" ry="8" transform="rotate(-30 26 25)" stroke="${pal.fg}" stroke-width="2.2" fill="none"/><line x1="30" y1="31" x2="41" y2="45" stroke="${pal.fg}" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="38" cy="25" rx="6" ry="8" transform="rotate(30 38 25)" stroke="${pal.fg}" stroke-width="2.2" fill="none"/><line x1="34" y1="31" x2="23" y2="45" stroke="${pal.fg}" stroke-width="2.4" stroke-linecap="round"/>`;
-                    break;
-                case "steamroller":
-                    innerGlyph = `<rect x="19" y="24" width="26" height="12" rx="6" stroke="${pal.fg}" stroke-width="2.3" fill="none"/><circle cx="25" cy="30" r="2.2" fill="${pal.fg}"/><circle cx="39" cy="30" r="2.2" fill="${pal.fg}"/><line x1="16" y1="42" x2="48" y2="42" stroke="${pal.fg}" stroke-width="2.5" stroke-linecap="round"/>`;
-                    break;
-                case "marathon_fire":
-                    innerGlyph = `<circle cx="32" cy="33" r="12" stroke="${pal.fg}" stroke-width="2.2" fill="none"/><polyline points="32,26 32,33 37,36" stroke="${pal.fg}" stroke-width="2.3" stroke-linecap="round" fill="none"/><line x1="28" y1="17" x2="36" y2="17" stroke="${pal.fg}" stroke-width="2.3" stroke-linecap="round"/>`;
-                    break;
-                case "chain_links":
-                    innerGlyph = `<rect x="18" y="25" width="16" height="10" rx="5" stroke="${pal.fg}" stroke-width="2.3" fill="none"/><rect x="30" y="29" width="16" height="10" rx="5" stroke="${pal.fg}" stroke-width="2.3" fill="none"/>`;
-                    break;
-            }
+            const iconMap = {
+                flame_crown:    "fa-solid fa-crown",
+                bolt_target:    "fa-solid fa-bolt",
+                anchor_down:    "fa-solid fa-anchor",
+                knight_shield:  "fa-solid fa-shield-halved",
+                chef_zero:      "fa-solid fa-utensils",
+                sliced_bagel:   "fa-solid fa-dove",
+                ecg_pulse:      "fa-solid fa-heart-pulse",
+                crossed_swords: "fa-solid fa-Robot",
+                sniper_cross:   "fa-solid fa-crosshairs",
+                mountain_flag:  "fa-solid fa-mountain-sun",
+                giant_slayer:   "fa-solid fa-hammer",
+                hourglass_iron: "fa-solid fa-hourglass-half",
+                balance_scales: "fa-solid fa-scale-balanced",
+                network_nodes:  "fa-solid fa-Masks-theater",
+                duo_racquets:   "fa-solid fa-people-group",
+                steamroller:    "fa-solid fa-truck-monster",
+                marathon_fire:  "fa-solid fa-stopwatch",
+                chain_links:    "fa-solid fa-link"
+            };
+
+            // Clean lowercase FA6 Free solid icons
+            const cleanIcons = {
+                flame_crown:    "fa-solid fa-crown",
+                bolt_target:    "fa-solid fa-bolt",
+                anchor_down:    "fa-solid fa-anchor",
+                knight_shield:  "fa-solid fa-shield-halved",
+                chef_zero:      "fa-solid fa-broom",
+                sliced_bagel:   "fa-solid fa-crow",
+                ecg_pulse:      "fa-solid fa-heart-pulse",
+                crossed_swords: "fa-solid fa-dumbbell",
+                sniper_cross:   "fa-solid fa-crosshairs",
+                mountain_flag:  "fa-solid fa-mountain",
+                giant_slayer:   "fa-solid fa-angles-up",
+                hourglass_iron: "fa-solid fa-hourglass-half",
+                balance_scales: "fa-solid fa-scale-balanced",
+                network_nodes:  "fa-solid fa-diagram-project",
+                duo_racquets:   "fa-solid fa-handshake-simple",
+                steamroller:    "fa-solid fa-Road-spikes",
+                marathon_fire:  "fa-solid fa-stopwatch",
+                chain_links:    "fa-solid fa-link"
+            };
+            cleanIcons.steamroller = "fa-solid fa-Explosion";
+            cleanIcons.steamroller = "fa-solid fa-burst";
+
+            const faClass = cleanIcons[type] || "fa-solid fa-trophy";
 
             return `
-                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="${gradId}" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="${pal.bg1}"/>
-                            <stop offset="100%" stop-color="${pal.bg2}"/>
-                        </linearGradient>
-                    </defs>
-                    <polygon points="32,3 57,17.5 57,46.5 32,61 7,46.5 7,17.5" fill="url(#${gradId})" stroke="${pal.stroke}" stroke-width="2.6"/>
-                    <polygon points="32,8 52.5,20 52.5,44 32,56 11.5,44 11.5,20" fill="none" stroke="${pal.stroke}" stroke-opacity="0.28" stroke-width="1.2"/>
-                    ${innerGlyph}
-                </svg>
+                <div class="hex-outer" style="background: ${pal.border};">
+                    <div class="hex-inner" style="background: linear-gradient(145deg, ${pal.bg1}, ${pal.bg2});">
+                        <i class="${faClass}" style="color: ${pal.fg};" aria-hidden="true"></i>
+                    </div>
+                </div>
             `;
         }
 
@@ -2690,20 +2681,25 @@
         }
 
         function renderLeaderboard() {
-            document.getElementById("sum-mode-badge").textContent = "Prepočet od 1500 ELO";
-            document.getElementById("sum-matches-count").textContent = computedMatches.length;
+            const lmLabel = document.getElementById("last-match-label");
+            const lmResult = document.getElementById("last-match-result");
+            const lmMeta = document.getElementById("last-match-meta");
+
+            if (computedMatches.length > 0) {
+                const lastM = computedMatches[computedMatches.length - 1];
+                const gemsText = lastM.gems ? ` (${lastM.gems})` : "";
+                const signA = lastM.deltaA >= 0 ? `+${lastM.deltaA.toFixed(1)}` : lastM.deltaA.toFixed(1);
+                const signB = lastM.deltaB >= 0 ? `+${lastM.deltaB.toFixed(1)}` : lastM.deltaB.toFixed(1);
+                lmLabel.textContent = `Posledný odohratý zápas (#${lastM.index}) · ${lastM.date}`;
+                lmResult.innerHTML = `${lastM.teamNameA} <span style="color:var(--text-muted); font-weight:500;">vs</span> ${lastM.teamNameB} <span class="match-score-pill" style="font-size:0.92rem;">${lastM.sets1}:${lastM.sets2}</span> <span style="color:var(--text-muted); font-weight:600; font-size:0.88rem;">${gemsText}</span>`;
+                lmMeta.textContent = `Posun ELO: ${lastM.teamNameA} (${signA}) · ${lastM.teamNameB} (${signB})`;
+            } else {
+                lmLabel.textContent = "Posledný odohratý zápas";
+                lmResult.textContent = "Zatiaľ žiadny odohratý zápas";
+                lmMeta.textContent = "Pridaj prvý zápas v sekcii Zápas & Kurt";
+            }
 
             if (state.leaderboardMode === "players") {
-                if (computedPlayers.length > 0) {
-                    document.getElementById("sum-leader-label").textContent = "Líder jednotlivcov";
-                    document.getElementById("sum-leader-name").textContent = computedPlayers[0].name;
-                    document.getElementById("sum-leader-elo").textContent = `${computedPlayers[0].elo.toFixed(1)} ELO`;
-                }
-                document.getElementById("sum-count-label").textContent = "Deblistov v DB";
-                document.getElementById("sum-players-count").textContent = computedPlayers.length;
-                const totalStarts = computedPlayers.reduce((acc, p) => acc + p.matches, 0);
-                document.getElementById("sum-total-starts").textContent = `Spolu ${totalStarts} štartov`;
-
                 const tbody = document.querySelector("#leaderboard-table tbody");
                 tbody.innerHTML = "";
 
@@ -2755,14 +2751,6 @@
                 });
             } else {
                 // Rebríček pevných dvojíc
-                if (computedPairs.length > 0) {
-                    document.getElementById("sum-leader-label").textContent = "Líder dvojíc";
-                    document.getElementById("sum-leader-name").textContent = computedPairs[0].name;
-                    document.getElementById("sum-leader-elo").textContent = `${computedPairs[0].elo.toFixed(1)} ELO`;
-                }
-                document.getElementById("sum-count-label").textContent = "Unikátnych párov";
-                document.getElementById("sum-players-count").textContent = computedPairs.length;
-
                 const tbody = document.querySelector("#pairs-leaderboard-table tbody");
                 tbody.innerHTML = "";
 
@@ -3947,7 +3935,7 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
             const a = document.createElement("a");
             a.href = dataStr;
-            a.download = `ELO4MASTER_v1.05_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            a.download = `ELO4MASTER_v1.07_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             a.click();
         }
 
@@ -3994,7 +3982,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `ELO4MASTER_v1.05_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
+            a.download = `ELO4MASTER_v1.07_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
             a.click();
         }
 
@@ -4176,7 +4164,7 @@
             const canvas = document.getElementById("tvCanvas");
             const a = document.createElement("a");
             a.href = canvas.toDataURL("image/png");
-            a.download = `ELO4MASTER_v1.05_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            a.download = `ELO4MASTER_v1.07_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
             a.click();
         }
 
