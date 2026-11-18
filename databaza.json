@@ -1,0 +1,354 @@
+{
+  "config": {
+    "K": 32,
+    "D": 200,
+    "calcFrom1500": true
+  },
+  "players": [
+    {
+      "id": "vlado",
+      "name": "Vlado",
+      "color": "#f97316"
+    },
+    {
+      "id": "tibor",
+      "name": "Tibor",
+      "color": "#c084fc"
+    },
+    {
+      "id": "belo",
+      "name": "Belo",
+      "color": "#facc15"
+    },
+    {
+      "id": "martin",
+      "name": "Martin",
+      "color": "#2dd4bf"
+    },
+    {
+      "id": "adam",
+      "name": "Adam",
+      "color": "#fb7185"
+    },
+    {
+      "id": "uher",
+      "name": "Uher",
+      "color": "#60a5fa"
+    },
+    {
+      "id": "igor",
+      "name": "Igor",
+      "color": "#e879f9"
+    },
+    {
+      "id": "matus",
+      "name": "Matúš",
+      "color": "#fbbf24"
+    },
+    {
+      "id": "tono",
+      "name": "Toňo",
+      "color": "#38bdf8"
+    },
+    {
+      "id": "cicero",
+      "name": "Cicero",
+      "color": "#34d399"
+    },
+    {
+      "id": "peto",
+      "name": "Peťo",
+      "color": "#a3e635"
+    },
+    {
+      "id": "majo",
+      "name": "Majo",
+      "color": "#f43f5e"
+    }
+  ],
+  "matches": [
+    {
+      "id": "d24_1",
+      "date": "2024-07-06",
+      "t1p1": "tono",
+      "t1p2": "peto",
+      "t2p1": "majo",
+      "t2p2": "tibor",
+      "sets1": 1,
+      "sets2": 1,
+      "gems": "5:7 6:3"
+    },
+    {
+      "id": "d24_2",
+      "date": "2024-08-11",
+      "t1p1": "belo",
+      "t1p2": "tono",
+      "t2p1": "majo",
+      "t2p2": "peto",
+      "sets1": 2,
+      "sets2": 0,
+      "gems": "6:2 6:3"
+    },
+    {
+      "id": "d24_3",
+      "date": "2024-08-18",
+      "t1p1": "belo",
+      "t1p2": "tono",
+      "t2p1": "majo",
+      "t2p2": "peto",
+      "sets1": 1,
+      "sets2": 1,
+      "gems": "2:6 6:4"
+    },
+    {
+      "id": "d24_4",
+      "date": "2024-08-25",
+      "t1p1": "belo",
+      "t1p2": "matus",
+      "t2p1": "majo",
+      "t2p2": "peto",
+      "sets1": 1,
+      "sets2": 1,
+      "gems": "1:6 6:4"
+    },
+    {
+      "id": "d24_5",
+      "date": "2024-09-01",
+      "t1p1": "belo",
+      "t1p2": "tibor",
+      "t2p1": "majo",
+      "t2p2": "peto",
+      "sets1": 2,
+      "sets2": 0,
+      "gems": "6:4 6:2"
+    },
+    {
+      "id": "d24_6",
+      "date": "2024-09-07",
+      "t1p1": "uher",
+      "t1p2": "belo",
+      "t2p1": "tono",
+      "t2p2": "cicero",
+      "sets1": 2,
+      "sets2": 0,
+      "gems": "6:4 6:2"
+    },
+    {
+      "id": "d24_7",
+      "date": "2024-09-07",
+      "t1p1": "belo",
+      "t1p2": "peto",
+      "t2p1": "cicero",
+      "t2p2": "tono",
+      "sets1": 2,
+      "sets2": 0,
+      "gems": "6:4 6:3"
+    },
+    {
+      "id": "d24_8",
+      "date": "2024-10-26",
+      "t1p1": "belo",
+      "t1p2": "majo",
+      "t2p1": "tono",
+      "t2p2": "cicero",
+      "sets1": 1,
+      "sets2": 1,
+      "gems": "1:6 6:3"
+    },
+    {
+      "id": "d24_9",
+      "date": "2024-11-02",
+      "t1p1": "belo",
+      "t1p2": "tono",
+      "t2p1": "majo",
+      "t2p2": "peto",
+      "sets1": 3,
+      "sets2": 0,
+      "gems": "6:2 6:3 6:3"
+    },
+    {
+      "id": "d24_10",
+      "date": "2024-11-09",
+      "t1p1": "belo",
+      "t1p2": "tono",
+      "t2p1": "majo",
+      "t2p2": "peto",
+      "sets1": 2,
+      "sets2": 0,
+      "gems": "7:5 6:0"
+    },
+    {
+      "id": "d24_11",
+      "date": "2024-11-23",
+      "t1p1": "belo",
+      "t1p2": "tono",
+      "t2p1": "majo",
+      "t2p2": "peto",
+      "sets1": 3,
+      "sets2": 0,
+      "gems": "6:3 6:4 6:1"
+    },
+    {
+      "id": "d24_12",
+      "date": "2025-01-05",
+      "t1p1": "belo",
+      "t1p2": "majo",
+      "t2p1": "peto",
+      "t2p2": "vlado",
+      "sets1": 0,
+      "sets2": 2,
+      "gems": "1:6 1:6"
+    },
+    {
+      "id": "d24_13",
+      "date": "2025-01-11",
+      "t1p1": "belo",
+      "t1p2": "majo",
+      "t2p1": "tono",
+      "t2p2": "tibor",
+      "sets1": 1,
+      "sets2": 1,
+      "gems": "6:3 4:6"
+    },
+    {
+      "id": "d24_14",
+      "date": "2025-01-26",
+      "t1p1": "belo",
+      "t1p2": "tibor",
+      "t2p1": "peto",
+      "t2p2": "vlado",
+      "sets1": 0,
+      "sets2": 3,
+      "gems": "4:6 3:6 3:6"
+    },
+    {
+      "id": "d24_15",
+      "date": "2025-02-08",
+      "t1p1": "majo",
+      "t1p2": "martin",
+      "t2p1": "belo",
+      "t2p2": "peto",
+      "sets1": 3,
+      "sets2": 0,
+      "gems": "6:1 6:1 6:1"
+    },
+    {
+      "id": "d24_16",
+      "date": "2025-05-17",
+      "t1p1": "belo",
+      "t1p2": "tibor",
+      "t2p1": "vlado",
+      "t2p2": "majo",
+      "sets1": 0,
+      "sets2": 3,
+      "gems": "2:6 5:7 5:7"
+    },
+    {
+      "id": "d24_17",
+      "date": "2025-05-24",
+      "t1p1": "belo",
+      "t1p2": "cicero",
+      "t2p1": "peto",
+      "t2p2": "majo",
+      "sets1": 2,
+      "sets2": 1,
+      "gems": "4:6 7:5 7:6"
+    },
+    {
+      "id": "d24_18",
+      "date": "2025-06-07",
+      "t1p1": "belo",
+      "t1p2": "tibor",
+      "t2p1": "tono",
+      "t2p2": "majo",
+      "sets1": 3,
+      "sets2": 0,
+      "gems": "6:3 6:1 6:3"
+    },
+    {
+      "id": "d24_19",
+      "date": "2025-11-09",
+      "t1p1": "vlado",
+      "t1p2": "tibor",
+      "t2p1": "belo",
+      "t2p2": "tono",
+      "sets1": 3,
+      "sets2": 0,
+      "gems": "6:0 6:3 6:1"
+    },
+    {
+      "id": "d24_20",
+      "date": "2025-11-23",
+      "t1p1": "vlado",
+      "t1p2": "tibor",
+      "t2p1": "belo",
+      "t2p2": "igor",
+      "sets1": 1,
+      "sets2": 1,
+      "gems": "7:6 3:6"
+    },
+    {
+      "id": "d24_21",
+      "date": "2025-11-30",
+      "t1p1": "vlado",
+      "t1p2": "tibor",
+      "t2p1": "belo",
+      "t2p2": "tono",
+      "sets1": 1,
+      "sets2": 1,
+      "gems": "6:4 6:7"
+    },
+    {
+      "id": "d24_22",
+      "date": "2025-12-28",
+      "t1p1": "vlado",
+      "t1p2": "majo",
+      "t2p1": "belo",
+      "t2p2": "tibor",
+      "sets1": 1,
+      "sets2": 1,
+      "gems": "7:5 4:6"
+    },
+    {
+      "id": "d24_23",
+      "date": "2026-05-16",
+      "t1p1": "vlado",
+      "t1p2": "majo",
+      "t2p1": "tibor",
+      "t2p2": "belo",
+      "sets1": 0,
+      "sets2": 3,
+      "gems": "3:6 4:6 6:7"
+    },
+    {
+      "id": "d24_24",
+      "date": "2026-09-15",
+      "t1p1": "tibor",
+      "t1p2": "adam",
+      "t2p1": "belo",
+      "t2p2": "peto",
+      "sets1": 3,
+      "sets2": 0,
+      "gems": "6:2 6:2 6:1"
+    }
+  ],
+  "chartVisiblePlayers": {
+    "vlado": true,
+    "tibor": true,
+    "belo": true,
+    "martin": true,
+    "adam": true,
+    "uher": true,
+    "igor": true,
+    "matus": true,
+    "tono": true,
+    "cicero": true,
+    "peto": true,
+    "majo": true
+  },
+  "h2hMode": "teams",
+  "leaderboardMode": "players",
+  "tvMode": "players",
+  "updatedAt": 1794988300643,
+  "exportedAtIso": "2026-11-18T07:51:40.643Z"
+}
