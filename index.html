@@ -499,6 +499,75 @@
             background: rgba(255, 255, 255, 0.10);
         }
 
+        table.elo-table tbody tr.row-inactive {
+            color: rgba(185, 198, 195, 0.56);
+        }
+
+        table.elo-table tbody tr.row-inactive td,
+        table.elo-table tbody tr.row-inactive td strong,
+        table.elo-table tbody tr.row-inactive .elo-pill,
+        table.elo-table tbody tr.row-inactive .delta-tag {
+            color: rgba(185, 198, 195, 0.56) !important;
+            text-shadow: none;
+        }
+
+        table.elo-table tbody tr.row-inactive .rank-badge {
+            background: rgba(160, 174, 172, 0.20) !important;
+            color: rgba(205, 215, 213, 0.65) !important;
+            box-shadow: none !important;
+        }
+
+        table.elo-table tbody tr.row-inactive .player-color-dot,
+        table.elo-table tbody tr.row-inactive .form-dots {
+            filter: grayscale(100%);
+            opacity: 0.48;
+        }
+
+        table.elo-table tbody tr.row-inactive:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .status-ico {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.86rem;
+            line-height: 1;
+            margin-left: 3px;
+            cursor: help;
+            vertical-align: middle;
+        }
+
+        .status-ico-fire {
+            filter: drop-shadow(0 0 5px rgba(251, 146, 60, 0.65));
+        }
+
+        .status-ico-cold {
+            filter: drop-shadow(0 0 5px rgba(125, 211, 252, 0.65));
+        }
+
+        .status-ico-inactive {
+            font-size: 0.68rem;
+            opacity: 0.88;
+        }
+
+        .table-status-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            margin-top: 10px;
+            padding-top: 9px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .table-status-legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
         .rank-badge {
             display: inline-flex;
             align-items: center;
@@ -609,6 +678,12 @@
         input:focus, select:focus {
             border-color: rgba(255, 255, 255, 0.65);
             box-shadow: 0 0 0 2px rgba(136, 0, 0, 0.35);
+        }
+
+        input.auto-filled-flash {
+            border-color: var(--tennis-lime) !important;
+            box-shadow: 0 0 0 2px rgba(190, 242, 100, 0.38) !important;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
         .grid-2 {
@@ -1245,6 +1320,129 @@
             margin-bottom: 12px;
         }
 
+        .tv-controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .tv-ctrl-card {
+            background: rgba(0, 28, 24, 0.50);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 12px;
+            padding: 9px 11px;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14);
+        }
+
+        .tv-ctrl-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-bottom: 7px;
+        }
+
+        .tv-ctrl-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tv-ctrl-steppers {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tv-step-btn {
+            width: 26px;
+            height: 24px;
+            border-radius: 7px;
+            border: 1px solid var(--btn-glass-border);
+            background: var(--btn-glass-bg);
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            line-height: 1;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s, transform 0.1s;
+        }
+
+        .tv-step-btn:hover {
+            background: var(--btn-glass-hover);
+        }
+
+        .tv-step-btn:active {
+            transform: scale(0.94);
+        }
+
+        .tv-pct-badge {
+            min-width: 42px;
+            text-align: center;
+            font-size: 0.76rem;
+            font-weight: 800;
+            color: var(--tennis-lime);
+            background: rgba(0, 18, 16, 0.55);
+            border: 1px solid rgba(190, 242, 100, 0.35);
+            border-radius: 7px;
+            padding: 2px 6px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tv-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            padding: 0;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.22);
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .tv-range:focus {
+            box-shadow: none;
+        }
+
+        .tv-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--tennis-lime);
+            border: 2px solid #052e16;
+            box-shadow: 0 0 8px rgba(190, 242, 100, 0.55);
+            cursor: pointer;
+        }
+
+        .tv-range::-moz-range-thumb {
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--tennis-lime);
+            border: 2px solid #052e16;
+            box-shadow: 0 0 8px rgba(190, 242, 100, 0.55);
+            cursor: pointer;
+        }
+
+        @media (max-width: 540px) {
+            .tv-controls-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+        }
+
 
         /* PC KONTEXTOVÉ OKNÁ (POPOVERS / TOOLTIPS) PRE TLAČIDLÁ ZÁLOH V KARTE HISTÓRIA */
         .ctx-btn-wrap {
@@ -1378,7 +1576,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.16</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.17</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -1457,6 +1655,11 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+                </div>
+                <div class="table-status-legend">
+                    <span>🔥 3+ výhier v rade</span>
+                    <span>❄️ 3+ prehier v rade</span>
+                    <span>⚫ Neaktívny (1+ rok bez zápasu)</span>
                 </div>
             </div>
 
@@ -1580,8 +1783,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="match-gems">Presný stav na gemy (voliteľné, napr. 6:4 6:2)</label>
-                    <input type="text" id="match-gems" placeholder="napr. 6:4 6:2 alebo 4:6 7:5 7:6">
+                    <label for="match-gems">Presný stav na gemy (voliteľné · automaticky doplní sety)</label>
+                    <input type="text" id="match-gems" placeholder="napr. 6:4 6:2 alebo 4:6 7:5 7:6" oninput="autoCalcSetsFromGems('match-gems', 'sets-t1', 'sets-t2', true)">
                 </div>
 
                 <!-- ŽIVÝ NÁHĽAD PREPOČTU PRED ULOŽENÍM -->
@@ -1787,7 +1990,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.16)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.17)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -1814,8 +2017,8 @@
                         <input type="date" id="hist-date">
                     </div>
                     <div class="form-group">
-                        <label for="hist-gems">Gemy (voliteľné)</label>
-                        <input type="text" id="hist-gems" placeholder="napr. 6:4 6:3">
+                        <label for="hist-gems">Gemy (auto doplní sety)</label>
+                        <input type="text" id="hist-gems" placeholder="napr. 6:4 6:3" oninput="autoCalcSetsFromGems('hist-gems', 'hist-sets1', 'hist-sets2', false)">
                     </div>
                 </div>
 
@@ -1926,7 +2129,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.16_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.17_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -2015,8 +2218,8 @@
                     <input type="date" id="edit-date">
                 </div>
                 <div class="form-group">
-                    <label for="edit-gems">Presné gemy</label>
-                    <input type="text" id="edit-gems" placeholder="napr. 6:4 6:2">
+                    <label for="edit-gems">Presné gemy (auto doplní sety)</label>
+                    <input type="text" id="edit-gems" placeholder="napr. 6:4 6:2" oninput="autoCalcSetsFromGems('edit-gems', 'edit-sets1', 'edit-sets2', false)">
                 </div>
             </div>
             <div class="team-select-box" style="margin-bottom:8px;">
@@ -2078,6 +2281,30 @@
                 </div>
             </div>
             <canvas id="tvCanvas" width="1920" height="1080"></canvas>
+            <div class="tv-controls-grid">
+                <div class="tv-ctrl-card">
+                    <div class="tv-ctrl-top">
+                        <span class="tv-ctrl-label">Blur pod tabuľkou</span>
+                        <div class="tv-ctrl-steppers">
+                            <button type="button" class="tv-step-btn" onclick="stepTvBlur(-10)" title="Znížiť blur o 10 %">−</button>
+                            <span class="tv-pct-badge" id="tv-blur-val" onclick="setTvBlur(50)" title="Kliknutím obnovíš predvolených 50 %">50%</span>
+                            <button type="button" class="tv-step-btn" onclick="stepTvBlur(10)" title="Zvýšiť blur o 10 %">+</button>
+                        </div>
+                    </div>
+                    <input type="range" id="tv-blur-slider" class="tv-range" min="0" max="100" step="1" value="50" oninput="setTvBlur(this.value)">
+                </div>
+                <div class="tv-ctrl-card">
+                    <div class="tv-ctrl-top">
+                        <span class="tv-ctrl-label">Priehľadnosť pod tabuľkou</span>
+                        <div class="tv-ctrl-steppers">
+                            <button type="button" class="tv-step-btn" onclick="stepTvTransparency(-10)" title="Znížiť priehľadnosť o 10 %">−</button>
+                            <span class="tv-pct-badge" id="tv-transp-val" onclick="setTvTransparency(40)" title="Kliknutím obnovíš predvolených 40 %">40%</span>
+                            <button type="button" class="tv-step-btn" onclick="stepTvTransparency(10)" title="Zvýšiť priehľadnosť o 10 %">+</button>
+                        </div>
+                    </div>
+                    <input type="range" id="tv-transp-slider" class="tv-range" min="0" max="100" step="1" value="40" oninput="setTvTransparency(this.value)">
+                </div>
+            </div>
             <div class="grid-2">
                 <button class="btn btn-primary" onclick="downloadTvGraphic()">Stiahnuť PNG grafiku (HD)</button>
                 <button class="btn btn-secondary" onclick="closeTvModal()">Späť do aplikácie</button>
@@ -2379,6 +2606,7 @@
             setH2HMode(state.h2hMode, true);
             refreshAllViews();
             setupCanvasEvents();
+            loadTvSettings();
             ensureTvBackgroundLoaded();
 
             document.addEventListener("keydown", e => {
@@ -2461,6 +2689,43 @@
             return sets;
         }
 
+        function autoCalcSetsFromGems(gemsInputId, sets1InputId, sets2InputId, triggerPreview = false) {
+            const gemsEl = document.getElementById(gemsInputId);
+            const s1El = document.getElementById(sets1InputId);
+            const s2El = document.getElementById(sets2InputId);
+            if (!gemsEl || !s1El || !s2El) return;
+
+            const parsedSets = parseSetsFromGemsString(gemsEl.value);
+            if (parsedSets.length === 0) return;
+
+            let s1 = 0;
+            let s2 = 0;
+            parsedSets.forEach(st => {
+                if (st.g1 > st.g2) s1++;
+                else if (st.g2 > st.g1) s2++;
+            });
+
+            if (s1 === 0 && s2 === 0) return;
+
+            const changed = String(s1El.value) !== String(s1) || String(s2El.value) !== String(s2);
+            s1El.value = s1;
+            s2El.value = s2;
+
+            if (changed) {
+                [s1El, s2El].forEach(el => {
+                    el.classList.remove("auto-filled-flash");
+                    void el.offsetWidth;
+                    el.classList.add("auto-filled-flash");
+                    clearTimeout(el._flashTimer);
+                    el._flashTimer = setTimeout(() => el.classList.remove("auto-filled-flash"), 550);
+                });
+            }
+
+            if (triggerPreview) {
+                updateMatchPreview();
+            }
+        }
+
         function parseGemsString(gemsStr) {
             let g1 = 0, g2 = 0;
             const sets = parseSetsFromGemsString(gemsStr);
@@ -2525,7 +2790,10 @@
                     tbPlayed: 0,
                     maxSingleGain: 0,
                     maxSingleGainMatch: null,
-                    partnersSet: new Set()
+                    partnersSet: new Set(),
+                    lastMatchDate: null,
+                    daysSinceLastMatch: null,
+                    isInactive: false
                 };
             });
 
@@ -2549,7 +2817,12 @@
                         setsLost: 0,
                         gemsWon: 0,
                         gemsLost: 0,
-                        form: []
+                        form: [],
+                        curWinStreak: 0,
+                        curLossStreak: 0,
+                        lastMatchDate: null,
+                        daysSinceLastMatch: null,
+                        isInactive: false
                     };
                 }
                 return pairsMap[key];
@@ -2597,11 +2870,19 @@
                 // Tímové ELO dvojice
                 const pairEA = 1 / (1 + Math.pow(10, (pairB.elo - pairA.elo) / D));
 
+                if (m.date) {
+                    [pA1, pA2, pB1, pB2, pairA, pairB].forEach(obj => {
+                        if (!obj.lastMatchDate || m.date > obj.lastMatchDate) obj.lastMatchDate = m.date;
+                    });
+                }
+
                 let sA = 0.5, sB = 0.5;
                 if (Number(m.sets1) > Number(m.sets2)) {
                     sA = 1; sB = 0;
                     pairA.wins++; pairB.losses++;
                     pairA.form.push("W"); pairB.form.push("L");
+                    pairA.curWinStreak++; pairA.curLossStreak = 0;
+                    pairB.curLossStreak++; pairB.curWinStreak = 0;
                     [pA1, pA2].forEach(p => {
                         p.wins++;
                         p.form.push("W");
@@ -2623,6 +2904,8 @@
                     sA = 0; sB = 1;
                     pairB.wins++; pairA.losses++;
                     pairB.form.push("W"); pairA.form.push("L");
+                    pairB.curWinStreak++; pairB.curLossStreak = 0;
+                    pairA.curLossStreak++; pairA.curWinStreak = 0;
                     [pA1, pA2].forEach(p => {
                         p.losses++;
                         p.form.push("L");
@@ -2643,6 +2926,8 @@
                 } else {
                     pairA.draws++; pairB.draws++;
                     pairA.form.push("D"); pairB.form.push("D");
+                    pairA.curWinStreak = 0; pairA.curLossStreak = 0;
+                    pairB.curWinStreak = 0; pairB.curLossStreak = 0;
                     [pA1, pA2, pB1, pB2].forEach(p => {
                         p.draws++;
                         p.form.push("D");
@@ -2784,6 +3069,22 @@
                 });
                 timelinePoints.push(snap);
             });
+
+            const todayMid = new Date();
+            todayMid.setHours(0, 0, 0, 0);
+            const computeInactivity = (obj) => {
+                if (obj.lastMatchDate) {
+                    const dp = String(obj.lastMatchDate).split("-").map(Number);
+                    if (dp.length === 3 && !dp.some(isNaN)) {
+                        const lastDt = new Date(dp[0], dp[1] - 1, dp[2]);
+                        const diffDays = Math.floor((todayMid - lastDt) / (1000 * 60 * 60 * 24));
+                        obj.daysSinceLastMatch = diffDays;
+                        obj.isInactive = diffDays >= 365;
+                    }
+                }
+            };
+            Object.values(pMap).forEach(computeInactivity);
+            Object.values(pairsMap).forEach(computeInactivity);
 
             computedPlayers = Object.values(pMap).map(p => ({
                 ...p,
@@ -3387,14 +3688,27 @@
                         ? `<div class="form-dots">` + last5.map(f => `<span class="form-dot form-${f}">${f === 'W' ? 'V' : (f === 'D' ? 'R' : 'P')}</span>`).join("") + `</div>`
                         : `<span style="color:var(--text-muted); font-size:0.72rem;">—</span>`;
 
+                    let statusIconsHtml = "";
+                    if (p.isInactive) {
+                        const inactiveTitle = `Neaktívny – posledný zápas ${escapeHtml(p.lastMatchDate)} (pred ${p.daysSinceLastMatch} dňami)`;
+                        statusIconsHtml += `<span class="status-ico status-ico-inactive" title="${inactiveTitle}">⚫</span>`;
+                    } else {
+                        if (p.curWinStreak >= 3) {
+                            statusIconsHtml += `<span class="status-ico status-ico-fire" title="Horúca séria: ${p.curWinStreak} výhier v rade">🔥</span>`;
+                        } else if (p.curLossStreak >= 3) {
+                            statusIconsHtml += `<span class="status-ico status-ico-cold" title="Séria prehier: ${p.curLossStreak} prehier v rade">❄️</span>`;
+                        }
+                    }
+
                     const tr = document.createElement("tr");
+                    if (p.isInactive) tr.className = "row-inactive";
                     tr.onclick = () => openPlayerDetail(p.id);
                     tr.innerHTML = `
                         <td><span class="rank-badge ${rankClass}">${rank}</span></td>
                         <td>
-                            <div style="display:flex; align-items:center; gap:7px;">
-                                <span style="width:8px; height:8px; border-radius:50%; background:${p.color}; display:inline-block;"></span>
-                                <strong>${escapeHtml(p.name)}</strong>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span class="player-color-dot" style="width:8px; height:8px; border-radius:50%; background:${p.color}; display:inline-block; flex-shrink:0;"></span>
+                                <strong>${escapeHtml(p.name)}</strong>${statusIconsHtml}
                             </div>
                         </td>
                         <td class="text-right">${deltaHtml}<span class="elo-pill">${p.elo.toFixed(1)}</span></td>
@@ -3429,15 +3743,28 @@
                         ? `<div class="form-dots">` + last5.map(f => `<span class="form-dot form-${f}">${f === 'W' ? 'V' : (f === 'D' ? 'R' : 'P')}</span>`).join("") + `</div>`
                         : `<span style="color:var(--text-muted); font-size:0.72rem;">—</span>`;
 
+                    let pairStatusIconsHtml = "";
+                    if (pr.isInactive) {
+                        const inactiveTitle = `Neaktívna dvojica – posledný zápas ${escapeHtml(pr.lastMatchDate)} (pred ${pr.daysSinceLastMatch} dňami)`;
+                        pairStatusIconsHtml += `<span class="status-ico status-ico-inactive" title="${inactiveTitle}">⚫</span>`;
+                    } else {
+                        if (pr.curWinStreak >= 3) {
+                            pairStatusIconsHtml += `<span class="status-ico status-ico-fire" title="Horúca séria: ${pr.curWinStreak} výhier v rade">🔥</span>`;
+                        } else if (pr.curLossStreak >= 3) {
+                            pairStatusIconsHtml += `<span class="status-ico status-ico-cold" title="Séria prehier: ${pr.curLossStreak} prehier v rade">❄️</span>`;
+                        }
+                    }
+
                     const tr = document.createElement("tr");
+                    if (pr.isInactive) tr.className = "row-inactive";
                     tr.onclick = () => openPlayerDetail(pr.p1Id);
                     tr.innerHTML = `
                         <td><span class="rank-badge ${rankClass}">${rank}</span></td>
                         <td>
                             <div style="display:flex; align-items:center; gap:5px;">
-                                <span style="width:7px; height:7px; border-radius:50%; background:${pr.color1}; display:inline-block;"></span>
-                                <span style="width:7px; height:7px; border-radius:50%; background:${pr.color2}; display:inline-block;"></span>
-                                <strong>${escapeHtml(pr.name)}</strong>
+                                <span class="player-color-dot" style="width:7px; height:7px; border-radius:50%; background:${pr.color1}; display:inline-block; flex-shrink:0;"></span>
+                                <span class="player-color-dot" style="width:7px; height:7px; border-radius:50%; background:${pr.color2}; display:inline-block; flex-shrink:0;"></span>
+                                <strong>${escapeHtml(pr.name)}</strong>${pairStatusIconsHtml}
                             </div>
                         </td>
                         <td class="text-right"><span class="elo-pill">${pr.elo.toFixed(1)}</span></td>
@@ -4599,7 +4926,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.16_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.17_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -4654,12 +4981,87 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.16_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.17_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
+
+        const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
+        let tvBlurPct = 50;
+        let tvTransparencyPct = 40;
+        let tvRenderRaf = null;
 
         let tvBgImage = null;
         let tvBgLoaded = false;
         let tvBgPromise = null;
+
+        function loadTvSettings() {
+            try {
+                const raw = localStorage.getItem(TV_SETTINGS_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (typeof parsed.blurPct === "number" && !isNaN(parsed.blurPct)) {
+                        tvBlurPct = Math.max(0, Math.min(100, Math.round(parsed.blurPct)));
+                    }
+                    if (typeof parsed.transparencyPct === "number" && !isNaN(parsed.transparencyPct)) {
+                        tvTransparencyPct = Math.max(0, Math.min(100, Math.round(parsed.transparencyPct)));
+                    }
+                }
+            } catch (e) {}
+            syncTvControlsUI();
+        }
+
+        function saveTvSettings() {
+            try {
+                localStorage.setItem(TV_SETTINGS_KEY, JSON.stringify({
+                    blurPct: tvBlurPct,
+                    transparencyPct: tvTransparencyPct
+                }));
+            } catch (e) {}
+        }
+
+        function syncTvControlsUI() {
+            const blurSlider = document.getElementById("tv-blur-slider");
+            const blurVal = document.getElementById("tv-blur-val");
+            const transpSlider = document.getElementById("tv-transp-slider");
+            const transpVal = document.getElementById("tv-transp-val");
+            if (blurSlider) blurSlider.value = tvBlurPct;
+            if (blurVal) blurVal.textContent = `${tvBlurPct}%`;
+            if (transpSlider) transpSlider.value = tvTransparencyPct;
+            if (transpVal) transpVal.textContent = `${tvTransparencyPct}%`;
+        }
+
+        function scheduleTvRender() {
+            if (tvRenderRaf) return;
+            tvRenderRaf = requestAnimationFrame(() => {
+                tvRenderRaf = null;
+                if (document.getElementById("tv-modal").classList.contains("open")) {
+                    renderTvCanvas();
+                }
+            });
+        }
+
+        function setTvBlur(val) {
+            const num = Math.max(0, Math.min(100, Math.round(Number(val) || 0)));
+            tvBlurPct = num;
+            syncTvControlsUI();
+            saveTvSettings();
+            scheduleTvRender();
+        }
+
+        function stepTvBlur(delta) {
+            setTvBlur(tvBlurPct + delta);
+        }
+
+        function setTvTransparency(val) {
+            const num = Math.max(0, Math.min(100, Math.round(Number(val) || 0)));
+            tvTransparencyPct = num;
+            syncTvControlsUI();
+            saveTvSettings();
+            scheduleTvRender();
+        }
+
+        function stepTvTransparency(delta) {
+            setTvTransparency(tvTransparencyPct + delta);
+        }
 
         async function ensureTvBackgroundLoaded(callback) {
             if (tvBgLoaded) {
@@ -4790,6 +5192,7 @@
         }
 
         function openTvModal() {
+            syncTvControlsUI();
             document.getElementById("tv-modal").classList.add("open");
             renderTvCanvas();
             ensureTvBackgroundLoaded(() => {
@@ -4820,34 +5223,46 @@
             const panelH = H - 88;  // 992
             const panelRadius = 26;
 
-            // 2. Jemný blur efekt pozadia priamo pod glass panelom
+            // 2. Nastaviteľný blur a priehľadnosť pozadia priamo pod glass panelom
+            const blurPx = Math.round((tvBlurPct / 100) * 28 * 10) / 10;
+            const opacityFactor = Math.max(0, Math.min(1, 1 - tvTransparencyPct / 100));
+
             ctx.save();
             drawRoundedRectPath(ctx, panelX, panelY, panelW, panelH, panelRadius);
             ctx.clip();
-            ctx.filter = "blur(14px)";
-            drawTvBackgroundLayer(ctx, W, H, forceFallbackBg);
-            ctx.filter = "none";
+            if (blurPx > 0) {
+                ctx.filter = `blur(${blurPx}px)`;
+                drawTvBackgroundLayer(ctx, W, H, forceFallbackBg);
+                ctx.filter = "none";
+            }
 
-            // Polopriehľadná sklenená výplň (glassmorphism)
-            const glassGrad = ctx.createLinearGradient(panelX, panelY, panelX + panelW, panelY + panelH);
-            glassGrad.addColorStop(0, "rgba(6, 38, 34, 0.62)");
-            glassGrad.addColorStop(0.5, "rgba(4, 28, 25, 0.54)");
-            glassGrad.addColorStop(1, "rgba(2, 20, 18, 0.66)");
-            ctx.fillStyle = glassGrad;
-            ctx.fillRect(panelX, panelY, panelW, panelH);
+            // Polopriehľadná sklenená výplň (glassmorphism) podľa nastavenej priehľadnosti
+            if (opacityFactor > 0.001) {
+                const a0 = Math.min(1, +(opacityFactor * 1.033).toFixed(3));
+                const a1 = Math.min(1, +(opacityFactor * 0.90).toFixed(3));
+                const a2 = Math.min(1, +(opacityFactor * 1.10).toFixed(3));
+                const glassGrad = ctx.createLinearGradient(panelX, panelY, panelX + panelW, panelY + panelH);
+                glassGrad.addColorStop(0, `rgba(6, 38, 34, ${a0})`);
+                glassGrad.addColorStop(0.5, `rgba(4, 28, 25, ${a1})`);
+                glassGrad.addColorStop(1, `rgba(2, 20, 18, ${a2})`);
+                ctx.fillStyle = glassGrad;
+                ctx.fillRect(panelX, panelY, panelW, panelH);
 
-            // Jemný horný odlesk skla
-            const shineGrad = ctx.createLinearGradient(panelX, panelY, panelX, panelY + 180);
-            shineGrad.addColorStop(0, "rgba(255, 255, 255, 0.14)");
-            shineGrad.addColorStop(1, "rgba(255, 255, 255, 0.0)");
-            ctx.fillStyle = shineGrad;
-            ctx.fillRect(panelX, panelY, panelW, 180);
+                // Jemný horný odlesk skla
+                const shineAlpha = +(0.14 * opacityFactor).toFixed(3);
+                const shineGrad = ctx.createLinearGradient(panelX, panelY, panelX, panelY + 180);
+                shineGrad.addColorStop(0, `rgba(255, 255, 255, ${shineAlpha})`);
+                shineGrad.addColorStop(1, "rgba(255, 255, 255, 0.0)");
+                ctx.fillStyle = shineGrad;
+                ctx.fillRect(panelX, panelY, panelW, 180);
+            }
             ctx.restore();
 
             // Vonkajšie orámovanie glass panelu
             ctx.save();
             drawRoundedRectPath(ctx, panelX, panelY, panelW, panelH, panelRadius);
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.34)";
+            const borderAlpha = +(Math.max(0.16, 0.34 * Math.max(0.45, opacityFactor))).toFixed(3);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${borderAlpha})`;
             ctx.lineWidth = 2;
             ctx.stroke();
             ctx.restore();
@@ -4879,7 +5294,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.16 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.17 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -4958,10 +5373,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.16 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.16 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.17 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.17 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.16 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.17 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -5164,7 +5579,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.16_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.17_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
