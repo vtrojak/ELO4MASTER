@@ -307,6 +307,155 @@
             font-weight: 700;
         }
 
+        /* LAST MATCH TV GLASS-NEON SCOREBOARD */
+        .lm-board-wrap {
+            --lm-sets-w: 48px;
+            --lm-gem-w: 42px;
+            margin-top: 8px;
+        }
+
+        .lm-scoreboard {
+            display: grid;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(217, 249, 40, 0.36);
+            background: rgba(0, 18, 26, 0.42);
+            backdrop-filter: blur(14px) saturate(165%);
+            -webkit-backdrop-filter: blur(14px) saturate(165%);
+            box-shadow:
+                0 8px 24px rgba(0, 14, 20, 0.42),
+                0 0 18px rgba(190, 242, 100, 0.14),
+                inset 0 1px 1px rgba(255, 255, 255, 0.24);
+        }
+
+        .lm-scoreboard.is-draw {
+            border-color: rgba(125, 211, 252, 0.40);
+            box-shadow:
+                0 8px 24px rgba(0, 14, 20, 0.42),
+                0 0 16px rgba(125, 211, 252, 0.14),
+                inset 0 1px 1px rgba(255, 255, 255, 0.24);
+        }
+
+        .lm-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            font-weight: 900;
+            font-style: italic;
+            font-size: 1.02rem;
+            line-height: 1.15;
+            user-select: none;
+        }
+
+        .lm-row-2 {
+            border-top: 1.5px solid rgba(0, 10, 16, 0.78);
+        }
+
+        .lm-cell-team {
+            justify-content: flex-start;
+            padding: 8px 13px;
+            text-align: left;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lm-team-win {
+            background: linear-gradient(135deg, rgba(0, 88, 192, 0.84), rgba(0, 56, 140, 0.74));
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(125, 211, 252, 0.45), 0 1px 2px rgba(0, 0, 0, 0.45);
+        }
+
+        .lm-team-loss {
+            background: linear-gradient(135deg, rgba(0, 74, 166, 0.72), rgba(0, 48, 122, 0.66));
+            color: #05111f;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.26);
+        }
+
+        .lm-team-draw {
+            background: linear-gradient(135deg, rgba(0, 82, 180, 0.78), rgba(0, 52, 130, 0.70));
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+        }
+
+        .lm-cell-sets {
+            border-left: 1.5px solid rgba(0, 10, 16, 0.78);
+            font-size: 1.08rem;
+        }
+
+        .lm-sets-win {
+            background: linear-gradient(135deg, rgba(255, 242, 20, 0.94), rgba(215, 248, 38, 0.84));
+            color: #051018;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.75), 0 0 14px rgba(248, 240, 20, 0.42);
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+
+        .lm-sets-loss {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(226, 238, 246, 0.80));
+            color: #051018;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.85);
+        }
+
+        .lm-sets-draw {
+            background: linear-gradient(135deg, rgba(240, 249, 255, 0.90), rgba(208, 232, 248, 0.78));
+            color: #051018;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.80);
+        }
+
+        .lm-cell-gem {
+            border-left: 1.5px solid rgba(0, 10, 16, 0.75);
+            background: linear-gradient(180deg, rgba(50, 56, 62, 0.82), rgba(26, 31, 36, 0.86));
+            color: #ffffff;
+        }
+
+        .lm-gem-win {
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+        }
+
+        .lm-gem-loss {
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        .lm-empty-state {
+            padding: 12px 10px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 480px) {
+            .lm-board-wrap {
+                --lm-sets-w: 38px;
+                --lm-gem-w: 32px;
+            }
+            .lm-cell {
+                min-height: 36px;
+                font-size: 0.90rem;
+            }
+            .lm-cell-team {
+                padding: 7px 9px;
+                font-size: 0.86rem;
+            }
+            .lm-cell-sets {
+                font-size: 0.96rem;
+            }
+        }
+
+        @media (max-width: 390px) {
+            .lm-board-wrap.many-sets {
+                --lm-sets-w: 34px;
+                --lm-gem-w: 27px;
+            }
+            .lm-board-wrap.many-sets .lm-cell-team {
+                font-size: 0.80rem;
+                padding: 6px 7px;
+            }
+        }
+
         /* TABLE */
         .table-wrap {
             overflow-x: auto;
@@ -642,6 +791,22 @@
         .mm-option-card.best-balance {
             border-color: rgba(190, 242, 100, 0.65);
             background: linear-gradient(135deg, rgba(16, 85, 65, 0.48), rgba(0, 32, 28, 0.52));
+        }
+
+        .mm-option-card .mm-option-info {
+            flex: 1 1 220px;
+            min-width: 0;
+        }
+
+        .mm-option-card .mm-apply-btn {
+            flex: 0 0 auto;
+            width: auto;
+            min-width: max-content;
+            white-space: nowrap;
+            padding: 8px 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* CHART */
@@ -1200,7 +1365,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.13</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.15</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -1222,11 +1387,10 @@
                 <i class="fa-solid fa-rotate"></i>
                 <span>Načítať aktuálnu databázu</span>
             </button>
-            <div class="stat-tile" id="last-match-banner" style="margin-bottom: 14px; padding: 12px 16px;">
+            <div class="stat-tile" id="last-match-banner" style="margin-bottom: 14px; padding: 12px 14px;">
                 <div class="stat-tile-label" id="last-match-label">Posledný odohratý zápas</div>
-                <div class="stat-tile-value" id="last-match-teams" style="margin-top: 6px; font-size: 1.04rem;">—</div>
-                <div id="last-match-score" style="margin-top: 6px; font-size: 0.96rem;">—</div>
-                <div class="stat-tile-sub" id="last-match-meta" style="margin-top: 6px;">—</div>
+                <div id="last-match-board" class="lm-board-wrap"></div>
+                <div class="stat-tile-sub" id="last-match-meta" style="margin-top: 8px;">—</div>
             </div>
 
             <div class="card">
@@ -1610,7 +1774,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.13)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.15)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -1749,7 +1913,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.13_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.15_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -1916,7 +2080,7 @@
         </button>
         <button class="nav-item" onclick="switchTab('sec-match', this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-            Zápas & Kurt
+            Pridať zápas
         </button>
         <button class="nav-item" onclick="switchTab('sec-chart', this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -3110,24 +3274,72 @@
 
         function renderLeaderboard() {
             const lmLabel = document.getElementById("last-match-label");
-            const lmTeams = document.getElementById("last-match-teams");
-            const lmScore = document.getElementById("last-match-score");
+            const lmBoard = document.getElementById("last-match-board");
             const lmMeta = document.getElementById("last-match-meta");
 
             if (computedMatches.length > 0) {
                 const lastM = computedMatches[computedMatches.length - 1];
-                const gemsText = lastM.gems ? ` (${lastM.gems})` : "";
-                const signA = lastM.deltaA >= 0 ? `+${lastM.deltaA.toFixed(1)}` : lastM.deltaA.toFixed(1);
-                const signB = lastM.deltaB >= 0 ? `+${lastM.deltaB.toFixed(1)}` : lastM.deltaB.toFixed(1);
+                const s1 = Number(lastM.sets1) || 0;
+                const s2 = Number(lastM.sets2) || 0;
+                const isDraw = s1 === s2;
+                const swapOrder = s2 > s1;
+
+                const topTeam = swapOrder ? lastM.teamNameB : lastM.teamNameA;
+                const botTeam = swapOrder ? lastM.teamNameA : lastM.teamNameB;
+                const topSets = swapOrder ? s2 : s1;
+                const botSets = swapOrder ? s1 : s2;
+                const topDelta = swapOrder ? lastM.deltaB : lastM.deltaA;
+                const botDelta = swapOrder ? lastM.deltaA : lastM.deltaB;
+
+                const parsedSets = parseSetsFromGemsString(lastM.gems);
+                const setsCount = parsedSets.length;
+                lmBoard.classList.toggle("many-sets", setsCount >= 4);
+
+                const gridCols = setsCount > 0
+                    ? `minmax(0, 1fr) var(--lm-sets-w) repeat(${setsCount}, var(--lm-gem-w))`
+                    : `minmax(0, 1fr) var(--lm-sets-w)`;
+
+                const topTeamCls = isDraw ? "lm-team-draw" : "lm-team-win";
+                const botTeamCls = isDraw ? "lm-team-draw" : "lm-team-loss";
+                const topSetsCls = isDraw ? "lm-sets-draw" : "lm-sets-win";
+                const botSetsCls = isDraw ? "lm-sets-draw" : "lm-sets-loss";
+
+                const topGemCells = parsedSets.map(st => {
+                    const gTop = swapOrder ? st.g2 : st.g1;
+                    const gBot = swapOrder ? st.g1 : st.g2;
+                    const gCls = gTop > gBot ? "lm-gem-win" : (gTop < gBot ? "lm-gem-loss" : "");
+                    return `<div class="lm-cell lm-cell-gem ${gCls}">${gTop}</div>`;
+                }).join("");
+
+                const botGemCells = parsedSets.map(st => {
+                    const gTop = swapOrder ? st.g2 : st.g1;
+                    const gBot = swapOrder ? st.g1 : st.g2;
+                    const gCls = gBot > gTop ? "lm-gem-win" : (gBot < gTop ? "lm-gem-loss" : "");
+                    return `<div class="lm-cell lm-row-2 lm-cell-gem ${gCls}">${gBot}</div>`;
+                }).join("");
+
                 lmLabel.textContent = `Posledný odohratý zápas (#${lastM.index}) · ${lastM.date}`;
-                lmTeams.innerHTML = `${lastM.teamNameA} <span style="color:var(--text-muted); font-weight:500;">vs</span> ${lastM.teamNameB}`;
-                lmScore.innerHTML = `<span class="match-score-pill" style="font-size:0.96rem; margin-left:0;">${lastM.sets1}:${lastM.sets2}</span> <span style="color:var(--text-muted); font-weight:600; font-size:0.9rem;">${gemsText}</span>`;
-                lmMeta.textContent = `Posun ELO: ${lastM.teamNameA} (${signA}) · ${lastM.teamNameB} (${signB})`;
+                lmBoard.innerHTML = `
+                    <div class="lm-scoreboard ${isDraw ? 'is-draw' : ''}" style="grid-template-columns: ${gridCols};">
+                        <div class="lm-cell lm-cell-team ${topTeamCls}" title="${topTeam}">${topTeam}</div>
+                        <div class="lm-cell lm-cell-sets ${topSetsCls}">${topSets}</div>
+                        ${topGemCells}
+                        <div class="lm-cell lm-row-2 lm-cell-team ${botTeamCls}" title="${botTeam}">${botTeam}</div>
+                        <div class="lm-cell lm-row-2 lm-cell-sets ${botSetsCls}">${botSets}</div>
+                        ${botGemCells}
+                    </div>
+                `;
+
+                const topSign = topDelta >= 0 ? `+${topDelta.toFixed(1)}` : topDelta.toFixed(1);
+                const botSign = botDelta >= 0 ? `+${botDelta.toFixed(1)}` : botDelta.toFixed(1);
+                const topCol = topDelta >= 0 ? "var(--win)" : "var(--loss)";
+                const botCol = botDelta >= 0 ? "var(--win)" : "var(--loss)";
+                lmMeta.innerHTML = `Posun ELO: <span style="color:#ffffff;">${topTeam}</span> (<span style="color:${topCol};">${topSign}</span>) · <span style="color:var(--text-muted);">${botTeam}</span> (<span style="color:${botCol};">${botSign}</span>)`;
             } else {
                 lmLabel.textContent = "Posledný odohratý zápas";
-                lmTeams.textContent = "Zatiaľ žiadny odohratý zápas";
-                lmScore.textContent = "—";
-                lmMeta.textContent = "Pridaj prvý zápas v sekcii Zápas & Kurt";
+                lmBoard.classList.remove("many-sets");
+                lmBoard.innerHTML = `<div class="lm-empty-state">Zatiaľ žiadny odohratý zápas</div>`;
+                lmMeta.textContent = "Pridaj prvý zápas v sekcii Pridať zápas";
             }
 
             if (state.leaderboardMode === "players") {
@@ -3254,7 +3466,7 @@
                 const isBest = idx === 0;
                 return `
                     <div class="mm-option-card ${isBest ? 'best-balance' : ''}">
-                        <div>
+                        <div class="mm-option-info">
                             <div style="font-size:0.7rem; font-weight:800; color:${isBest ? 'var(--tennis-lime)' : 'var(--text-muted)'}; text-transform:uppercase;">
                                 ${isBest ? '★ Najvyrovnanejší zápas (Odporúčané)' : `Alternatíva #${idx + 1}`} · Rozdiel Ø ${c.diff.toFixed(1)} ELO
                             </div>
@@ -3267,7 +3479,7 @@
                                 Šanca na výhru: <strong>${(c.probA*100).toFixed(1)}%</strong> : <strong>${(c.probB*100).toFixed(1)}%</strong>
                             </div>
                         </div>
-                        <button type="button" class="preset-btn" style="flex:0; white-space:nowrap; padding:7px 11px;" onclick="applyMatchmakerCombo('${c.a1.id}','${c.a2.id}','${c.b1.id}','${c.b2.id}')">
+                        <button type="button" class="preset-btn mm-apply-btn" onclick="applyMatchmakerCombo('${c.a1.id}','${c.a2.id}','${c.b1.id}','${c.b2.id}')">
                             Použiť v zápise ↓
                         </button>
                     </div>
@@ -4356,7 +4568,7 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
             const a = document.createElement("a");
             a.href = dataStr;
-            a.download = customFilename || `ELO4MASTER_v1.13_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            a.download = customFilename || `ELO4MASTER_v1.15_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             a.click();
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -4409,7 +4621,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `ELO4MASTER_v1.13_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
+            a.download = `ELO4MASTER_v1.15_tabulka_${new Date().toISOString().split("T")[0]}.csv`;
             a.click();
         }
 
@@ -4637,7 +4849,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.13 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.15 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -4709,8 +4921,8 @@
             ctx.font = "800 29px sans-serif";
             ctx.textAlign = "left";
             const headerTitle = state.tvMode === "pairs"
-                ? `ELO4MASTER V1.13 | REBRÍČEK DEBLOVÝCH DVOJÍC (${computedPairs.length} PÁROV)`
-                : `ELO4MASTER V1.13 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                ? `ELO4MASTER V1.15 | REBRÍČEK DEBLOVÝCH DVOJÍC (${computedPairs.length} PÁROV)`
+                : `ELO4MASTER V1.15 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
             ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
@@ -4894,7 +5106,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.13_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.15_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
