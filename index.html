@@ -1063,47 +1063,115 @@
         .h2h-seg-d { background: #facc15; height: 100%; transition: width 0.3s; }
         .h2h-seg-b { background: #38bdf8; height: 100%; transition: width 0.3s; }
 
-        /* ACHIEVEMENTS / BADGES */
+        /* ACHIEVEMENTS / BADGES – PRISPÔSOBENÉ PRE TRANSPARENTNÉ 256×256 PNG IKONY */
         .ach-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 11px;
+            gap: 14px;
         }
 
         .ach-card {
-            background: rgba(0, 35, 30, 0.42);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            --ach-glow: rgba(255, 255, 255, 0.22);
+            --ach-tint: rgba(255, 255, 255, 0.05);
+            background: linear-gradient(145deg, rgba(0, 32, 28, 0.56), rgba(0, 20, 18, 0.46));
+            backdrop-filter: blur(16px) saturate(160%);
+            -webkit-backdrop-filter: blur(16px) saturate(160%);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 13px;
+            border-radius: 16px;
+            padding: 15px 14px;
             display: flex;
-            gap: 12px;
+            gap: 14px;
             align-items: flex-start;
             position: relative;
             overflow: hidden;
-            transition: transform 0.15s, border-color 0.2s;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 24px rgba(0, 18, 16, 0.34), inset 0 1px 1px rgba(255, 255, 255, 0.18);
+            transition: transform 0.18s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .ach-card::before {
+            content: "";
+            position: absolute;
+            top: -24px;
+            left: -24px;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, var(--ach-tint) 0%, transparent 72%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .ach-card:hover {
             transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.45);
+            border-color: var(--ach-glow);
+            box-shadow: 0 10px 28px rgba(0, 14, 12, 0.46), 0 0 18px var(--ach-tint), inset 0 1px 1px rgba(255, 255, 255, 0.26);
+        }
+
+        .ach-card.ach-green {
+            --ach-glow: rgba(74, 222, 128, 0.58);
+            --ach-tint: rgba(74, 222, 128, 0.20);
+            border-color: rgba(74, 222, 128, 0.36);
+        }
+        .ach-card.ach-blue {
+            --ach-glow: rgba(56, 189, 248, 0.58);
+            --ach-tint: rgba(56, 189, 248, 0.20);
+            border-color: rgba(56, 189, 248, 0.36);
+        }
+        .ach-card.ach-purple {
+            --ach-glow: rgba(192, 132, 252, 0.58);
+            --ach-tint: rgba(192, 132, 252, 0.20);
+            border-color: rgba(192, 132, 252, 0.36);
+        }
+        .ach-card.ach-red {
+            --ach-glow: rgba(248, 113, 113, 0.58);
+            --ach-tint: rgba(248, 113, 113, 0.20);
+            border-color: rgba(248, 113, 113, 0.36);
+        }
+        .ach-card.ach-gold {
+            --ach-glow: rgba(250, 204, 21, 0.58);
+            --ach-tint: rgba(250, 204, 21, 0.18);
+            border-color: rgba(250, 204, 21, 0.36);
         }
 
         .ach-crest {
-            width: 56px;
-            height: 56px;
+            width: 80px;
+            height: 80px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.38));
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .ach-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            background: transparent;
+            user-select: none;
+            -webkit-user-drag: none;
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 8px var(--ach-tint));
+            transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), filter 0.22s ease;
+        }
+
+        .ach-card:hover .ach-icon-img {
+            transform: scale(1.07);
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.52)) drop-shadow(0 0 14px var(--ach-glow));
+        }
+
+        .ach-fallback-hex {
+            width: 68px;
+            height: 68px;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.42));
         }
 
         .hex-outer {
-            width: 54px;
-            height: 54px;
+            width: 64px;
+            height: 64px;
             clip-path: polygon(50% 3%, 93% 26%, 93% 74%, 50% 97%, 7% 74%, 7% 26%);
             display: flex;
             align-items: center;
@@ -1122,14 +1190,26 @@
         }
 
         .hex-inner i {
-            font-size: 1.28rem;
+            font-size: 1.45rem;
             line-height: 1;
             display: inline-block;
+        }
+
+        .profile-mini-badge-img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            background: transparent;
+            flex-shrink: 0;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
         }
 
         .ach-body {
             flex: 1;
             min-width: 0;
+            position: relative;
+            z-index: 1;
         }
 
         .ach-title {
@@ -1544,6 +1624,10 @@
             .ach-grid {
                 grid-template-columns: 1fr;
             }
+            .ach-crest {
+                width: 72px;
+                height: 72px;
+            }
             .grid-4 {
                 grid-template-columns: 1fr 1fr;
             }
@@ -1576,7 +1660,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.17</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.18</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -1990,7 +2074,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.17)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.18)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2129,7 +2213,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.17_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.18_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -2343,6 +2427,21 @@
     <script>
         const STORAGE_KEY = "ELO4MASTER_DB_V1";
         const REMOTE_JSON_FILES = ["databaza.json", "data.json"];
+        const ACHIEVEMENT_ICON_DIRS = ["./", "./icons/", "./ikony/", "./badges/", "./img/", "./images/", "./achievements/"];
+
+        function handleAchIconError(imgEl) {
+            const file = imgEl.getAttribute("data-icon-file");
+            const nextIdx = (parseInt(imgEl.getAttribute("data-dir-idx") || "0", 10)) + 1;
+            if (file && nextIdx < ACHIEVEMENT_ICON_DIRS.length) {
+                imgEl.setAttribute("data-dir-idx", String(nextIdx));
+                imgEl.src = ACHIEVEMENT_ICON_DIRS[nextIdx] + file;
+            } else {
+                imgEl.onerror = null;
+                imgEl.style.display = "none";
+                const fallback = imgEl.nextElementSibling;
+                if (fallback) fallback.style.display = fallback.dataset.fallbackDisplay || "flex";
+            }
+        }
 
         const PLAYER_COLORS = [
             "#f97316", // Vlado
@@ -3116,44 +3215,24 @@
             buildAchievements();
         }
 
-        function getCrestSvg(type, theme) {
+        function getAchievementIconHtml(iconFile, title, faClass, themeKey) {
             const palettes = {
-                gold:   { bg1: "#451a03", bg2: "#090e1a", border: "#f59e0b", fg: "#fbbf24" },
-                lime:   { bg1: "#1a2e05", bg2: "#090e1a", border: "#a3e635", fg: "#bef264" },
-                blue:   { bg1: "#082f49", bg2: "#090e1a", border: "#38bdf8", fg: "#7dd3fc" },
-                crimson:{ bg1: "#450a0a", bg2: "#090e1a", border: "#ef4444", fg: "#f87171" },
-                purple: { bg1: "#3b0764", bg2: "#090e1a", border: "#e879f9", fg: "#f0abfc" }
+                "ach-green":  { bg1: "#052e16", bg2: "#090e1a", border: "#4ade80", fg: "#86efac" },
+                "ach-blue":   { bg1: "#082f49", bg2: "#090e1a", border: "#38bdf8", fg: "#7dd3fc" },
+                "ach-purple": { bg1: "#3b0764", bg2: "#090e1a", border: "#c084fc", fg: "#e879f9" },
+                "ach-red":    { bg1: "#450a0a", bg2: "#090e1a", border: "#f87171", fg: "#fca5a5" },
+                "ach-gold":   { bg1: "#451a03", bg2: "#090e1a", border: "#f59e0b", fg: "#fbbf24" }
             };
-            const pal = palettes[theme] || palettes.gold;
-
-            // Clean lowercase FA6 Free solid icons
-            const cleanIcons = {
-                flame_crown:    "fa-solid fa-crown",
-                bolt_target:    "fa-solid fa-bolt",
-                anchor_down:    "fa-solid fa-anchor",
-                knight_shield:  "fa-solid fa-shield-halved",
-                chef_zero:      "fa-solid fa-broom",
-                sliced_bagel:   "fa-solid fa-crow",
-                ecg_pulse:      "fa-solid fa-heart-pulse",
-                crossed_swords: "fa-solid fa-dumbbell",
-                sniper_cross:   "fa-solid fa-crosshairs",
-                mountain_flag:  "fa-solid fa-mountain",
-                giant_slayer:   "fa-solid fa-angles-up",
-                hourglass_iron: "fa-solid fa-hourglass-half",
-                balance_scales: "fa-solid fa-scale-balanced",
-                network_nodes:  "fa-solid fa-diagram-project",
-                duo_racquets:   "fa-solid fa-handshake-simple",
-                steamroller:    "fa-solid fa-burst",
-                marathon_fire:  "fa-solid fa-stopwatch",
-                chain_links:    "fa-solid fa-link"
-            };
-
-            const faClass = cleanIcons[type] || "fa-solid fa-trophy";
-
+            const pal = palettes[themeKey] || palettes["ach-green"];
+            const safeTitle = escapeHtml(title);
+            const safeFile = escapeHtml(iconFile);
             return `
-                <div class="hex-outer" style="background: ${pal.border};">
-                    <div class="hex-inner" style="background: linear-gradient(145deg, ${pal.bg1}, ${pal.bg2});">
-                        <i class="${faClass}" style="color: ${pal.fg};" aria-hidden="true"></i>
+                <img class="ach-icon-img" src="${ACHIEVEMENT_ICON_DIRS[0]}${safeFile}" alt="${safeTitle}" width="80" height="80" loading="lazy" decoding="async" data-icon-file="${safeFile}" data-dir-idx="0" onerror="handleAchIconError(this)">
+                <div class="ach-fallback-hex" data-fallback-display="flex" style="display:none;">
+                    <div class="hex-outer" style="background: ${pal.border};">
+                        <div class="hex-inner" style="background: linear-gradient(145deg, ${pal.bg1}, ${pal.bg2});">
+                            <i class="${faClass}" style="color: ${pal.fg};" aria-hidden="true"></i>
+                        </div>
                     </div>
                 </div>
             `;
@@ -3251,14 +3330,17 @@
             });
 
             computedAchievements = [
-                // KATEGÓRIA 1
+                // KATEGÓRIA 1: Série a momentálna forma
                 {
                     id: "unstoppable",
                     cat: 1,
                     title: "Nezastaviteľný",
                     desc: "Najdlhšia historická víťazná šnúra bez prerušenia",
-                    icon: "flame_crown",
-                    theme: "gold",
+                    iconFile: "nezastavitelny.png",
+                    faClass: "fa-solid fa-shield-halved",
+                    theme: "ach-green",
+                    accent: "#4ade80",
+                    isNegative: false,
                     valueText: `${rWinStreak.value} výhry v rade`,
                     holders: rWinStreak.holders
                 },
@@ -3267,8 +3349,11 @@
                     cat: 1,
                     title: "Horúca ruka",
                     desc: "Najdlhšia práve prebiehajúca víťazná séria",
-                    icon: "bolt_target",
-                    theme: "lime",
+                    iconFile: "ruka.png",
+                    faClass: "fa-solid fa-fire",
+                    theme: "ach-green",
+                    accent: "#4ade80",
+                    isNegative: false,
                     valueText: `${rHotHand.value} aktívne výhry`,
                     holders: rHotHand.holders
                 },
@@ -3277,8 +3362,11 @@
                     cat: 1,
                     title: "Voľný pád",
                     desc: "Najviac prehier v rade za sebou",
-                    icon: "anchor_down",
-                    theme: "crimson",
+                    iconFile: "pad.png",
+                    faClass: "fa-solid fa-arrow-trend-down",
+                    theme: "ach-red",
+                    accent: "#f87171",
+                    isNegative: true,
                     valueText: `${rLossStreak.value} prehry v rade`,
                     holders: rLossStreak.holders
                 },
@@ -3287,20 +3375,26 @@
                     cat: 1,
                     title: "Nepriestrelný",
                     desc: "Najdlhšia séria zápasov bez prehry (výhry + remízy)",
-                    icon: "knight_shield",
-                    theme: "blue",
+                    iconFile: "nepriestrelny.png",
+                    faClass: "fa-solid fa-helmet-safety",
+                    theme: "ach-green",
+                    accent: "#4ade80",
+                    isNegative: false,
                     valueText: `${rUnbeaten.value} záp. bez prehry`,
                     holders: rUnbeaten.holders
                 },
 
-                // KATEGÓRIA 2
+                // KATEGÓRIA 2: Kanáre, tiebreaky a skóre
                 {
                     id: "master_baker",
                     cat: 2,
                     title: "Čistič",
                     desc: "Najviac rozdaných kanárov (setov 6:0)",
-                    icon: "chef_zero",
-                    theme: "gold",
+                    iconFile: "cistic.png",
+                    faClass: "fa-solid fa-broom",
+                    theme: "ach-green",
+                    accent: "#4ade80",
+                    isNegative: false,
                     valueText: `${rBagelGive.value}× set 6:0`,
                     holders: rBagelGive.holders
                 },
@@ -3309,8 +3403,11 @@
                     cat: 2,
                     title: "Ornitológ",
                     desc: "Najviac inkasovaných kanárov (setov 0:6)",
-                    icon: "sliced_bagel",
-                    theme: "crimson",
+                    iconFile: "ornitolog.png",
+                    faClass: "fa-solid fa-crow",
+                    theme: "ach-red",
+                    accent: "#f87171",
+                    isNegative: true,
                     valueText: `${rBagelTake.value}× set 0:6`,
                     holders: rBagelTake.holders
                 },
@@ -3319,8 +3416,11 @@
                     cat: 2,
                     title: "Chirurg",
                     desc: "Kráľ tiebreakov – najviac vyhratých setov 7:6",
-                    icon: "ecg_pulse",
-                    theme: "lime",
+                    iconFile: "chirurg.png",
+                    faClass: "fa-solid fa-heart-pulse",
+                    theme: "ach-green",
+                    accent: "#4ade80",
+                    isNegative: false,
                     valueText: `${rTbWon.value} vyhraté TB`,
                     holders: rTbWon.holders
                 },
@@ -3329,8 +3429,11 @@
                     cat: 2,
                     title: "Muž zo železa",
                     desc: "Najviac odohratých tiebreakových setov (7:6 / 6:7)",
-                    icon: "crossed_swords",
-                    theme: "blue",
+                    iconFile: "muz_zo_zeleza.png",
+                    faClass: "fa-solid fa-7",
+                    theme: "ach-blue",
+                    accent: "#38bdf8",
+                    isNegative: false,
                     valueText: `${rTbPlayed.value} odohratých TB`,
                     holders: rTbPlayed.holders
                 },
@@ -3339,20 +3442,26 @@
                     cat: 2,
                     title: "Sniper",
                     desc: "Najlepšia priemerná gemová bilancia na zápas (min. 3 štarty)",
-                    icon: "sniper_cross",
-                    theme: "gold",
+                    iconFile: "sniper.png",
+                    faClass: "fa-solid fa-crosshairs",
+                    theme: "ach-gold",
+                    accent: "#fbbf24",
+                    isNegative: false,
                     valueText: `${rSniper.value >= 0 ? '+' : ''}${rSniper.value.toFixed(1)} gemu / záp.`,
                     holders: rSniper.holders
                 },
 
-                // KATEGÓRIA 3
+                // KATEGÓRIA 3: ELO míľniky a aktivita
                 {
                     id: "king_of_hill",
                     cat: 3,
                     title: "Kráľ hôr (Peak ELO)",
                     desc: "Historicky najvyššie dosiahnuté ELO hodnotenie",
-                    icon: "mountain_flag",
-                    theme: "gold",
+                    iconFile: "vrchol.png",
+                    faClass: "fa-solid fa-mountain",
+                    theme: "ach-green",
+                    accent: "#4ade80",
+                    isNegative: false,
                     valueText: `${rPeakElo.value.toFixed(1)} ELO`,
                     holders: rPeakElo.holders
                 },
@@ -3361,8 +3470,11 @@
                     cat: 3,
                     title: "Lovec obrov",
                     desc: "Najväčší bodový ELO zisk v jednom zápase",
-                    icon: "giant_slayer",
-                    theme: "lime",
+                    iconFile: "obor.png",
+                    faClass: "fa-solid fa-angles-up",
+                    theme: "ach-blue",
+                    accent: "#38bdf8",
+                    isNegative: false,
                     valueText: `+${rGiantSlay.value.toFixed(1)} ELO`,
                     holders: rGiantSlay.holders
                 },
@@ -3371,8 +3483,11 @@
                     cat: 3,
                     title: "Železný muž kurtu",
                     desc: "Najviac odohratých štvorhier v histórii",
-                    icon: "hourglass_iron",
-                    theme: "blue",
+                    iconFile: "zelezny_muz.png",
+                    faClass: "fa-solid fa-robot",
+                    theme: "ach-blue",
+                    accent: "#38bdf8",
+                    isNegative: false,
                     valueText: `${rIronMan.value} zápasov`,
                     holders: rIronMan.holders
                 },
@@ -3381,8 +3496,11 @@
                     cat: 3,
                     title: "Diplomat",
                     desc: "Kráľ remíz – najviac nerozhodných zápasov 1:1",
-                    icon: "balance_scales",
-                    theme: "blue",
+                    iconFile: "diplomat.png",
+                    faClass: "fa-solid fa-scale-balanced",
+                    theme: "ach-blue",
+                    accent: "#38bdf8",
+                    isNegative: false,
                     valueText: `${rDiplomat.value} remíz`,
                     holders: rDiplomat.holders
                 },
@@ -3391,20 +3509,26 @@
                     cat: 3,
                     title: "Chameleón",
                     desc: "Najviac rôznych spoluhráčov, s ktorými nastúpil",
-                    icon: "network_nodes",
-                    theme: "lime",
+                    iconFile: "chameleon.png",
+                    faClass: "fa-solid fa-diagram-project",
+                    theme: "ach-blue",
+                    accent: "#38bdf8",
+                    isNegative: false,
                     valueText: `${rChameleon.value} rôznych parťákov`,
                     holders: rChameleon.holders
                 },
 
-                // KATEGÓRIA 4: TÍMOVÉ ODZNAKY PRE DVOJICE
+                // KATEGÓRIA 4: Tímové odznaky pre deblové dvojice
                 {
                     id: "dynamic_duo",
                     cat: 4,
                     title: "Dynamické duo",
                     desc: `Najúspešnejšia pevná dvojica podľa párového ELO (${rBestPairElo.holders.map(x => x.name).join(", ")})`,
-                    icon: "duo_racquets",
-                    theme: "gold",
+                    iconFile: "dynamicke_duo.png",
+                    faClass: "fa-solid fa-handshake-simple",
+                    theme: "ach-purple",
+                    accent: "#c084fc",
+                    isNegative: false,
                     valueText: `${rBestPairElo.value.toFixed(1)} Párové ELO`,
                     holders: bestPairPlayers
                 },
@@ -3413,8 +3537,11 @@
                     cat: 4,
                     title: "Parný valec",
                     desc: `Najvyšší rozdiel gemov v jednom zápase (${steamrollerMatches.map(m => '#' + m.index + ' ' + m.gems).join(', ')})`,
-                    icon: "steamroller",
-                    theme: "lime",
+                    iconFile: "valec.png",
+                    faClass: "fa-solid fa-burst",
+                    theme: "ach-green",
+                    accent: "#4ade80",
+                    isNegative: false,
                     valueText: `Rozdiel +${maxGemDiffVal} gemov`,
                     holders: steamrollerHolders
                 },
@@ -3423,8 +3550,11 @@
                     cat: 4,
                     title: "Krv, pot a slzy",
                     desc: `Najdlhšia bitka histórie podľa počtu gemov (${marathonMatches.map(m => '#' + m.index + ' ' + m.gems).join(', ')})`,
-                    icon: "marathon_fire",
-                    theme: "purple",
+                    iconFile: "krv_pot.png",
+                    faClass: "fa-solid fa-stopwatch",
+                    theme: "ach-blue",
+                    accent: "#38bdf8",
+                    isNegative: false,
                     valueText: `${maxTotalGemsVal} odohratých gemov`,
                     holders: marathonHolders
                 },
@@ -3433,8 +3563,11 @@
                     cat: 4,
                     title: "Nerozlučná dvojka",
                     desc: `Najčastejšie spolu nastupujúci deblový pár (${rMostFrequentPair.holders.map(x => x.name).join(", ")})`,
-                    icon: "chain_links",
-                    theme: "blue",
+                    iconFile: "nerozlucna_dvojka.png",
+                    faClass: "fa-solid fa-link",
+                    theme: "ach-purple",
+                    accent: "#c084fc",
+                    isNegative: false,
                     valueText: `${rMostFrequentPair.value} spoločných štartov`,
                     holders: frequentPairPlayers
                 }
@@ -3456,16 +3589,12 @@
                             </span>
                         `).join("");
 
-                    let pillColor = "#fbbf24";
-                    if (ach.theme === "crimson") pillColor = "var(--loss)";
-                    else if (ach.theme === "lime") pillColor = "var(--tennis-lime)";
-                    else if (ach.theme === "blue") pillColor = "var(--blue-accent)";
-                    else if (ach.theme === "purple") pillColor = "#f0abfc";
+                    const pillColor = ach.accent || "#4ade80";
 
                     return `
-                        <div class="ach-card">
+                        <div class="ach-card ${ach.theme}">
                             <div class="ach-crest">
-                                ${getCrestSvg(ach.icon, ach.theme)}
+                                ${getAchievementIconHtml(ach.iconFile, ach.title, ach.faClass, ach.theme)}
                             </div>
                             <div class="ach-body">
                                 <div class="ach-title">${escapeHtml(ach.title)}</div>
@@ -3489,7 +3618,7 @@
 
             const badgeCounts = {};
             computedAchievements.forEach(ach => {
-                if (ach.theme === "crimson") return;
+                if (ach.isNegative) return;
                 ach.holders.forEach(h => {
                     badgeCounts[h.id] = (badgeCounts[h.id] || 0) + 1;
                 });
@@ -4571,8 +4700,10 @@
                         <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; color:var(--text-muted);">Držiteľ odznakov (${ownedBadges.length})</div>
                         <div class="profile-badges-wrap">
                             ${ownedBadges.map(b => `
-                                <span class="profile-mini-badge" style="border-color:${b.theme === 'crimson' ? 'rgba(239,68,68,0.4)' : 'rgba(249,115,22,0.35)'}">
-                                    🏆 ${b.title} <span style="color:var(--text-muted); font-weight:600;">(${b.valueText})</span>
+                                <span class="profile-mini-badge" style="border-color:${b.accent}88;">
+                                    <img class="profile-mini-badge-img" src="${ACHIEVEMENT_ICON_DIRS[0]}${escapeHtml(b.iconFile)}" alt="${escapeHtml(b.title)}" width="22" height="22" loading="lazy" data-icon-file="${escapeHtml(b.iconFile)}" data-dir-idx="0" onerror="handleAchIconError(this)">
+                                    <span data-fallback-display="inline" style="display:none; color:${b.accent};">🏆</span>
+                                    <strong>${escapeHtml(b.title)}</strong> <span style="color:var(--text-muted); font-weight:600;">(${b.valueText})</span>
                                 </span>
                             `).join("")}
                         </div>
@@ -4926,7 +5057,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.17_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.18_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -4981,7 +5112,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.17_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.18_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -5294,7 +5425,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.17 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.18 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -5373,10 +5504,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.17 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.17 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.18 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.18 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.17 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.18 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -5579,7 +5710,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.17_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.18_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
