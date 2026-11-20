@@ -480,6 +480,34 @@
             white-space: nowrap;
         }
 
+        table.elo-table th.sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.15s, background 0.15s;
+            border-radius: 6px;
+        }
+
+        table.elo-table th.sortable:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+        table.elo-table th.sortable.sort-active {
+            color: var(--tennis-lime);
+        }
+
+        .sort-arrow {
+            display: inline-block;
+            margin-left: 3px;
+            font-size: 0.62rem;
+            opacity: 0.45;
+        }
+
+        table.elo-table th.sortable.sort-active .sort-arrow {
+            opacity: 1;
+            color: var(--tennis-lime);
+        }
+
         table.elo-table td {
             padding: 10px 6px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
@@ -1660,7 +1688,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.19</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.2</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -1705,16 +1733,16 @@
                     <table class="elo-table" id="leaderboard-table">
                         <thead>
                             <tr>
-                                <th>Por.</th>
-                                <th>Meno</th>
-                                <th class="text-right">ELO</th>
-                                <th class="text-right">Záp.</th>
-                                <th class="text-right">V</th>
-                                <th class="text-right">P</th>
-                                <th class="text-right">R</th>
-                                <th class="text-right">Gemy (%)</th>
-                                <th class="text-right">Úsp. (%)</th>
-                                <th class="text-center">Forma</th>
+                                <th class="sortable" data-sort-key="rank" onclick="setTableSort('players', 'rank')">Por.<span class="sort-arrow"></span></th>
+                                <th class="sortable" data-sort-key="name" onclick="setTableSort('players', 'name')">Meno<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="elo" onclick="setTableSort('players', 'elo')">ELO<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="matches" onclick="setTableSort('players', 'matches')">Záp.<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="wins" onclick="setTableSort('players', 'wins')">V<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="losses" onclick="setTableSort('players', 'losses')">P<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="draws" onclick="setTableSort('players', 'draws')">R<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="gemPct" onclick="setTableSort('players', 'gemPct')">Gemy (%)<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="winPct" onclick="setTableSort('players', 'winPct')">Úsp. (%)<span class="sort-arrow"></span></th>
+                                <th class="text-center sortable" data-sort-key="form" onclick="setTableSort('players', 'form')">Forma<span class="sort-arrow"></span></th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -1726,15 +1754,15 @@
                     <table class="elo-table" id="pairs-leaderboard-table">
                         <thead>
                             <tr>
-                                <th>Por.</th>
-                                <th>Dvojica (Tím)</th>
-                                <th class="text-right">Párové ELO</th>
-                                <th class="text-right">Záp.</th>
-                                <th class="text-right">Bilancia</th>
-                                <th class="text-right">Sety</th>
-                                <th class="text-right">Gemy</th>
-                                <th class="text-right">Úsp. (%)</th>
-                                <th class="text-center">Forma</th>
+                                <th class="sortable" data-sort-key="rank" onclick="setTableSort('pairs', 'rank')">Por.<span class="sort-arrow"></span></th>
+                                <th class="sortable" data-sort-key="name" onclick="setTableSort('pairs', 'name')">Dvojica (Tím)<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="elo" onclick="setTableSort('pairs', 'elo')">Párové ELO<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="matches" onclick="setTableSort('pairs', 'matches')">Záp.<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="wins" onclick="setTableSort('pairs', 'wins')">Bilancia<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="sets" onclick="setTableSort('pairs', 'sets')">Sety<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="gems" onclick="setTableSort('pairs', 'gems')">Gemy<span class="sort-arrow"></span></th>
+                                <th class="text-right sortable" data-sort-key="winPct" onclick="setTableSort('pairs', 'winPct')">Úsp. (%)<span class="sort-arrow"></span></th>
+                                <th class="text-center sortable" data-sort-key="form" onclick="setTableSort('pairs', 'form')">Forma<span class="sort-arrow"></span></th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -2074,7 +2102,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.19)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.2)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2213,7 +2241,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.19_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.2_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -3716,6 +3744,101 @@
             renderMatchHistory();
         }
 
+        let tableSort = {
+            players: { key: "elo", dir: "desc" },
+            pairs: { key: "elo", dir: "desc" }
+        };
+
+        function setTableSort(mode, key) {
+            const current = tableSort[mode];
+            if (current.key === key) {
+                current.dir = current.dir === "desc" ? "asc" : "desc";
+            } else {
+                current.key = key;
+                current.dir = "desc";
+            }
+            renderLeaderboard();
+        }
+
+        function getFormScore(formArr) {
+            if (!formArr || formArr.length === 0) return -1;
+            const last5 = formArr.slice(-5);
+            return last5.reduce((acc, f) => acc + (f === "W" ? 1 : (f === "D" ? 0.5 : 0)), 0);
+        }
+
+        function updateSortIndicators(tableId, sortCfg) {
+            const ths = document.querySelectorAll(`#${tableId} thead th.sortable`);
+            ths.forEach(th => {
+                const key = th.getAttribute("data-sort-key");
+                const arrow = th.querySelector(".sort-arrow");
+                if (key === sortCfg.key) {
+                    th.classList.add("sort-active");
+                    if (arrow) arrow.textContent = sortCfg.dir === "desc" ? "▼" : "▲";
+                } else {
+                    th.classList.remove("sort-active");
+                    if (arrow) arrow.textContent = "⇅";
+                }
+            });
+        }
+
+        function getSortedPlayers() {
+            const { key, dir } = tableSort.players;
+            const mult = dir === "desc" ? -1 : 1;
+
+            return computedPlayers.map((p, idx) => ({ ...p, baseRank: idx + 1 })).sort((a, b) => {
+                if (key === "name") {
+                    return a.name.localeCompare(b.name, "sk") * mult;
+                }
+                const getVal = (p) => {
+                    switch (key) {
+                        case "rank": return p.baseRank;
+                        case "elo": return p.elo;
+                        case "matches": return p.matches;
+                        case "wins": return p.wins;
+                        case "losses": return p.losses;
+                        case "draws": return p.draws;
+                        case "gemPct": {
+                            const tg = p.gemsWon + p.gemsLost;
+                            return tg > 0 ? (p.gemsWon / tg) * 100 : -1;
+                        }
+                        case "winPct": return p.matches > 0 ? ((p.wins + 0.5 * p.draws) / p.matches) * 100 : -1;
+                        case "form": return getFormScore(p.form);
+                        default: return p.elo;
+                    }
+                };
+                const diff = getVal(a) - getVal(b);
+                if (diff !== 0) return diff * mult;
+                return b.elo - a.elo;
+            });
+        }
+
+        function getSortedPairs() {
+            const { key, dir } = tableSort.pairs;
+            const mult = dir === "desc" ? -1 : 1;
+
+            return computedPairs.map((pr, idx) => ({ ...pr, baseRank: idx + 1 })).sort((a, b) => {
+                if (key === "name") {
+                    return a.name.localeCompare(b.name, "sk") * mult;
+                }
+                const getVal = (pr) => {
+                    switch (key) {
+                        case "rank": return pr.baseRank;
+                        case "elo": return pr.elo;
+                        case "matches": return pr.matches;
+                        case "wins": return pr.wins;
+                        case "sets": return pr.setsWon - pr.setsLost;
+                        case "gems": return pr.gemsWon - pr.gemsLost;
+                        case "winPct": return pr.matches > 0 ? ((pr.wins + 0.5 * pr.draws) / pr.matches) * 100 : -1;
+                        case "form": return getFormScore(pr.form);
+                        default: return pr.elo;
+                    }
+                };
+                const diff = getVal(a) - getVal(b);
+                if (diff !== 0) return diff * mult;
+                return b.elo - a.elo;
+            });
+        }
+
         function renderLeaderboard() {
             const btnPlayers = document.getElementById("tbl-mode-players");
             const btnPairs = document.getElementById("tbl-mode-pairs");
@@ -3792,11 +3915,12 @@
             }
 
             if (state.leaderboardMode === "players") {
+                updateSortIndicators("leaderboard-table", tableSort.players);
                 const tbody = document.querySelector("#leaderboard-table tbody");
                 tbody.innerHTML = "";
 
-                computedPlayers.forEach((p, idx) => {
-                    const rank = idx + 1;
+                getSortedPlayers().forEach((p) => {
+                    const rank = p.baseRank;
                     const winPct = p.matches > 0
                         ? (((p.wins + 0.5 * p.draws) / p.matches) * 100).toFixed(1)
                         : "0.0";
@@ -3856,11 +3980,12 @@
                 });
             } else {
                 // Rebríček pevných dvojíc
+                updateSortIndicators("pairs-leaderboard-table", tableSort.pairs);
                 const tbody = document.querySelector("#pairs-leaderboard-table tbody");
                 tbody.innerHTML = "";
 
-                computedPairs.forEach((pr, idx) => {
-                    const rank = idx + 1;
+                getSortedPairs().forEach((pr) => {
+                    const rank = pr.baseRank;
                     const winPct = pr.matches > 0
                         ? (((pr.wins + 0.5 * pr.draws) / pr.matches) * 100).toFixed(1)
                         : "0.0";
@@ -5060,7 +5185,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.19_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.2_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -5115,7 +5240,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.19_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.2_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -5428,7 +5553,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.19 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.2 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -5507,10 +5632,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.19 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.19 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.2 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.2 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.19 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.2 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -5713,7 +5838,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.19_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.2_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
