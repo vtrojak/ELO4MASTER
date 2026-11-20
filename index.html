@@ -11,6 +11,7 @@
     <title>ELO4MASTER | Deblový Tenisový ELO Systém & Štatistiky</title>
     <style>
         :root {
+            --app-bg-gradient: linear-gradient(135deg, #00b49d 0%, #007263 100%);
             --bg-grad-start: #00b49d;
             --bg-grad-end: #007263;
             --bg-dark: #004d43;
@@ -44,13 +45,29 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
         }
 
+        html {
+            overflow-x: clip;
+            background: var(--bg-dark);
+        }
+
         body {
-            background: linear-gradient(135deg, #00b49d 0%, #007263 100%);
-            background-attachment: fixed;
+            background: transparent;
             color: var(--text-main);
             min-height: 100vh;
             padding-bottom: 122px;
             line-height: 1.45;
+            overflow-x: clip;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: var(--app-bg-gradient);
+            pointer-events: none;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         /* HEADER */
@@ -58,12 +75,10 @@
             position: sticky;
             top: 0;
             z-index: 900;
-            background: rgba(0, 75, 65, 0.48);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
+            background: linear-gradient(180deg, rgba(0, 44, 39, 0.86) 0%, rgba(0, 34, 30, 0.78) 100%);
             border-bottom: 1px solid var(--border);
             padding: 10px 14px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.22);
         }
 
         .header-inner {
@@ -1334,6 +1349,10 @@
             display: flex;
             flex-direction: column;
             box-shadow: 0 -4px 22px rgba(0, 0, 0, 0.28);
+            contain: layout paint;
+            isolation: isolate;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .news-bar {
@@ -1345,6 +1364,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.55);
             border-bottom: 1px solid rgba(0, 0, 0, 0.14);
             overflow: hidden;
+            contain: layout paint;
             user-select: none;
             -webkit-user-select: none;
         }
@@ -1402,6 +1422,7 @@
             background: #ffffff;
             color: #111827;
             position: relative;
+            contain: layout paint;
             cursor: pointer;
         }
 
@@ -1884,7 +1905,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.22</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.24</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -2298,7 +2319,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.22)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.24)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2437,7 +2458,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.22_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.24_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -2652,7 +2673,7 @@
             H2H & Hráči
         </button>
         <button class="nav-item" onclick="switchTab('sec-badges', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.22C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.22C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.24C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.24C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
             Odznaky
         </button>
         <button class="nav-item" onclick="switchTab('sec-history', this)">
@@ -2718,6 +2739,7 @@
             }
         ];
 
+        const THEME_STORAGE_KEY = "ELO4MASTER_THEME_V1";
         let currentSeasonThemeIndex = 0;
 
         function getSeasonKeyByDate(date = new Date()) {
@@ -2728,17 +2750,46 @@
             return "winter";                                 // december, január, február
         }
 
-        function applySeasonTheme(themeKey, showNotification = false) {
+        function saveThemePreference(themeKey, seasonKey = getSeasonKeyByDate()) {
+            try {
+                localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify({
+                    themeKey: themeKey,
+                    savedSeason: seasonKey
+                }));
+            } catch (e) {}
+        }
+
+        function getInitialThemeKey() {
+            const currentSeason = getSeasonKeyByDate();
+            try {
+                const raw = localStorage.getItem(THEME_STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    const isValidTheme = parsed && SEASON_THEMES.some(t => t.key === parsed.themeKey);
+                    if (isValidTheme && parsed.savedSeason === currentSeason) {
+                        return parsed.themeKey;
+                    }
+                }
+            } catch (e) {}
+            saveThemePreference(currentSeason, currentSeason);
+            return currentSeason;
+        }
+
+        function applySeasonTheme(themeKey, showNotification = false, persist = false) {
             const idx = SEASON_THEMES.findIndex(t => t.key === themeKey);
             currentSeasonThemeIndex = idx !== -1 ? idx : 0;
             const theme = SEASON_THEMES[currentSeasonThemeIndex];
 
-            document.body.style.background = theme.gradient;
-            document.body.style.backgroundAttachment = "fixed";
+            document.documentElement.style.setProperty("--app-bg-gradient", theme.gradient);
+            document.documentElement.style.background = theme.themeColor;
 
             const metaTheme = document.querySelector('meta[name="theme-color"]');
             if (metaTheme) {
                 metaTheme.setAttribute("content", theme.themeColor);
+            }
+
+            if (persist) {
+                saveThemePreference(theme.key, getSeasonKeyByDate());
             }
 
             if (showNotification) {
@@ -2748,7 +2799,7 @@
 
         function cycleSeasonTheme() {
             const nextIdx = (currentSeasonThemeIndex + 1) % SEASON_THEMES.length;
-            applySeasonTheme(SEASON_THEMES[nextIdx].key, true);
+            applySeasonTheme(SEASON_THEMES[nextIdx].key, true, true);
         }
 
         function handleAchIconError(imgEl) {
@@ -2992,7 +3043,7 @@
         }
 
         async function initApp() {
-            applySeasonTheme(getSeasonKeyByDate(), false);
+            applySeasonTheme(getInitialThemeKey(), false, false);
             const raw = localStorage.getItem(STORAGE_KEY);
             if (raw) {
                 try {
@@ -3037,6 +3088,10 @@
                     closeTvModal();
                 }
             });
+
+            // Načítať aktuálne počasie pre Čadcu (Open-Meteo) ako 1. správu v NEWS
+            fetchCadcaWeather(false);
+            setInterval(() => fetchCadcaWeather(false), 25 * 60 * 1000);
 
             // Automaticky skontrolovať externý databaza.json na GitHube
             await syncFromRemoteJSON(false);
@@ -5481,7 +5536,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.22_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.24_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -5536,7 +5591,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.22_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.24_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -5849,7 +5904,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.22 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.24 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -5928,10 +5983,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.22 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.22 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.24 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.24 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.22 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.24 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -6134,7 +6189,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.22_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.24_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
@@ -6191,7 +6246,7 @@
         }
 
 
-        /* ==================== NEWS BAR TICKER (v1.22) ==================== */
+        /* ==================== NEWS BAR TICKER (v1.24) ==================== */
         let cachedNewsItems = [];
         let newsLastSignature = "";
         let newsResizeTimer = null;
@@ -6225,7 +6280,7 @@
             const achievements = computedAchievements || [];
 
             if (players.length === 0) {
-                add("INFO", "Vitajte v ELO4MASTER v1.22! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
+                add("INFO", "Vitajte v ELO4MASTER v1.24! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
                 return items;
             }
 
@@ -6449,16 +6504,269 @@
             }
         }
 
+
+        /* ==================== POČASIE ČADCA (OPEN-METEO) ==================== */
+        const WEATHER_CACHE_KEY = "CADCA_WEATHER_CACHE_V1";
+        const WEATHER_CACHE_TTL_MS = 20 * 60 * 1000;
+        const WEATHER_API_URL = "https://api.open-meteo.com/v1/forecast?latitude=49.4386&longitude=18.7897&current=temperature_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,wind_speed_10m&timezone=Europe%2FBratislava";
+
+        let cadcaWeather = null;
+        let cadcaWeatherFetchedAt = 0;
+        let cadcaWeatherFailed = false;
+        let weatherQuipSeed = Math.floor(Math.random() * 1000);
+
+        const WEATHER_QUIPS_BY_MONTH = {
+            // ZIMNÉ / CHLADNÉ OBDOBIE (NOVEMBER – MAREC): vždy vtipná poznámka (otužilci / hala)
+            1: [
+                "Vonku je to v januári len pre otužilcov – novoročné predsavzatia radšej plňte v teple haly!",
+                "Januárový tenis vonku? Jedine v lyžiarkach a s čajom v termoske. Smer hala!",
+                "V januári na Kysuciach loptičky vonku skôr mrznú než skáču – ideálny čas na halu.",
+                "Vonku trénujú len ľadové medvede a najtvrdší otužilci. Zvyšok ligy sa hlási v hale!"
+            ],
+            2: [
+                "Február na Kysuciach nepozná zľutovanie – vonku je to len pre otužilcov, výplety patria do haly.",
+                "Ak nemáš rukavice s protišmykovým gripom, februárový kurt vonku vynechaj a rezervuj halu!",
+                "Vonku by si si vo februári skôr privolal omrzliny než eso – istí to vykúrená hala.",
+                "Februárové podmienky vonku sú len pre otužilcov s dobrou poistkou. Hala je jasná voľba!"
+            ],
+            3: [
+                "Marec sa tvári jarne, ale na Kysuciach je vonku stále len pre otužilcov – radšej ešte hala!",
+                "V marci antuka ešte len rozmŕza, vonku hrajú iba najodvážnejší otužilci. Zatiaľ istí hala.",
+                "Prvé marcové slnko vie oklamať – na kraťasy je priskoro, vonku len pre otužilcov, šup do haly!",
+                "V marci vonku skôr chytíš nádchu ako forhend do rohu – halová sezóna ešte nekončí!"
+            ],
+            11: [
+                "V novembri je to vonku už len pre otužilcov – antuka šla na zimný spánok, sťahujeme sa do haly!",
+                "Novembrový tenis vonku? Len ak chceš hrať v hmle s reflexnou loptičkou. Radšej pekne do haly!",
+                "V novembri vonku vydržia len kysuckí otužilci – zvyšok partie nech si nachystá halovky.",
+                "Sychravý november praje halovému tenisu – vonku by dnes zmrzol aj ten najrýchlejší servis!"
+            ],
+            12: [
+                "V decembri je tenis vonku len pre otužilcov a Santa Clausa – my ostatní ideme do haly!",
+                "Decembrový mráz a vonkajší kurt nejdú dokopy – radšej poriadny zápas v hale a potom punč.",
+                "Vonku by sa v decembri hralo lepšie hokejkou než raketou. Hala je jediná rozumná voľba!",
+                "Pre otužilcov ideál, pre normálnych tenistov jasný signál: v decembri hráme pod strechou v hale!"
+            ],
+
+            // VONKAJŠIA SEZÓNA (APRÍL – OKTÓBER): hala (<14 °C / dážď / búrka) vs. antuka von (>=14 °C a sucho)
+            4: {
+                indoor: [
+                    "Apríl je bláznivý a dnes vonku nepraje – radšej zvoľte zápas v hale, nech nepremoknete!",
+                    "Pod 14 °C alebo mokro v apríli? Antuka nech si ešte oddýchne, dnes to istí zápas v hale.",
+                    "Aprílové počasie dnes vyhralo prvý set – presuňte súboj do haly pod strechu!"
+                ],
+                outdoor: [
+                    "Apríl hlási super podmienky – zoberte rakety a poďte pokrstiť vonkajšiu antuku!",
+                    "Teplota nad 14 °C a sucho: ideálny aprílový deň na prvé sklzy na vonkajšej antuke!",
+                    "Hala môže dnes oddychovať – v Čadci to volá von na antuku!"
+                ]
+            },
+            5: {
+                indoor: [
+                    "Máj síce lásky čas, ale dnes skôr čas na strechu nad hlavou – odporúčame zápas v hale!",
+                    "Zamrznutí alebo zmoknutí na antuke? V máji radšej nie – dnes presuňte zápas do haly.",
+                    "Dnešné májové počasie antuke nepraje, v hale vás aspoň nevyženie dážď ani chlad!"
+                ],
+                outdoor: [
+                    "Májová klasika v Čadci – podmienky ako na Roland Garros, šup von na antuku!",
+                    "V máji sedieť v hale by bol hriech – podmienky sú ideálne, poďte na antuku von!",
+                    "Sucho a príjemne teplo: májová antuka čaká, kto dnes získa ELO body vonku?"
+                ]
+            },
+            6: {
+                indoor: [
+                    "Aj v júni vie počasie v Čadci prekvapiť – dnes to na antuku nie je, odporúčame zápas v hale!",
+                    "Dážď, búrka alebo chladný jún? Neriskujte blato na teniskách a dajte si zápas v hale.",
+                    "Dnešný jún má zlú náladu – pod strechou v hale bude loptička odskakovať spoľahlivejšie!"
+                ],
+                outdoor: [
+                    "Jún v plnej paráde – dlhé dni a super počasie, všetci von na antuku!",
+                    "Perfektné júnové podmienky v Čadci – namažte sa, zoberte vodu a hor sa na antuku von!",
+                    "Ideálny júnový deň na antukové výmeny – hala dnes zíva prázdnotou!"
+                ]
+            },
+            7: {
+                indoor: [
+                    "Júlová búrka či nečakané ochladenie? Dnes antuku vynechajte a zachráňte tenis zápasom v hale!",
+                    "V júli sa v hale hráva málokedy, ale dnešné počasie hovorí jasne – šup pod strechu do haly!",
+                    "Keď v júli hrozí dážď alebo chlad pod 14 °C, múdry tenista volí zápas v hale."
+                ],
+                outdoor: [
+                    "Letný júl ako z katalógu – ideálny čas vypotiť pár ELO bodov vonku na antuke!",
+                    "Plná letná sezóna v Čadci: antuka je suchá a pripravená, šup von na kurt!",
+                    "V júli patrí tenis pod holé nebo – poďte si to rozdať von na antuku!"
+                ]
+            },
+            8: {
+                indoor: [
+                    "Augustová búrka alebo chladnejší deň – antuka je dnes mimo hry, odporúčame zápas v hale!",
+                    "Aj v auguste vie Kysuce schladiť či spláchnuť dážď – dnes to vyrieši zápas v hale.",
+                    "Dnes radšej neriskujte mokrú antuku a presuňte augustový duel pod strechu do haly!"
+                ],
+                outdoor: [
+                    "Augustové slnko a teplý vzduch – perfektné podmienky na poriadnu bitku na antuke vonku!",
+                    "V auguste niet nad prach z antuky na ponožkách – vyrazte na kurt von!",
+                    "Skvelé augustové počasie v Čadci – vonkajšia antuka dnes volá po zápase!"
+                ]
+            },
+            9: {
+                indoor: [
+                    "September už ukazuje zuby – pod 14 °C alebo dážď znamená jasné odporúčanie: zápas v hale!",
+                    "Dnešný september nepraje vonkajšej antuke, presuňte zápas do sucha a tepla haly.",
+                    "Jesenný chlad či prehánky v septembri? Neriskujte prechladnutie, dnes je na rade hala!"
+                ],
+                outdoor: [
+                    "Babie leto v septembri! Príjemná teplota bez zrážok – ideálny čas ísť na antuku von!",
+                    "September ako stvorený na tenis bez úpalu – využite to a poďte na antuku von!",
+                    "Perfektné septembrové podmienky na Kysuciach – antuka vonku ešte rozhodne nekončí!"
+                ]
+            },
+            10: {
+                indoor: [
+                    "Október pripomína, že zima je za rohom – pri tomto počasí odporúčame zápas v hale!",
+                    "V októbri pod 14 °C alebo v daždi už antuka nechutí – zahrajte si v pohodlí haly.",
+                    "Dnešný október patrí hale – vonku by ste skôr zbierali lístie než víťazné údery!"
+                ],
+                outdoor: [
+                    "Októbrový zázrak nad 14 °C a bez dažďa – chyťte šancu za pačesy a poďte na antuku von!",
+                    "Zlatý október v Čadci praje tenisu: kým sa dá, užite si ešte vonkajšiu antuku!",
+                    "Bonusové teplo v októbri – hala počká, dnes to ešte vyzerá na skvelú antuku vonku!"
+                ]
+            }
+        };
+
+        function decodeWmoWeather(code) {
+            const c = Number(code);
+            if (c === 0) return { label: "jasno", icon: "☀️", isWet: false, isStorm: false };
+            if (c === 1) return { label: "prevažne jasno", icon: "🌤️", isWet: false, isStorm: false };
+            if (c === 2) return { label: "polojasno", icon: "⛅", isWet: false, isStorm: false };
+            if (c === 3) return { label: "zamračené", icon: "☁️", isWet: false, isStorm: false };
+            if (c === 45 || c === 48) return { label: "hmla", icon: "🌫️", isWet: false, isStorm: false };
+            if (c === 51 || c === 53 || c === 55) return { label: "mrholenie", icon: "🌦️", isWet: true, isStorm: false };
+            if (c === 56 || c === 57) return { label: "mrznúce mrholenie", icon: "🌧️", isWet: true, isStorm: false };
+            if (c === 61 || c === 63 || c === 65) return { label: "dážď", icon: "🌧️", isWet: true, isStorm: false };
+            if (c === 66 || c === 67) return { label: "mrznúci dážď", icon: "🌧️", isWet: true, isStorm: false };
+            if (c === 71 || c === 73 || c === 75 || c === 77) return { label: "sneženie", icon: "❄️", isWet: true, isStorm: false };
+            if (c === 80 || c === 81 || c === 82) return { label: "prehánky", icon: "🌦️", isWet: true, isStorm: false };
+            if (c === 85 || c === 86) return { label: "snehové prehánky", icon: "🌨️", isWet: true, isStorm: false };
+            if (c === 95 || c === 96 || c === 99) return { label: "búrka", icon: "⛈️", isWet: true, isStorm: true };
+            return { label: "premenlivo", icon: "🌤️", isWet: false, isStorm: false };
+        }
+
+        function loadCachedCadcaWeather() {
+            try {
+                const raw = localStorage.getItem(WEATHER_CACHE_KEY);
+                if (!raw) return false;
+                const parsed = JSON.parse(raw);
+                if (parsed && parsed.data && typeof parsed.data.temperature_2m === "number") {
+                    cadcaWeather = parsed.data;
+                    cadcaWeatherFetchedAt = Number(parsed.fetchedAt) || 0;
+                    const age = Date.now() - cadcaWeatherFetchedAt;
+                    return age < WEATHER_CACHE_TTL_MS;
+                }
+            } catch (e) {}
+            return false;
+        }
+
+        async function fetchCadcaWeather(force = false) {
+            if (!force && loadCachedCadcaWeather()) {
+                renderNewsTicker(false);
+                return;
+            }
+            try {
+                const resp = await fetch(WEATHER_API_URL, { cache: "no-store" });
+                if (!resp.ok) throw new Error("HTTP " + resp.status);
+                const json = await resp.json();
+                if (json && json.current && typeof json.current.temperature_2m === "number") {
+                    cadcaWeather = json.current;
+                    cadcaWeatherFetchedAt = Date.now();
+                    cadcaWeatherFailed = false;
+                    try {
+                        localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({
+                            fetchedAt: cadcaWeatherFetchedAt,
+                            data: cadcaWeather
+                        }));
+                    } catch (e) {}
+                    renderNewsTicker(false);
+                }
+            } catch (err) {
+                cadcaWeatherFailed = true;
+                renderNewsTicker(false);
+            }
+        }
+
+        function getWeatherNewsItem() {
+            const month = new Date().getMonth() + 1; // 1 – 12
+            const isWinterPeriod = (month === 11 || month === 12 || month === 1 || month === 2 || month === 3);
+
+            if (!cadcaWeather) {
+                if (cadcaWeatherFailed) {
+                    const fallbackQuip = isWinterPeriod
+                        ? "Offline režim – v tomto období to vonku aj tak býva len pre otužilcov, radšej zvoľte halu!"
+                        : "Offline režim – mrknite z okna: ak je nad 14 °C a sucho, šup na antuku, inak do haly.";
+                    return {
+                        tag: "POČASIE ČADCA",
+                        text: `Aktuálne dáta sa nepodarilo načítať. ${fallbackQuip}`
+                    };
+                }
+                return {
+                    tag: "POČASIE ČADCA",
+                    text: "Načítavam aktuálne podmienky pre tenis z Open-Meteo..."
+                };
+            }
+
+            const temp = Number(cadcaWeather.temperature_2m);
+            const wind = Math.round(Number(cadcaWeather.wind_speed_10m) || 0);
+            const precip = Number(cadcaWeather.precipitation) || 0;
+            const rain = Number(cadcaWeather.rain) || 0;
+            const showers = Number(cadcaWeather.showers) || 0;
+            const snow = Number(cadcaWeather.snowfall) || 0;
+            const wmo = decodeWmoWeather(cadcaWeather.weather_code);
+            const hasPrecip = wmo.isWet || precip > 0 || rain > 0 || showers > 0 || snow > 0;
+
+            let quipList = [];
+            if (isWinterPeriod) {
+                quipList = WEATHER_QUIPS_BY_MONTH[month] || WEATHER_QUIPS_BY_MONTH[11];
+            } else {
+                const monthPool = WEATHER_QUIPS_BY_MONTH[month] || WEATHER_QUIPS_BY_MONTH[6];
+                const goIndoor = (temp < 14) || hasPrecip || wmo.isStorm;
+                quipList = goIndoor ? monthPool.indoor : monthPool.outdoor;
+            }
+
+            const quip = quipList[weatherQuipSeed % quipList.length];
+            const tempStr = temp.toFixed(1).replace(".", ",");
+            const precipExtra = (precip > 0) ? `, zrážky ${precip.toFixed(1).replace(".", ",")} mm` : "";
+            const text = `${wmo.icon} ${tempStr} °C (${wmo.label}, vietor ${wind} km/h${precipExtra}) – ${quip}`;
+
+            return {
+                tag: "POČASIE ČADCA",
+                text
+            };
+        }
+
+
+        let cachedOtherNewsItems = [];
+        let newsDataSignature = "";
+
         function renderNewsTicker(forceReshuffle = false) {
             const groupA = document.getElementById("news-ticker-group-a");
             const groupB = document.getElementById("news-ticker-group-b");
             const track = document.getElementById("news-ticker-track");
             if (!groupA || !groupB || !track) return;
 
-            const sig = `${computedMatches.length}_${computedPlayers.map(p => p.id + ":" + p.elo).join("|")}`;
-            if (forceReshuffle || sig !== newsLastSignature || cachedNewsItems.length === 0) {
-                newsLastSignature = sig;
-                cachedNewsItems = shuffleNewsArray(buildNewsTickerItems());
+            const dataSig = `${computedMatches.length}_${computedPlayers.map(p => p.id + ":" + p.elo).join("|")}`;
+            const weatherSig = `${cadcaWeatherFetchedAt}_${cadcaWeatherFailed ? 1 : 0}_${weatherQuipSeed}`;
+            const fullSig = `${dataSig}__${weatherSig}`;
+
+            if (forceReshuffle || dataSig !== newsDataSignature || cachedOtherNewsItems.length === 0) {
+                newsDataSignature = dataSig;
+                cachedOtherNewsItems = shuffleNewsArray(buildNewsTickerItems());
+            }
+
+            if (forceReshuffle || fullSig !== newsLastSignature || cachedNewsItems.length === 0) {
+                newsLastSignature = fullSig;
+                const weatherItem = getWeatherNewsItem();
+                cachedNewsItems = [weatherItem, ...cachedOtherNewsItems];
             }
 
             const html = cachedNewsItems.map(item =>
@@ -6492,6 +6800,7 @@
                 bar.classList.remove("is-paused");
                 if (label) label.textContent = "NEWS";
             }
+            weatherQuipSeed++;
             renderNewsTicker(true);
             showToast(`NEWS lišta premiešaná (${cachedNewsItems.length} správ)`);
         }
