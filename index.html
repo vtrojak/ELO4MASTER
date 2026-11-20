@@ -49,7 +49,7 @@
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
-            padding-bottom: 88px;
+            padding-bottom: 122px;
             line-height: 1.45;
         }
 
@@ -1323,21 +1323,206 @@
             color: var(--text-main);
         }
 
-        /* BOTTOM NAV */
-        .bottom-nav {
+
+        /* BOTTOM DOCK (NEWS BAR + NAV) */
+        .bottom-dock {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             z-index: 950;
-            background: rgba(0, 62, 54, 0.58);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -4px 22px rgba(0, 0, 0, 0.28);
+        }
+
+        .news-bar {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+            height: 32px;
+            background: #ffffff;
+            border-top: 1px solid rgba(255, 255, 255, 0.55);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .news-badge {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 13px 0 11px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: #ffffff;
+            font-size: 0.74rem;
+            font-weight: 900;
+            letter-spacing: 0.9px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.22);
+            cursor: pointer;
+            white-space: nowrap;
+            border: none;
+        }
+
+        .news-badge:hover {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+        }
+
+        .news-live-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
+            animation: newsDotPulse 1.6s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        .news-bar.is-paused .news-live-dot {
+            animation: none;
+            opacity: 0.5;
+        }
+
+        @keyframes newsDotPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.78); }
+        }
+
+        .news-viewport {
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            color: #111827;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .news-viewport::before,
+        .news-viewport::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 14px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .news-viewport::before {
+            left: 0;
+            background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .news-viewport::after {
+            right: 0;
+            background: linear-gradient(270deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .news-track {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            will-change: transform;
+            animation: newsMarqueeScroll var(--news-duration, 90s) linear infinite;
+        }
+
+        .news-bar.is-paused .news-track {
+            animation-play-state: paused;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .news-viewport:hover .news-track {
+                animation-play-state: paused;
+            }
+        }
+
+        @keyframes newsMarqueeScroll {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+
+        .news-group {
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .news-item {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #111827;
+            letter-spacing: 0.05px;
+            padding: 0 4px;
+        }
+
+        .news-tag {
+            display: inline-block;
+            color: #b91c1c;
+            font-weight: 800;
+            margin-right: 5px;
+            text-transform: uppercase;
+            font-size: 0.74rem;
+            letter-spacing: 0.3px;
+        }
+
+        .news-sep {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 18px;
+            color: #dc2626;
+            font-size: 0.56rem;
+            opacity: 0.88;
+        }
+
+        @media (max-width: 620px) {
+            body {
+                padding-bottom: 116px;
+            }
+            .news-bar {
+                height: 28px;
+            }
+            .news-badge {
+                padding: 0 9px 0 8px;
+                font-size: 0.67rem;
+                letter-spacing: 0.6px;
+                gap: 4px;
+            }
+            .news-live-dot {
+                width: 6px;
+                height: 6px;
+            }
+            .news-item {
+                font-size: 0.76rem;
+            }
+            .news-tag {
+                font-size: 0.68rem;
+            }
+            .news-sep {
+                margin: 0 14px;
+            }
+        }
+
+        /* BOTTOM NAV */
+        .bottom-nav {
+            background: rgba(0, 62, 54, 0.62);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
             padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.22);
         }
 
         .nav-item {
@@ -1699,7 +1884,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.21</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.22</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -2113,7 +2298,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.21)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.22)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2252,7 +2437,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.21_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.22_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -2435,8 +2620,21 @@
         </div>
     </div>
 
-    <!-- SPODNÁ NAVIGÁCIA PRE MOBIL (6 SEKCIÍ) -->
-    <nav class="bottom-nav">
+    <!-- SPODNÁ LIŠTA: NEWS BAR + NAVIGÁCIA -->
+    <div class="bottom-dock">
+        <div class="news-bar" id="news-bar" aria-label="Tenisové správy a štatistiky">
+            <button type="button" class="news-badge" id="news-badge-btn" onclick="reshuffleNewsTicker()" title="Kliknutím premiešaš poradie správ">
+                <span class="news-live-dot"></span>
+                <span id="news-badge-label">NEWS</span>
+            </button>
+            <div class="news-viewport" onclick="toggleNewsTickerPause()" title="Kliknutím pozastavíš alebo spustíš správy (na PC stačí prejsť myšou)">
+                <div class="news-track" id="news-ticker-track">
+                    <div class="news-group" id="news-ticker-group-a"></div>
+                    <div class="news-group" id="news-ticker-group-b" aria-hidden="true"></div>
+                </div>
+            </div>
+        </div>
+        <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchTab('sec-table', this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
             Tabuľka
@@ -2454,7 +2652,7 @@
             H2H & Hráči
         </button>
         <button class="nav-item" onclick="switchTab('sec-badges', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.22C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.22C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
             Odznaky
         </button>
         <button class="nav-item" onclick="switchTab('sec-history', this)">
@@ -2462,6 +2660,7 @@
             História
         </button>
     </nav>
+    </div>
 
     <script>
         const STORAGE_KEY = "ELO4MASTER_DB_V1";
@@ -3838,6 +4037,7 @@
             renderPlayerProfile();
             renderAchievements();
             renderMatchHistory();
+            renderNewsTicker();
         }
 
         let tableSort = {
@@ -5281,7 +5481,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.21_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.22_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -5336,7 +5536,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.21_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.22_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -5649,7 +5849,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.21 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.22 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -5728,10 +5928,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.21 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.21 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.22 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.22 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.21 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.22 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -5934,7 +6134,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.21_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.22_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
@@ -5989,6 +6189,317 @@
             t.classList.add("show");
             setTimeout(() => t.classList.remove("show"), 3200);
         }
+
+
+        /* ==================== NEWS BAR TICKER (v1.22) ==================== */
+        let cachedNewsItems = [];
+        let newsLastSignature = "";
+        let newsResizeTimer = null;
+
+        function shuffleNewsArray(arr) {
+            const copy = arr.slice();
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function formatDateSk(iso) {
+            if (!iso) return "";
+            const parts = String(iso).split("-");
+            if (parts.length !== 3) return iso;
+            return `${parseInt(parts[2], 10)}.${parseInt(parts[1], 10)}.${parts[0]}`;
+        }
+
+        function buildNewsTickerItems() {
+            const items = [];
+            const add = (tag, text) => {
+                if (text) items.push({ tag, text });
+            };
+
+            const players = computedPlayers || [];
+            const activePlayers = players.filter(p => p.matches > 0);
+            const pairs = computedPairs || [];
+            const matches = computedMatches || [];
+            const achievements = computedAchievements || [];
+
+            if (players.length === 0) {
+                add("INFO", "Vitajte v ELO4MASTER v1.22! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
+                return items;
+            }
+
+            // 1. Neaktivita (bulvár > 180 dní a > 365 dní) – obmedzíme na max 6 najzaujímavejších, aby nezaplavili celú lištu
+            let halfYearIdx = 0;
+            let yearIdx = 0;
+            const halfYearTpls = [
+                (p) => `${p.name} bol videný, ako potajomky trénuje o stenu. Po ${p.daysSinceLastMatch} dňoch pauzy sa očakáva jeho návrat na kurty!`,
+                (p) => `${p.name} naposledy hral štvorhru pred ${p.daysSinceLastMatch} dňami (${formatDateSk(p.lastMatchDate)}). Parťáci začínajú byť nervózni.`,
+                (p) => `Pátracia akcia: ${p.name} chýba v debli už ${p.daysSinceLastMatch} dní. Vraj si šetrí servis na tajný turnaj.`
+            ];
+            const yearTpls = [
+                (p) => `${p.name} nehral štvorhru už ${p.daysSinceLastMatch} dní. Zákulisné zdroje tvrdia, že vymenil raketu za šípky alebo petang.`,
+                (p) => `Posledný deblový štart hráča ${p.name} (${formatDateSk(p.lastMatchDate)}) si už pamätajú len kronikári. Raketa zrejme zapadá prachom.`,
+                (p) => `${p.name} je mimo kurtov už viac ako rok (${p.daysSinceLastMatch} dní). Podľa neoverených správ prestúpil k šachistom.`
+            ];
+
+            const halfYearList = activePlayers.filter(p => typeof p.daysSinceLastMatch === "number" && p.daysSinceLastMatch >= 180 && p.daysSinceLastMatch < 365);
+            const yearList = activePlayers.filter(p => typeof p.daysSinceLastMatch === "number" && p.daysSinceLastMatch >= 365);
+
+            shuffleNewsArray(halfYearList).slice(0, 3).forEach(p => {
+                add("ŠOKUJÚCE ZÁBERY", halfYearTpls[halfYearIdx % halfYearTpls.length](p));
+                halfYearIdx++;
+            });
+            shuffleNewsArray(yearList).slice(0, 3).forEach(p => {
+                add("BULVÁR", yearTpls[yearIdx % yearTpls.length](p));
+                yearIdx++;
+            });
+
+            // 2. Čerstvý navrátilec (v posledných 3 štvorhrách sa niekto vrátil po >= 90 dňoch)
+            if (matches.length >= 2) {
+                const recent = matches.slice(-3);
+                const comebackSeen = new Set();
+                recent.forEach(rm => {
+                    [rm.t1p1, rm.t1p2, rm.t2p1, rm.t2p2].forEach(pid => {
+                        if (comebackSeen.has(pid) || !rm.date) return;
+                        const prevMatches = matches.filter(m =>
+                            m.index < rm.index &&
+                            (m.t1p1 === pid || m.t1p2 === pid || m.t2p1 === pid || m.t2p2 === pid) &&
+                            m.date
+                        );
+                        if (prevMatches.length > 0) {
+                            const prevDate = prevMatches[prevMatches.length - 1].date;
+                            const d1 = new Date(prevDate + "T00:00:00");
+                            const d2 = new Date(rm.date + "T00:00:00");
+                            const gapDays = Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
+                            if (gapDays >= 90) {
+                                const pl = players.find(x => x.id === pid);
+                                if (pl) {
+                                    comebackSeen.add(pid);
+                                    add("JE SPÄŤ", `${pl.name} sa po ${gapDays}-dňovej pauze vrátil do štvorhry a hneď zamiešal kartami!`);
+                                }
+                            }
+                        }
+                    });
+                });
+            }
+
+            // 3. Posledná štvorhra + burza ELO
+            if (matches.length > 0) {
+                const lm = matches[matches.length - 1];
+                const s1 = Number(lm.sets1) || 0;
+                const s2 = Number(lm.sets2) || 0;
+                const gemsTxt = lm.gems ? ` (${lm.gems})` : "";
+                if (s1 > s2) {
+                    add("POSLEDNÁ ŠTVORHRA", `Zápas #${lm.index} (${formatDateSk(lm.date)}): ${lm.teamNameA} zdolali pár ${lm.teamNameB} pomerom ${s1}:${s2}${gemsTxt}.`);
+                } else if (s2 > s1) {
+                    add("POSLEDNÁ ŠTVORHRA", `Zápas #${lm.index} (${formatDateSk(lm.date)}): ${lm.teamNameB} porazili pár ${lm.teamNameA} pomerom ${s2}:${s1}${gemsTxt}.`);
+                } else {
+                    add("POSLEDNÁ ŠTVORHRA", `Zápas #${lm.index} (${formatDateSk(lm.date)}): ${lm.teamNameA} a ${lm.teamNameB} sa rozišli zmierlivo ${s1}:${s2}${gemsTxt}.`);
+                }
+
+                if (lm.deltaA > 0) {
+                    add("BURZA ELO", `Po poslednej štvorhre vyskočili akcie páru ${lm.teamNameA} o +${lm.deltaA.toFixed(1)} ELO bodov na hráča.`);
+                    add("ČERVENÉ ČÍSLA", `Posledný zápas stál dvojicu ${lm.teamNameB} presne ${lm.deltaB.toFixed(1)} ELO bodov. Odveta je vraj už v príprave.`);
+                } else if (lm.deltaB > 0) {
+                    add("BURZA ELO", `Po poslednej štvorhre vyskočili akcie páru ${lm.teamNameB} o +${lm.deltaB.toFixed(1)} ELO bodov na hráča.`);
+                    add("ČERVENÉ ČÍSLA", `Posledný zápas stál dvojicu ${lm.teamNameA} presne ${lm.deltaA.toFixed(1)} ELO bodov. Odveta je vraj už v príprave.`);
+                }
+            }
+
+            // 4. Aktuálne série (horúca forma / kríza)
+            activePlayers.forEach(p => {
+                if (!p.isInactive && p.curWinStreak >= 3) {
+                    add("HORÚCA FORMA", `${p.name} je na neudržanie – ťahá deblovú sériu ${p.curWinStreak} výhier v rade! Kto ho zastaví?`);
+                } else if (!p.isInactive && p.curLossStreak >= 3) {
+                    add("KRÍZOVÝ ŠTÁB", `${p.name} prehral už ${p.curLossStreak} štvorhier po sebe. Odborníci odporúčajú vymeniť výplet alebo parťáka.`);
+                }
+            });
+
+            // 5. Súboje na čele rebríčka jednotlivcov aj dvojíc
+            if (players.length >= 1) {
+                add("NA TRÓNE", `Aktuálnym deblovým kráľom rebríčka je ${players[0].name} s ratingom ${players[0].elo.toFixed(1)} ELO.`);
+            }
+            if (players.length >= 2) {
+                const diff12 = Math.round((players[0].elo - players[1].elo) * 10) / 10;
+                if (diff12 <= 25) {
+                    add("DRÁMA NA ČELE", `${players[1].name} dýcha na chrbát lídrovi ${players[0].name} – delí ich už len ${diff12.toFixed(1)} ELO bodov!`);
+                } else {
+                    add("BOJ O ČELO", `${players[1].name} stráca na prvého deblistu ${players[0].name} presne ${diff12.toFixed(1)} ELO bodov.`);
+                }
+
+                let minGap = Infinity;
+                let closePair = null;
+                for (let i = 0; i < players.length - 1; i++) {
+                    const g = Math.round((players[i].elo - players[i + 1].elo) * 10) / 10;
+                    if (g < minGap) {
+                        minGap = g;
+                        closePair = [players[i], players[i + 1]];
+                    }
+                }
+                if (closePair) {
+                    add("NA CHLP ROVNAKO", `${closePair[0].name} a ${closePair[1].name} sú v tabuľke natlačení na rozdiel iba ${minGap.toFixed(1)} ELO bodov.`);
+                }
+            }
+
+            if (pairs.length >= 1) {
+                add("PÁR ČÍSLO JEDEN", `Rebríček pevných dvojíc vedie zohraný tandem ${pairs[0].name} s párovým ratingom ${pairs[0].elo.toFixed(1)} ELO.`);
+            }
+            if (pairs.length >= 2) {
+                const pDiff = Math.round((pairs[0].elo - pairs[1].elo) * 10) / 10;
+                add("SÚBOJ DVOJÍC", `Medzi najlepšími pármi ${pairs[0].name} a ${pairs[1].name} je rozdiel len ${pDiff.toFixed(1)} párových ELO bodov.`);
+            }
+
+            // 6. Hráčske štatistiky (úspešnosť, gemy, progres, návrat z dna, pokles z maxima)
+            if (activePlayers.length > 0) {
+                const qualified = activePlayers.filter(p => p.matches >= 3);
+                if (qualified.length > 0) {
+                    const bestWinPct = qualified.reduce((a, b) => {
+                        const pa = (a.wins + 0.5 * a.draws) / a.matches;
+                        const pb = (b.wins + 0.5 * b.draws) / b.matches;
+                        return pb > pa ? b : a;
+                    });
+                    const pctW = (((bestWinPct.wins + 0.5 * bestWinPct.draws) / bestWinPct.matches) * 100).toFixed(1);
+                    add("STROJ NA VÝHRY", `Najvyššiu úspešnosť v štvorhre (min. 3 štarty) má ${bestWinPct.name} – presne ${pctW} % (${bestWinPct.wins}V-${bestWinPct.losses}P-${bestWinPct.draws}R).`);
+
+                    const withGems = qualified.filter(p => (p.gemsWon + p.gemsLost) > 0);
+                    if (withGems.length > 0) {
+                        const bestGems = withGems.reduce((a, b) => {
+                            const ga = a.gemsWon / (a.gemsWon + a.gemsLost);
+                            const gb = b.gemsWon / (b.gemsWon + b.gemsLost);
+                            return gb > ga ? b : a;
+                        });
+                        const gPct = ((bestGems.gemsWon / (bestGems.gemsWon + bestGems.gemsLost)) * 100).toFixed(1);
+                        add("ŠTATISTIKA DŇA", `${bestGems.name} vyhráva v štvorhrách až ${gPct} % všetkých odohratých gemov (${bestGems.gemsWon}:${bestGems.gemsLost}).`);
+                    }
+                }
+
+                const bestProgress = activePlayers.reduce((a, b) => ((b.elo - b.effectiveStartElo) > (a.elo - a.effectiveStartElo) ? b : a));
+                const progVal = Math.round((bestProgress.elo - bestProgress.effectiveStartElo) * 10) / 10;
+                if (progVal > 0) {
+                    add("DLHODOBÝ PROGRES", `Od štartu na ${bestProgress.effectiveStartElo.toFixed(0)} ELO si ${bestProgress.name} pripísal už celkových +${progVal.toFixed(1)} bodov.`);
+                }
+
+                const bestClimb = activePlayers.reduce((a, b) => ((b.elo - b.minElo) > (a.elo - a.minElo) ? b : a));
+                const climbVal = Math.round((bestClimb.elo - bestClimb.minElo) * 10) / 10;
+                if (climbVal >= 15) {
+                    add("NÁVRAT Z DNA", `${bestClimb.name} sa od svojho historického minima (${bestClimb.minElo.toFixed(1)} ELO) vyškriabal už o +${climbVal.toFixed(1)} bodov vyššie!`);
+                }
+
+                const biggestOffPeak = activePlayers.reduce((a, b) => ((b.maxElo - b.elo) > (a.maxElo - a.elo) ? b : a));
+                const offPeakVal = Math.round((biggestOffPeak.maxElo - biggestOffPeak.elo) * 10) / 10;
+                if (offPeakVal >= 15) {
+                    add("HĽADÁ FORMU", `${biggestOffPeak.name} kedysi dosiahol ${biggestOffPeak.maxElo.toFixed(1)} ELO – dnes mu k vlastnému rekordu chýba ${offPeakVal.toFixed(1)} bodov.`);
+                }
+            }
+
+            // 7. Klubová kronika
+            if (matches.length > 0) {
+                let totalClubGems = 0;
+                let totalClubSets = 0;
+                matches.forEach(m => {
+                    totalClubSets += (Number(m.sets1) || 0) + (Number(m.sets2) || 0);
+                    totalClubGems += m.totalGems || 0;
+                });
+                add("KLUBOVÁ KRONIKA", `V deblovej databáze je zapísaných ${matches.length} štvorhier, ${pairs.length} rôznych dvojíc a celkovo ${totalClubGems} gemov (${totalClubSets} setov).`);
+            }
+
+            // 8. Správy priamo z Achievementov (všetky 4 kategórie)
+            const achTemplates = {
+                unstoppable:      (n, a) => ["NEZASTAVITEĽNÝ", `Historický rekord víťaznej série (${a.valueText}) stále drží ${n}.`],
+                hot_hand:         (n, a) => ["HORÚCA RUKA", `Najdlhšiu práve prebiehajúcu víťaznú šnúru (${a.valueText}) má ${n}.`],
+                free_fall:        (n, a) => ["ČIERNA KRONIKA", `Odznak Voľný pád (${a.valueText}) má v zbierke ${n}.`],
+                bulletproof:      (n, a) => ["NEPRIESTRELNÝ", `Najdlhšiu šnúru bez jedinej prehry (${a.valueText}) zaznamenal ${n}.`],
+                master_baker:     (n, a) => ["POZOR NA KANÁRE", `${n} rozdal súperom už ${a.valueText}. V šatni mu hovoria Čistič!`],
+                bagel_receiver:   (n, a) => ["OCHRANA PRÍRODY", `${n} nazbieral už ${a.valueText} – titul Ornitológ mu patrí právom.`],
+                surgeon:          (n, a) => ["CHIRURG KURTU", `${n} vybavil súperov bez straty setu už ${a.valueText.replace("× bez straty setu", "-krát")}.`],
+                nerves_of_steel:  (n, a) => ["MUŽ ZO ŽELEZA", `${n} odohral už ${a.valueText} (7:6 / 6:7). Kardiológ tento šport neodporúča.`],
+                sniper:           (n, a) => ["SNIPER KURTU", `Najlepšiu priemernú gemovú bilanciu (${a.valueText}) si drží ${n}.`],
+                king_of_hill:     (n, a) => ["KRÁĽ HÔR", `Historický strop rebríčka (${a.valueText}) doteraz dosiahol ${n}.`],
+                giant_slayer:     (n, a) => ["LOVEC OBROV", `Najväčší jednorazový deblový lup (${a.valueText}) v jednom zápase ukoristil ${n}.`],
+                iron_man:         (n, a) => ["ŽELEZNÝ MUŽ", `${n} má na konte najviac štartov v štvorhre (${a.valueText}) – na kurte má trvalý pobyt.`],
+                diplomat:         (n, a) => ["DIPLOMAT LIGY", `${n} vedie tabuľku nerozhodných štvorhier 1:1 (${a.valueText}).`],
+                chameleon:        (n, a) => ["CHAMELEÓN", `Spoločenský typ: ${n} si v debli zahral už s ${a.valueText.replace(" rôznych parťákov", "")} rôznymi spoluhráčmi.`],
+                dynamic_duo:      (n, a) => ["DYNAMICKÉ DUO", `Najúspešnejšia pevná dvojica rebríčka dosiahla ${a.valueText} (${n}).`],
+                steamroller:      (n, a) => ["PARNÝ VALEC", `Rekordný debakel histórie (${a.valueText}) majú na svedomí ${n}.`],
+                blood_sweat:      (n, a) => ["KRV, POT A SLZY", `Najdlhšia deblová bitka histórie priniesla až ${a.valueText}!`],
+                inseparable_pair: (n, a) => ["NEROZLUČNÁ DVOJKA", `Manželstvo na kurte: ${n} spolu nastúpili už do ${a.valueText.replace(" spoločných štartov", "")} štvorhier.`]
+            };
+
+            achievements.forEach(a => {
+                if (a.holders && a.holders.length > 0 && achTemplates[a.id]) {
+                    const names = a.holders.map(h => h.name).join(" & ");
+                    const [tag, txt] = achTemplates[a.id](names, a);
+                    add(tag, txt);
+                }
+            });
+
+            return items;
+        }
+
+        function updateNewsTickerSpeed() {
+            const groupA = document.getElementById("news-ticker-group-a");
+            const track = document.getElementById("news-ticker-track");
+            if (!groupA || !track) return;
+            const widthPx = groupA.scrollWidth;
+            if (widthPx > 0) {
+                const pxPerSec = window.innerWidth <= 620 ? 44 : 52;
+                const durationSec = Math.max(24, Math.round(widthPx / pxPerSec));
+                track.style.setProperty("--news-duration", `${durationSec}s`);
+            }
+        }
+
+        function renderNewsTicker(forceReshuffle = false) {
+            const groupA = document.getElementById("news-ticker-group-a");
+            const groupB = document.getElementById("news-ticker-group-b");
+            const track = document.getElementById("news-ticker-track");
+            if (!groupA || !groupB || !track) return;
+
+            const sig = `${computedMatches.length}_${computedPlayers.map(p => p.id + ":" + p.elo).join("|")}`;
+            if (forceReshuffle || sig !== newsLastSignature || cachedNewsItems.length === 0) {
+                newsLastSignature = sig;
+                cachedNewsItems = shuffleNewsArray(buildNewsTickerItems());
+            }
+
+            const html = cachedNewsItems.map(item =>
+                `<span class="news-item"><span class="news-tag">${escapeHtml(item.tag)}:</span>${escapeHtml(item.text)}</span><span class="news-sep" aria-hidden="true">■</span>`
+            ).join("");
+
+            groupA.innerHTML = html;
+            groupB.innerHTML = html;
+
+            if (forceReshuffle) {
+                track.style.animation = "none";
+                void track.offsetWidth;
+                track.style.animation = "";
+            }
+
+            requestAnimationFrame(updateNewsTickerSpeed);
+        }
+
+        function toggleNewsTickerPause() {
+            const bar = document.getElementById("news-bar");
+            const label = document.getElementById("news-badge-label");
+            if (!bar) return;
+            const isPaused = bar.classList.toggle("is-paused");
+            if (label) label.textContent = isPaused ? "PAUZA" : "NEWS";
+        }
+
+        function reshuffleNewsTicker() {
+            const bar = document.getElementById("news-bar");
+            const label = document.getElementById("news-badge-label");
+            if (bar && bar.classList.contains("is-paused")) {
+                bar.classList.remove("is-paused");
+                if (label) label.textContent = "NEWS";
+            }
+            renderNewsTicker(true);
+            showToast(`NEWS lišta premiešaná (${cachedNewsItems.length} správ)`);
+        }
+
+        window.addEventListener("resize", () => {
+            clearTimeout(newsResizeTimer);
+            newsResizeTimer = setTimeout(updateNewsTickerSpeed, 180);
+        });
 
         window.addEventListener("DOMContentLoaded", initApp);
     </script>
