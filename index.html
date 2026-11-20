@@ -1452,7 +1452,9 @@
             align-items: center;
             width: max-content;
             will-change: transform;
-            animation: newsMarqueeScroll var(--news-duration, 90s) linear infinite;
+            animation:
+                newsMarqueeIntro var(--news-intro-duration, 8s) linear 0.5s 1 backwards,
+                newsMarqueeScroll var(--news-duration, 90s) linear calc(0.5s + var(--news-intro-duration, 8s)) infinite;
         }
 
         .news-bar.is-paused .news-track {
@@ -1463,6 +1465,11 @@
             .news-viewport:hover .news-track {
                 animation-play-state: paused;
             }
+        }
+
+        @keyframes newsMarqueeIntro {
+            0% { transform: translate3d(var(--news-vp-width, 100vw), 0, 0); }
+            100% { transform: translate3d(0, 0, 0); }
         }
 
         @keyframes newsMarqueeScroll {
@@ -1905,7 +1912,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.24</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.25</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -2319,7 +2326,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.24)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.25)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2458,7 +2465,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.24_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.25_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -2673,7 +2680,7 @@
             H2H & Hráči
         </button>
         <button class="nav-item" onclick="switchTab('sec-badges', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.24C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.24C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.25C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.25C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
             Odznaky
         </button>
         <button class="nav-item" onclick="switchTab('sec-history', this)">
@@ -3722,7 +3729,7 @@
                     theme: "ach-green",
                     accent: "#4ade80",
                     isNegative: false,
-                    valueText: `${rWinStreak.value} výhry v rade`,
+                    valueText: `${skCount(rWinStreak.value, "výhra", "výhry", "výhier")} v rade`,
                     holders: rWinStreak.holders
                 },
                 {
@@ -3735,7 +3742,7 @@
                     theme: "ach-green",
                     accent: "#4ade80",
                     isNegative: false,
-                    valueText: `${rHotHand.value} aktívne výhry`,
+                    valueText: `${skCount(rHotHand.value, "aktívna výhra", "aktívne výhry", "aktívnych výhier")}`,
                     holders: rHotHand.holders
                 },
                 {
@@ -3748,7 +3755,7 @@
                     theme: "ach-red",
                     accent: "#f87171",
                     isNegative: true,
-                    valueText: `${rLossStreak.value} prehry v rade`,
+                    valueText: `${skCount(rLossStreak.value, "prehra", "prehry", "prehier")} v rade`,
                     holders: rLossStreak.holders
                 },
                 {
@@ -3815,7 +3822,7 @@
                     theme: "ach-blue",
                     accent: "#38bdf8",
                     isNegative: false,
-                    valueText: `${rTbPlayed.value} odohratých TB`,
+                    valueText: `${skCount(rTbPlayed.value, "odohratý TB", "odohraté TB", "odohratých TB")}`,
                     holders: rTbPlayed.holders
                 },
                 {
@@ -3869,7 +3876,7 @@
                     theme: "ach-blue",
                     accent: "#38bdf8",
                     isNegative: false,
-                    valueText: `${rIronMan.value} zápasov`,
+                    valueText: `${skCount(rIronMan.value, "zápas", "zápasy", "zápasov")}`,
                     holders: rIronMan.holders
                 },
                 {
@@ -3882,7 +3889,7 @@
                     theme: "ach-blue",
                     accent: "#38bdf8",
                     isNegative: false,
-                    valueText: `${rDiplomat.value} remíz`,
+                    valueText: `${skCount(rDiplomat.value, "remíza", "remízy", "remíz")}`,
                     holders: rDiplomat.holders
                 },
                 {
@@ -3895,7 +3902,7 @@
                     theme: "ach-blue",
                     accent: "#38bdf8",
                     isNegative: false,
-                    valueText: `${rChameleon.value} rôznych parťákov`,
+                    valueText: `${skCount(rChameleon.value, "rôzny parťák", "rôzni parťáci", "rôznych parťákov")}`,
                     holders: rChameleon.holders
                 },
 
@@ -3923,7 +3930,7 @@
                     theme: "ach-green",
                     accent: "#4ade80",
                     isNegative: false,
-                    valueText: `Rozdiel +${maxGemDiffVal} gemov`,
+                    valueText: `Rozdiel +${skCount(maxGemDiffVal, "gem", "gemy", "gemov")}`,
                     holders: steamrollerHolders
                 },
                 {
@@ -3936,7 +3943,7 @@
                     theme: "ach-blue",
                     accent: "#38bdf8",
                     isNegative: false,
-                    valueText: `${maxTotalGemsVal} odohratých gemov`,
+                    valueText: `${skCount(maxTotalGemsVal, "odohratý gem", "odohraté gemy", "odohratých gemov")}`,
                     holders: marathonHolders
                 },
                 {
@@ -3949,7 +3956,7 @@
                     theme: "ach-purple",
                     accent: "#c084fc",
                     isNegative: false,
-                    valueText: `${rMostFrequentPair.value} spoločných štartov`,
+                    valueText: `${skCount(rMostFrequentPair.value, "spoločný štart", "spoločné štarty", "spoločných štartov")}`,
                     holders: frequentPairPlayers
                 }
             ];
@@ -5536,7 +5543,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.24_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.25_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -5591,7 +5598,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.24_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.25_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -5904,7 +5911,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.24 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.25 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -5983,10 +5990,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.24 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.24 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.25 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.25 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.24 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.25 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -6189,7 +6196,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.24_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.25_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
@@ -6246,7 +6253,7 @@
         }
 
 
-        /* ==================== NEWS BAR TICKER (v1.24) ==================== */
+        /* ==================== NEWS BAR TICKER (v1.25) ==================== */
         let cachedNewsItems = [];
         let newsLastSignature = "";
         let newsResizeTimer = null;
@@ -6267,6 +6274,75 @@
             return `${parseInt(parts[2], 10)}.${parseInt(parts[1], 10)}.${parts[0]}`;
         }
 
+        const SK_NAME_CASES = {
+            "vlado":  { gen: "Vlada",   dat: "Vladovi",   acc: "Vlada",   ins: "Vladom" },
+            "tibor":  { gen: "Tibora",  dat: "Tiborovi",  acc: "Tibora",  ins: "Tiborom" },
+            "belo":   { gen: "Bela",    dat: "Belovi",    acc: "Bela",    ins: "Belom" },
+            "majo":   { gen: "Maja",    dat: "Majovi",    acc: "Maja",    ins: "Majom" },
+            "peto":   { gen: "Peťa",    dat: "Peťovi",    acc: "Peťa",    ins: "Peťom" },
+            "tono":   { gen: "Toňa",    dat: "Toňovi",    acc: "Toňa",    ins: "Toňom" },
+            "martin": { gen: "Martina", dat: "Martinovi", acc: "Martina", ins: "Martinom" },
+            "adam":   { gen: "Adama",   dat: "Adamovi",   acc: "Adama",   ins: "Adamom" },
+            "uher":   { gen: "Uhra",    dat: "Uhrovi",    acc: "Uhra",    ins: "Uhrom" },
+            "igor":   { gen: "Igora",   dat: "Igorovi",   acc: "Igora",   ins: "Igorom" },
+            "matus":  { gen: "Matúša",  dat: "Matúšovi",  acc: "Matúša",  ins: "Matúšom" },
+            "cicero": { gen: "Cicera",  dat: "Cicerovi",  acc: "Cicera",  ins: "Cicerom" },
+            "marcel": { gen: "Marcela", dat: "Marcelovi", acc: "Marcela", ins: "Marcelom" },
+            "sulo":   { gen: "Šula",    dat: "Šulovi",    acc: "Šula",    ins: "Šulom" },
+            "pato":   { gen: "Paťa",    dat: "Paťovi",    acc: "Paťa",    ins: "Paťom" }
+        };
+
+        function skPlural(n, one, few, many) {
+            const absN = Math.abs(Number(n) || 0);
+            if (!Number.isInteger(absN)) return many;
+            if (absN === 1) return one;
+            if (absN >= 2 && absN <= 4) return few;
+            return many;
+        }
+
+        function skCount(n, one, few, many) {
+            return `${n} ${skPlural(n, one, few, many)}`;
+        }
+
+        function skName(name, gramCase = "nom") {
+            const clean = String(name || "").trim();
+            if (!clean || gramCase === "nom") return clean;
+            const key = clean.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if (SK_NAME_CASES[key] && SK_NAME_CASES[key][gramCase]) {
+                return SK_NAME_CASES[key][gramCase];
+            }
+            const last = clean.slice(-1).toLowerCase();
+            if (last === "o") {
+                const stem = clean.slice(0, -1);
+                if (gramCase === "gen" || gramCase === "acc") return stem + "a";
+                if (gramCase === "dat") return stem + "ovi";
+                if (gramCase === "ins") return stem + "om";
+            }
+            if (last === "a") {
+                const stem = clean.slice(0, -1);
+                if (gramCase === "gen" || gramCase === "acc") return stem + "u";
+                if (gramCase === "dat") return stem + "ovi";
+                if (gramCase === "ins") return stem + "om";
+            }
+            if ("bcčdďfghjklĺľmnňpqrŕsštťvwxzž".includes(last)) {
+                if (gramCase === "gen" || gramCase === "acc") return clean + "a";
+                if (gramCase === "dat") return clean + "ovi";
+                if (gramCase === "ins") return clean + "om";
+            }
+            return clean;
+        }
+
+        function skJoinNames(holders, gramCase = "nom") {
+            const list = (holders || []).map(h => {
+                const raw = typeof h === "string" ? h : (h && h.name ? h.name : "");
+                return skName(raw, gramCase);
+            }).filter(Boolean);
+            if (list.length === 0) return "";
+            if (list.length === 1) return list[0];
+            if (list.length === 2) return `${list[0]} a ${list[1]}`;
+            return `${list.slice(0, -1).join(", ")} a ${list[list.length - 1]}`;
+        }
+
         function buildNewsTickerItems() {
             const items = [];
             const add = (tag, text) => {
@@ -6280,7 +6356,7 @@
             const achievements = computedAchievements || [];
 
             if (players.length === 0) {
-                add("INFO", "Vitajte v ELO4MASTER v1.24! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
+                add("INFO", "Vitajte v ELO4MASTER v1.25! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
                 return items;
             }
 
@@ -6290,12 +6366,12 @@
             const halfYearTpls = [
                 (p) => `${p.name} bol videný, ako potajomky trénuje o stenu. Po ${p.daysSinceLastMatch} dňoch pauzy sa očakáva jeho návrat na kurty!`,
                 (p) => `${p.name} naposledy hral štvorhru pred ${p.daysSinceLastMatch} dňami (${formatDateSk(p.lastMatchDate)}). Parťáci začínajú byť nervózni.`,
-                (p) => `Pátracia akcia: ${p.name} chýba v debli už ${p.daysSinceLastMatch} dní. Vraj si šetrí servis na tajný turnaj.`
+                (p) => `Pátracia akcia: ${p.name} chýba v debli už ${skCount(p.daysSinceLastMatch, "deň", "dni", "dní")}. Vraj si šetrí servis na tajný turnaj.`
             ];
             const yearTpls = [
-                (p) => `${p.name} nehral štvorhru už ${p.daysSinceLastMatch} dní. Zákulisné zdroje tvrdia, že vymenil raketu za šípky alebo petang.`,
-                (p) => `Posledný deblový štart hráča ${p.name} (${formatDateSk(p.lastMatchDate)}) si už pamätajú len kronikári. Raketa zrejme zapadá prachom.`,
-                (p) => `${p.name} je mimo kurtov už viac ako rok (${p.daysSinceLastMatch} dní). Podľa neoverených správ prestúpil k šachistom.`
+                (p) => `${p.name} nehral štvorhru už ${skCount(p.daysSinceLastMatch, "deň", "dni", "dní")}. Zákulisné zdroje tvrdia, že vymenil raketu za šípky alebo petang.`,
+                (p) => `Posledný deblový štart ${skName(p.name, "gen")} (${formatDateSk(p.lastMatchDate)}) si už pamätajú len kronikári. Raketa zrejme zapadá prachom.`,
+                (p) => `${p.name} je mimo kurtov už viac ako rok (${skCount(p.daysSinceLastMatch, "deň", "dni", "dní")}). Podľa neoverených správ prestúpil k šachistom.`
             ];
 
             const halfYearList = activePlayers.filter(p => typeof p.daysSinceLastMatch === "number" && p.daysSinceLastMatch >= 180 && p.daysSinceLastMatch < 365);
@@ -6367,7 +6443,7 @@
                 if (!p.isInactive && p.curWinStreak >= 3) {
                     add("HORÚCA FORMA", `${p.name} je na neudržanie – ťahá deblovú sériu ${p.curWinStreak} výhier v rade! Kto ho zastaví?`);
                 } else if (!p.isInactive && p.curLossStreak >= 3) {
-                    add("KRÍZOVÝ ŠTÁB", `${p.name} prehral už ${p.curLossStreak} štvorhier po sebe. Odborníci odporúčajú vymeniť výplet alebo parťáka.`);
+                    add("KRÍZOVÝ ŠTÁB", `${p.name} prehral už ${skCount(p.curLossStreak, "štvorhru", "štvorhry", "štvorhier")} po sebe. Odborníci odporúčajú vymeniť výplet alebo parťáka.`);
                 }
             });
 
@@ -6378,9 +6454,9 @@
             if (players.length >= 2) {
                 const diff12 = Math.round((players[0].elo - players[1].elo) * 10) / 10;
                 if (diff12 <= 25) {
-                    add("DRÁMA NA ČELE", `${players[1].name} dýcha na chrbát lídrovi ${players[0].name} – delí ich už len ${diff12.toFixed(1)} ELO bodov!`);
+                    add("DRÁMA NA ČELE", `${players[1].name} dýcha na chrbát lídrovi ${skName(players[0].name, "dat")} – delí ich už len ${diff12.toFixed(1)} ELO bodov!`);
                 } else {
-                    add("BOJ O ČELO", `${players[1].name} stráca na prvého deblistu ${players[0].name} presne ${diff12.toFixed(1)} ELO bodov.`);
+                    add("BOJ O ČELO", `${players[1].name} stráca na prvého deblistu ${skName(players[0].name, "acc")} presne ${diff12.toFixed(1)} ELO bodov.`);
                 }
 
                 let minGap = Infinity;
@@ -6456,35 +6532,119 @@
                     totalClubSets += (Number(m.sets1) || 0) + (Number(m.sets2) || 0);
                     totalClubGems += m.totalGems || 0;
                 });
-                add("KLUBOVÁ KRONIKA", `V deblovej databáze je zapísaných ${matches.length} štvorhier, ${pairs.length} rôznych dvojíc a celkovo ${totalClubGems} gemov (${totalClubSets} setov).`);
+                add("KLUBOVÁ KRONIKA", `V deblovej databáze ${skPlural(matches.length, "je zapísaná", "sú zapísané", "je zapísaných")} ${skCount(matches.length, "štvorhra", "štvorhry", "štvorhier")}, ${skCount(pairs.length, "rôzna dvojica", "rôzne dvojice", "rôznych dvojíc")} a celkovo ${skCount(totalClubGems, "gem", "gemy", "gemov")} (${skCount(totalClubSets, "set", "sety", "setov")}).`);
             }
 
-            // 8. Správy priamo z Achievementov (všetky 4 kategórie)
+            // 8. Správy priamo z Achievementov (všetky 4 kategórie – správne skloňovanie a jednotné/množné číslo)
             const achTemplates = {
-                unstoppable:      (n, a) => ["NEZASTAVITEĽNÝ", `Historický rekord víťaznej série (${a.valueText}) stále drží ${n}.`],
-                hot_hand:         (n, a) => ["HORÚCA RUKA", `Najdlhšiu práve prebiehajúcu víťaznú šnúru (${a.valueText}) má ${n}.`],
-                free_fall:        (n, a) => ["ČIERNA KRONIKA", `Odznak Voľný pád (${a.valueText}) má v zbierke ${n}.`],
-                bulletproof:      (n, a) => ["NEPRIESTRELNÝ", `Najdlhšiu šnúru bez jedinej prehry (${a.valueText}) zaznamenal ${n}.`],
-                master_baker:     (n, a) => ["POZOR NA KANÁRE", `${n} rozdal súperom už ${a.valueText}. V šatni mu hovoria Čistič!`],
-                bagel_receiver:   (n, a) => ["OCHRANA PRÍRODY", `${n} nazbieral už ${a.valueText} – titul Ornitológ mu patrí právom.`],
-                surgeon:          (n, a) => ["CHIRURG KURTU", `${n} vybavil súperov bez straty setu už ${a.valueText.replace("× bez straty setu", "-krát")}.`],
-                nerves_of_steel:  (n, a) => ["MUŽ ZO ŽELEZA", `${n} odohral už ${a.valueText} (7:6 / 6:7). Kardiológ tento šport neodporúča.`],
-                sniper:           (n, a) => ["SNIPER KURTU", `Najlepšiu priemernú gemovú bilanciu (${a.valueText}) si drží ${n}.`],
-                king_of_hill:     (n, a) => ["KRÁĽ HÔR", `Historický strop rebríčka (${a.valueText}) doteraz dosiahol ${n}.`],
-                giant_slayer:     (n, a) => ["LOVEC OBROV", `Najväčší jednorazový deblový lup (${a.valueText}) v jednom zápase ukoristil ${n}.`],
-                iron_man:         (n, a) => ["ŽELEZNÝ MUŽ", `${n} má na konte najviac štartov v štvorhre (${a.valueText}) – na kurte má trvalý pobyt.`],
-                diplomat:         (n, a) => ["DIPLOMAT LIGY", `${n} vedie tabuľku nerozhodných štvorhier 1:1 (${a.valueText}).`],
-                chameleon:        (n, a) => ["CHAMELEÓN", `Spoločenský typ: ${n} si v debli zahral už s ${a.valueText.replace(" rôznych parťákov", "")} rôznymi spoluhráčmi.`],
-                dynamic_duo:      (n, a) => ["DYNAMICKÉ DUO", `Najúspešnejšia pevná dvojica rebríčka dosiahla ${a.valueText} (${n}).`],
-                steamroller:      (n, a) => ["PARNÝ VALEC", `Rekordný debakel histórie (${a.valueText}) majú na svedomí ${n}.`],
-                blood_sweat:      (n, a) => ["KRV, POT A SLZY", `Najdlhšia deblová bitka histórie priniesla až ${a.valueText}!`],
-                inseparable_pair: (n, a) => ["NEROZLUČNÁ DVOJKA", `Manželstvo na kurte: ${n} spolu nastúpili už do ${a.valueText.replace(" spoločných štartov", "")} štvorhier.`]
+                unstoppable: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["NEZASTAVITEĽNÝ", holders.length > 1
+                        ? `O historický rekord víťaznej série (${a.valueText}) sa delia ${n}.`
+                        : `Historický rekord víťaznej série (${a.valueText}) stále drží ${n}.`];
+                },
+                hot_hand: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["HORÚCA RUKA", holders.length > 1
+                        ? `Najdlhšiu práve prebiehajúcu víťaznú šnúru (${a.valueText}) majú ${n}.`
+                        : `Najdlhšiu práve prebiehajúcu víťaznú šnúru (${a.valueText}) má ${n}.`];
+                },
+                free_fall: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["ČIERNA KRONIKA", holders.length > 1
+                        ? `Odznak Voľný pád (${a.valueText}) majú v zbierke ${n}.`
+                        : `Odznak Voľný pád (${a.valueText}) má v zbierke ${n}.`];
+                },
+                bulletproof: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["NEPRIESTRELNÝ", holders.length > 1
+                        ? `Najdlhšiu šnúru bez jedinej prehry (${a.valueText}) zaznamenali ${n}.`
+                        : `Najdlhšiu šnúru bez jedinej prehry (${a.valueText}) zaznamenal ${n}.`];
+                },
+                master_baker: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["POZOR NA KANÁRE", holders.length > 1
+                        ? `${n} rozdali súperom už ${a.valueText}. V šatni im hovoria Čističi!`
+                        : `${n} rozdal súperom už ${a.valueText}. V šatni mu hovoria Čistič!`];
+                },
+                bagel_receiver: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["OCHRANA PRÍRODY", holders.length > 1
+                        ? `${n} nazbierali už ${a.valueText} – titul Ornitológ im patrí právom.`
+                        : `${n} nazbieral už ${a.valueText} – titul Ornitológ mu patrí právom.`];
+                },
+                surgeon: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    const cntStr = a.valueText.replace("× bez straty setu", "-krát");
+                    return ["CHIRURG KURTU", holders.length > 1
+                        ? `${n} vybavili súperov bez straty setu už ${cntStr}.`
+                        : `${n} vybavil súperov bez straty setu už ${cntStr}.`];
+                },
+                nerves_of_steel: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["MUŽ ZO ŽELEZA", holders.length > 1
+                        ? `${n} odohrali už ${a.valueText} (7:6 / 6:7). Kardiológ tento šport neodporúča.`
+                        : `${n} odohral už ${a.valueText} (7:6 / 6:7). Kardiológ tento šport neodporúča.`];
+                },
+                sniper: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["SNIPER KURTU", holders.length > 1
+                        ? `Najlepšiu priemernú gemovú bilanciu (${a.valueText}) si držia ${n}.`
+                        : `Najlepšiu priemernú gemovú bilanciu (${a.valueText}) si drží ${n}.`];
+                },
+                king_of_hill: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["KRÁĽ HÔR", holders.length > 1
+                        ? `Historický strop rebríčka (${a.valueText}) doteraz dosiahli ${n}.`
+                        : `Historický strop rebríčka (${a.valueText}) doteraz dosiahol ${n}.`];
+                },
+                giant_slayer: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["LOVEC OBROV", holders.length > 1
+                        ? `Najväčší jednorazový deblový lup (${a.valueText}) v jednom zápase ukoristili ${n}.`
+                        : `Najväčší jednorazový deblový lup (${a.valueText}) v jednom zápase ukoristil ${n}.`];
+                },
+                iron_man: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["ŽELEZNÝ MUŽ", holders.length > 1
+                        ? `${n} majú na konte najviac štartov v štvorhre (${a.valueText}) – na kurte majú trvalý pobyt.`
+                        : `${n} má na konte najviac štartov v štvorhre (${a.valueText}) – na kurte má trvalý pobyt.`];
+                },
+                diplomat: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["DIPLOMAT LIGY", holders.length > 1
+                        ? `${n} vedú tabuľku nerozhodných štvorhier 1:1 (${a.valueText}).`
+                        : `${n} vedie tabuľku nerozhodných štvorhier 1:1 (${a.valueText}).`];
+                },
+                chameleon: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    const num = parseInt(a.valueText, 10) || 0;
+                    const withTxt = num === 1 ? "s 1 spoluhráčom" : `s ${num} rôznymi spoluhráčmi`;
+                    return ["CHAMELEÓN", holders.length > 1
+                        ? `Spoločenskí hráči: ${n} si v debli zahrali už ${withTxt}.`
+                        : `Spoločenský typ: ${n} si v debli zahral už ${withTxt}.`];
+                },
+                dynamic_duo: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["DYNAMICKÉ DUO", `Najúspešnejšia pevná dvojica rebríčka dosiahla ${a.valueText} (${n}).`];
+                },
+                steamroller: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    return ["PARNÝ VALEC", `Rekordný debakel histórie (${a.valueText}) majú na svedomí ${n}.`];
+                },
+                blood_sweat: (holders, a) => {
+                    return ["KRV, POT A SLZY", `Najdlhšia deblová bitka histórie priniesla až ${a.valueText}!`];
+                },
+                inseparable_pair: (holders, a) => {
+                    const n = skJoinNames(holders, "nom");
+                    const num = parseInt(a.valueText, 10) || 0;
+                    return ["NEROZLUČNÁ DVOJKA", `Manželstvo na kurte: ${n} spolu nastúpili už do ${skCount(num, "štvorhry", "štvorhier", "štvorhier")}.`];
+                }
             };
 
             achievements.forEach(a => {
                 if (a.holders && a.holders.length > 0 && achTemplates[a.id]) {
-                    const names = a.holders.map(h => h.name).join(" & ");
-                    const [tag, txt] = achTemplates[a.id](names, a);
+                    const [tag, txt] = achTemplates[a.id](a.holders, a);
                     add(tag, txt);
                 }
             });
@@ -6495,11 +6655,18 @@
         function updateNewsTickerSpeed() {
             const groupA = document.getElementById("news-ticker-group-a");
             const track = document.getElementById("news-ticker-track");
+            const viewport = track ? track.parentElement : null;
             if (!groupA || !track) return;
             const widthPx = groupA.scrollWidth;
+            const vpWidth = viewport ? viewport.clientWidth : window.innerWidth;
+            const pxPerSec = window.innerWidth <= 620 ? 44 : 52;
+            if (vpWidth > 0) {
+                const introSec = Math.max(2, vpWidth / pxPerSec).toFixed(3);
+                track.style.setProperty("--news-vp-width", `${vpWidth}px`);
+                track.style.setProperty("--news-intro-duration", `${introSec}s`);
+            }
             if (widthPx > 0) {
-                const pxPerSec = window.innerWidth <= 620 ? 44 : 52;
-                const durationSec = Math.max(24, Math.round(widthPx / pxPerSec));
+                const durationSec = Math.max(24, widthPx / pxPerSec).toFixed(3);
                 track.style.setProperty("--news-duration", `${durationSec}s`);
             }
         }
@@ -6802,7 +6969,7 @@
             }
             weatherQuipSeed++;
             renderNewsTicker(true);
-            showToast(`NEWS lišta premiešaná (${cachedNewsItems.length} správ)`);
+            showToast(`NEWS lišta premiešaná (${skCount(cachedNewsItems.length, "správa", "správy", "správ")})`);
         }
 
         window.addEventListener("resize", () => {
