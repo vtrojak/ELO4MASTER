@@ -1660,7 +1660,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.18</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.19</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -2074,7 +2074,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.18)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.19)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2213,7 +2213,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.18_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.19_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -2887,6 +2887,7 @@
                     tbWon: 0,
                     tbLost: 0,
                     tbPlayed: 0,
+                    cleanSweeps: 0,
                     maxSingleGain: 0,
                     maxSingleGainMatch: null,
                     partnersSet: new Set(),
@@ -2984,6 +2985,7 @@
                     pairB.curLossStreak++; pairB.curWinStreak = 0;
                     [pA1, pA2].forEach(p => {
                         p.wins++;
+                        if (Number(m.sets2) === 0) p.cleanSweeps++;
                         p.form.push("W");
                         p.curWinStreak++;
                         if (p.curWinStreak > p.maxWinStreak) p.maxWinStreak = p.curWinStreak;
@@ -3015,6 +3017,7 @@
                     });
                     [pB1, pB2].forEach(p => {
                         p.wins++;
+                        if (Number(m.sets1) === 0) p.cleanSweeps++;
                         p.form.push("W");
                         p.curWinStreak++;
                         if (p.curWinStreak > p.maxWinStreak) p.maxWinStreak = p.curWinStreak;
@@ -3261,7 +3264,7 @@
 
             const rBagelGive = findTopHolders(activePlayers, p => p.bagelsGiven, 1);
             const rBagelTake = findTopHolders(activePlayers, p => p.bagelsTaken, 1);
-            const rTbWon     = findTopHolders(activePlayers, p => p.tbWon, 1);
+            const rCleanSweeps = findTopHolders(activePlayers, p => p.cleanSweeps, 1);
             const rTbPlayed  = findTopHolders(activePlayers, p => p.tbPlayed, 1);
             const rSniper    = findTopHolders(activePlayers, p => p.avgGemDiff !== null ? p.avgGemDiff : -999, -99);
 
@@ -3415,14 +3418,14 @@
                     id: "surgeon",
                     cat: 2,
                     title: "Chirurg",
-                    desc: "Kráľ tiebreakov – najviac vyhratých setov 7:6",
+                    desc: "Najviac víťazných zápasov bez straty jediného setu (výsledky 2:0 alebo 3:0 na sety)",
                     iconFile: "chirurg.png",
                     faClass: "fa-solid fa-heart-pulse",
                     theme: "ach-green",
                     accent: "#4ade80",
                     isNegative: false,
-                    valueText: `${rTbWon.value} vyhraté TB`,
-                    holders: rTbWon.holders
+                    valueText: `${rCleanSweeps.value}× bez straty setu`,
+                    holders: rCleanSweeps.holders
                 },
                 {
                     id: "nerves_of_steel",
@@ -5057,7 +5060,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.18_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.19_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -5112,7 +5115,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.18_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.19_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -5425,7 +5428,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.18 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.19 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -5504,10 +5507,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.18 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.18 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.19 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.19 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.18 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.19 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -5710,7 +5713,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.18_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.19_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
