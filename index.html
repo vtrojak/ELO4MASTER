@@ -1270,7 +1270,7 @@
             font-size: 0.88rem;
             font-weight: 800;
             color: var(--text-main);
-            line-height: 1.25;
+            line-height: 1.26;
         }
 
         .ach-desc {
@@ -1912,7 +1912,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.25</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.26</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -2326,7 +2326,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.25)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.26)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2465,7 +2465,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.25_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.26_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -2680,7 +2680,7 @@
             H2H & Hráči
         </button>
         <button class="nav-item" onclick="switchTab('sec-badges', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.25C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.25C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.26C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.26C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
             Odznaky
         </button>
         <button class="nav-item" onclick="switchTab('sec-history', this)">
@@ -5543,7 +5543,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.25_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.26_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -5598,7 +5598,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.25_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.26_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -5911,7 +5911,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.25 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.26 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -5990,10 +5990,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.25 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.25 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.26 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.26 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.25 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.26 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -6016,14 +6016,15 @@
             ctx.restore();
 
             const cols = [
-                { label: "POR.",                                          x: innerX + 60,   align: "center" },
-                { label: state.tvMode === "pairs" ? "DVOJICA (TÍM)" : "MENO HRÁČA", x: innerX + 140,  align: "left"   },
-                { label: "ELO",                                           x: innerX + 615,  align: "center" },
-                { label: "ZÁPASY",                                        x: innerX + 825,  align: "center" },
-                { label: "VÝHRY",                                         x: innerX + 995,  align: "center" },
-                { label: "PREHRY",                                        x: innerX + 1165, align: "center" },
-                { label: "REMÍZY",                                        x: innerX + 1335, align: "center" },
-                { label: "ÚSPEŠNOSŤ (%)",                                 x: innerX + 1530, align: "center" }
+                { label: "POR.",                                          x: innerX + 55,   align: "center" },
+                { label: state.tvMode === "pairs" ? "DVOJICA (TÍM)" : "MENO HRÁČA", x: innerX + 125,  align: "left"   },
+                { label: "ELO",                                           x: innerX + 555,  align: "center" },
+                { label: "ZÁPASY",                                        x: innerX + 745,  align: "center" },
+                { label: "VÝHRY",                                         x: innerX + 890,  align: "center" },
+                { label: "PREHRY",                                        x: innerX + 1035, align: "center" },
+                { label: "REMÍZY",                                        x: innerX + 1180, align: "center" },
+                { label: "ÚSPEŠNOSŤ (%)",                                 x: innerX + 1355, align: "center" },
+                { label: "FORMA",                                         x: innerX + 1560, align: "center" }
             ];
 
             ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
@@ -6074,9 +6075,9 @@
                 ctx.stroke();
                 ctx.restore();
 
-                // Zvýraznený glass stĺpec pre ELO hodnotu (vycentrovaný okolo cols[2].x = innerX + 615)
+                // Zvýraznený glass stĺpec pre ELO hodnotu (vycentrovaný okolo cols[2].x = innerX + 555)
                 ctx.save();
-                drawRoundedRectPath(ctx, innerX + 515, ry + 3, 200, rowH - 6, 8);
+                drawRoundedRectPath(ctx, innerX + 465, ry + 3, 180, rowH - 6, 8);
                 ctx.fillStyle = "rgba(0, 42, 37, 0.48)";
                 ctx.fill();
                 ctx.strokeStyle = "rgba(165, 243, 252, 0.30)";
@@ -6131,7 +6132,7 @@
                     ctx.font = `800 ${fontSize}px sans-serif`;
                     ctx.textAlign = "left";
                     ctx.fillStyle = "#ffffff";
-                    ctx.fillText(p.name.toUpperCase(), cols[1].x + dotR * 4 + 16, textY, 330);
+                    ctx.fillText(p.name.toUpperCase(), cols[1].x + dotR * 4 + 16, textY, 295);
                 } else {
                     ctx.save();
                     ctx.beginPath();
@@ -6143,7 +6144,7 @@
                     ctx.font = `800 ${fontSize}px sans-serif`;
                     ctx.textAlign = "left";
                     ctx.fillStyle = "#ffffff";
-                    ctx.fillText(p.name.toUpperCase(), cols[1].x + dotR * 2 + 12, textY, 345);
+                    ctx.fillText(p.name.toUpperCase(), cols[1].x + dotR * 2 + 12, textY, 310);
                 }
 
                 // ELO
@@ -6172,10 +6173,41 @@
                 ctx.font = `700 ${fontSize}px sans-serif`;
                 ctx.fillText(`${p.draws}`, cols[6].x, textY);
 
-                // Úspešnosť (%) – vycentrovaná pod nadpisom ÚSPEŠNOSŤ (%) s rezervou od pravého okraja
+                // Úspešnosť (%)
                 ctx.fillStyle = "#ffffff";
                 ctx.font = `800 ${fontSize}px sans-serif`;
-                ctx.fillText(`${winPct}%`, cols[7].x, textY, 210);
+                ctx.fillText(`${winPct}%`, cols[7].x, textY, 175);
+
+                // Forma (posledné 3 zápasy, najnovší vľavo)
+                const last3 = (p.form || []).slice(-3).reverse();
+                if (last3.length === 0) {
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.55)";
+                    ctx.font = `700 ${fontSize}px sans-serif`;
+                    ctx.textAlign = "center";
+                    ctx.fillText("—", cols[8].x, textY);
+                } else {
+                    const fSize = Math.min(34, Math.max(18, Math.round(rowH * 0.56)));
+                    const fGap = Math.max(5, Math.round(fSize * 0.22));
+                    const totalW = last3.length * fSize + (last3.length - 1) * fGap;
+                    let fx = cols[8].x - totalW / 2;
+                    const fy = ry + (rowH - fSize) / 2;
+                    const fFont = Math.max(11, Math.round(fSize * 0.58));
+                    last3.forEach(code => {
+                        const bgCol = code === "W" ? "#34d399" : (code === "D" ? "#facc15" : "#f87171");
+                        const fgCol = code === "W" ? "#022c22" : (code === "D" ? "#422006" : "#450a0a");
+                        const ch = code === "W" ? "V" : (code === "D" ? "R" : "P");
+                        ctx.save();
+                        drawRoundedRectPath(ctx, fx, fy, fSize, fSize, Math.max(4, Math.round(fSize * 0.22)));
+                        ctx.fillStyle = bgCol;
+                        ctx.fill();
+                        ctx.fillStyle = fgCol;
+                        ctx.font = `900 ${fFont}px sans-serif`;
+                        ctx.textAlign = "center";
+                        ctx.fillText(ch, fx + fSize / 2, fy + fSize / 2 + Math.round(fFont * 0.36));
+                        ctx.restore();
+                        fx += fSize + fGap;
+                    });
+                }
             });
             ctx.restore();
         }
@@ -6196,7 +6228,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.25_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.26_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
@@ -6253,7 +6285,7 @@
         }
 
 
-        /* ==================== NEWS BAR TICKER (v1.25) ==================== */
+        /* ==================== NEWS BAR TICKER (v1.26) ==================== */
         let cachedNewsItems = [];
         let newsLastSignature = "";
         let newsResizeTimer = null;
@@ -6356,7 +6388,7 @@
             const achievements = computedAchievements || [];
 
             if (players.length === 0) {
-                add("INFO", "Vitajte v ELO4MASTER v1.25! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
+                add("INFO", "Vitajte v ELO4MASTER v1.26! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
                 return items;
             }
 
@@ -6413,29 +6445,6 @@
                         }
                     });
                 });
-            }
-
-            // 3. Posledná štvorhra + burza ELO
-            if (matches.length > 0) {
-                const lm = matches[matches.length - 1];
-                const s1 = Number(lm.sets1) || 0;
-                const s2 = Number(lm.sets2) || 0;
-                const gemsTxt = lm.gems ? ` (${lm.gems})` : "";
-                if (s1 > s2) {
-                    add("POSLEDNÁ ŠTVORHRA", `Zápas #${lm.index} (${formatDateSk(lm.date)}): ${lm.teamNameA} zdolali pár ${lm.teamNameB} pomerom ${s1}:${s2}${gemsTxt}.`);
-                } else if (s2 > s1) {
-                    add("POSLEDNÁ ŠTVORHRA", `Zápas #${lm.index} (${formatDateSk(lm.date)}): ${lm.teamNameB} porazili pár ${lm.teamNameA} pomerom ${s2}:${s1}${gemsTxt}.`);
-                } else {
-                    add("POSLEDNÁ ŠTVORHRA", `Zápas #${lm.index} (${formatDateSk(lm.date)}): ${lm.teamNameA} a ${lm.teamNameB} sa rozišli zmierlivo ${s1}:${s2}${gemsTxt}.`);
-                }
-
-                if (lm.deltaA > 0) {
-                    add("BURZA ELO", `Po poslednej štvorhre vyskočili akcie páru ${lm.teamNameA} o +${lm.deltaA.toFixed(1)} ELO bodov na hráča.`);
-                    add("ČERVENÉ ČÍSLA", `Posledný zápas stál dvojicu ${lm.teamNameB} presne ${lm.deltaB.toFixed(1)} ELO bodov. Odveta je vraj už v príprave.`);
-                } else if (lm.deltaB > 0) {
-                    add("BURZA ELO", `Po poslednej štvorhre vyskočili akcie páru ${lm.teamNameB} o +${lm.deltaB.toFixed(1)} ELO bodov na hráča.`);
-                    add("ČERVENÉ ČÍSLA", `Posledný zápas stál dvojicu ${lm.teamNameA} presne ${lm.deltaA.toFixed(1)} ELO bodov. Odveta je vraj už v príprave.`);
-                }
             }
 
             // 4. Aktuálne série (horúca forma / kríza)
@@ -6912,6 +6921,212 @@
         }
 
 
+        function getMatchAgeDays(isoDate) {
+            if (!isoDate) return 9999;
+            const dp = String(isoDate).split("-").map(Number);
+            if (dp.length !== 3 || dp.some(isNaN)) return 9999;
+            const todayMid = new Date();
+            todayMid.setHours(0, 0, 0, 0);
+            const mDt = new Date(dp[0], dp[1] - 1, dp[2]);
+            const diff = Math.floor((todayMid - mDt) / (1000 * 60 * 60 * 24));
+            return Math.max(0, diff);
+        }
+
+        function getMatchJokePool(matchIndex) {
+            return [
+                { tag: "BEZ TV PRENOSU", text: `Zápas #${matchIndex} z technických príčin nevysielala žiadna TV – kameraman vraj zabudol nabiť batériu a sťažoval sa na slabý honorár.` },
+                { tag: "BEZ ROZHODCU", text: `Duel #${matchIndex} sa odohral aj napriek tomu, že hlavný rozhodca sa nedostavil. Podľa očitých svedkov ho videli v blízkej krčme s partiou miestnych štamgastov.` },
+                { tag: "ZÁKULISIE", text: `Zápas #${matchIndex} sa musel zaobísť bez rozhodcu – zákulisné správy tvrdia, že dal prednosť blízkej krčme v spoločnosti veselých slečien.` },
+                { tag: "HAWK-EYE", text: `V zápase #${matchIndex} opäť nefungoval systém Hawk-Eye – všetky sporné auty sa riešili tradičnou kysuckou metódou: kto zakričal hlasnejšie, mal pravdu.` },
+                { tag: "ANTIDOPING", text: `Antidopingový komisár po zápase #${matchIndex} odobral vzorky – v krvi hráčov sa našli len stopy horčíka, kofeínu a stopové množstvo etanolu.` },
+                { tag: "TRIBÚNA", text: `Zápas #${matchIndex} sledovala z tribúny napätá návšteva: jeden znudený holub a náhodný okoloidúci, ktorý hľadal skratku do obchodu.` },
+                { tag: "ZBERAČI", text: `Pre štrajk zberačov loptičiek si hráči v zápase #${matchIndex} museli po každý aut chodiť sami – najviac kilometrov tak nabehali mimo výmen.` },
+                { tag: "TLAČOVKA", text: `Pozápasová tlačovka po dueli #${matchIndex} sa presunula k najbližšiemu výčapu, kde porazený označil za hlavného vinníka zlé svetlo, krivé čiary a nový výplet.` },
+                { tag: "STÁVKOVKY", text: `Po výsledku zápasu #${matchIndex} musela jedna nemenovaná stávková kancelária dočasne pozastaviť kurzy na ďalšie kolo.` }
+            ];
+        }
+
+        function getMatchDramaItems(m) {
+            const out = [];
+            const sets = parseSetsFromGemsString(m.gems);
+            let bagels = 0;
+            let tiebreaks = 0;
+            let g1 = 0, g2 = 0;
+            sets.forEach(st => {
+                g1 += st.g1;
+                g2 += st.g2;
+                if ((st.g1 === 6 && st.g2 === 0) || (st.g1 === 0 && st.g2 === 6)) bagels++;
+                if ((st.g1 === 7 && st.g2 === 6) || (st.g1 === 6 && st.g2 === 7)) tiebreaks++;
+            });
+
+            if (bagels >= 2) {
+                out.push({ tag: "DVOJITÝ KANÁR", text: `Dvojitý kanár 6:0 6:0 v zápase #${m.index}! Zápisnica bola odoslaná na úrad pre ochranu zvierat ako podozrenie z chovu vtáctva vo veľkom.` });
+            } else if (bagels === 1) {
+                const bagelPool = [
+                    { tag: "POZOR NA KANÁRA", text: `V zápase #${m.index} padol čistý kanár 6:0 – ornitológovia v Čadci hlásia výskyt vzácneho vtáctva priamo na kurte.` },
+                    { tag: "RÝCHLY PROCES", text: `Set 6:0 v dueli #${m.index} trval kratšie než rozcvička – porazený si ani nestihol poriadne zašpiniť tenisky.` },
+                    { tag: "ZĽAVA NA KURT", text: `Po výsledku 6:0 v zápase #${m.index} zvažuje správca kurtu, že porazenému vráti polovicu vstupného, lebo na ihrisku bol len do počtu.` },
+                    { tag: "NULA NA TANIERI", text: `V dueli #${m.index} sa podávala nula na tanieri (6:0) – podľa svedkov mal víťaz čas aj na krátku kávu medzi gemami.` }
+                ];
+                out.push(bagelPool[Math.floor(Math.random() * bagelPool.length)]);
+            }
+
+            if (tiebreaks > 0) {
+                out.push({ tag: "TIEBREAKOVÁ DRÁMA", text: `Zápas #${m.index} musel rozlúsknuť až tiebreak! Diváci (ak by tam nejakí boli) by si od nervov obhrýzli nechty až po lakte.` });
+            }
+
+            const totalG = g1 + g2;
+            const diffG = Math.abs(g1 - g2);
+            const totalSets = (Number(m.sets1) || 0) + (Number(m.sets2) || 0);
+            if (totalG > 0 && (diffG <= 3 || (totalSets >= 3 && diffG <= 4))) {
+                const closePool = [
+                    { tag: "INFARKTOVÝ ZÁVER", text: `Zápas #${m.index} bol čistý triler o každý jeden gem – pri záverečných loptičkách by sa napätie dalo krájať výpletom.` },
+                    { tag: "BITKA O KURT", text: `Žiadny bod zadarmo! V dueli #${m.index} rozhodli až posledné nervy a pár centimetrov od čiary – presne pre takéto zápasy sa hrá tenis.` },
+                    { tag: "O VLÁSOK", text: `V zápase #${m.index} rozhodlo len pár gemov – porazený síce odchádzal bez bodov, ale so vztýčenou hlavou a chuťou na okamžitú odvetu.` }
+                ];
+                out.push(closePool[Math.floor(Math.random() * closePool.length)]);
+            } else if (bagels === 0 && tiebreaks === 0 && totalG > 0 && diffG >= 7) {
+                out.push({ tag: "JEDNOZNAČNÝ PRIEBEH", text: `Zápas #${m.index} mal jednoznačný priebeh – víťaz na kurte takmer nezapol druhý prevodový stupeň.` });
+            }
+            return out;
+        }
+
+        function buildRecentMatchPoolDoubles(m, allMatches) {
+            const s1 = Number(m.sets1) || 0;
+            const s2 = Number(m.sets2) || 0;
+            const gemsTxt = m.gems ? ` (${m.gems})` : "";
+            const isAWin = s1 > s2;
+            const isBWin = s2 > s1;
+
+            let resultItem;
+            if (isAWin) {
+                resultItem = { tag: "POSLEDNÁ ŠTVORHRA", text: `Zápas #${m.index} (${formatDateSk(m.date)}): ${m.teamNameA} zdolali pár ${m.teamNameB} pomerom ${s1}:${s2}${gemsTxt}.` };
+            } else if (isBWin) {
+                resultItem = { tag: "POSLEDNÁ ŠTVORHRA", text: `Zápas #${m.index} (${formatDateSk(m.date)}): ${m.teamNameB} porazili pár ${m.teamNameA} pomerom ${s2}:${s1}${gemsTxt}.` };
+            } else {
+                resultItem = { tag: "POSLEDNÁ ŠTVORHRA", text: `Zápas #${m.index} (${formatDateSk(m.date)}): ${m.teamNameA} a ${m.teamNameB} sa rozišli zmierlivo ${s1}:${s2}${gemsTxt}.` };
+            }
+
+            const specialItems = [];
+
+            // ELO burza pre túto štvorhru
+            if (m.deltaA > 0) {
+                specialItems.push({ tag: "BURZA ELO", text: `Po štvorhre #${m.index} vyskočili akcie páru ${m.teamNameA} o +${m.deltaA.toFixed(1)} ELO bodov na hráča.` });
+                specialItems.push({ tag: "ČERVENÉ ČÍSLA", text: `Zápas #${m.index} stál dvojicu ${m.teamNameB} presne ${m.deltaB.toFixed(1)} ELO bodov na hráča. Odveta je vraj už v príprave.` });
+            } else if (m.deltaB > 0) {
+                specialItems.push({ tag: "BURZA ELO", text: `Po štvorhre #${m.index} vyskočili akcie páru ${m.teamNameB} o +${m.deltaB.toFixed(1)} ELO bodov na hráča.` });
+                specialItems.push({ tag: "ČERVENÉ ČÍSLA", text: `Zápas #${m.index} stál dvojicu ${m.teamNameA} presne ${m.deltaA.toFixed(1)} ELO bodov na hráča. Odveta je vraj už v príprave.` });
+            }
+
+            // Vzájomná bilancia presných dvojíc do tohto zápasu vrátane
+            const mutual = allMatches.filter(x =>
+                x.index <= m.index &&
+                ((x.pairKeyA === m.pairKeyA && x.pairKeyB === m.pairKeyB) ||
+                 (x.pairKeyA === m.pairKeyB && x.pairKeyB === m.pairKeyA))
+            );
+            if (mutual.length >= 2) {
+                let wA = 0, wB = 0, dr = 0;
+                mutual.forEach(x => {
+                    const sa = x.pairKeyA === m.pairKeyA ? Number(x.sets1) : Number(x.sets2);
+                    const sb = x.pairKeyA === m.pairKeyA ? Number(x.sets2) : Number(x.sets1);
+                    if (sa > sb) wA++;
+                    else if (sb > sa) wB++;
+                    else dr++;
+                });
+                const drTxt = dr > 0 ? ` (a ${skCount(dr, "remíza", "remízy", "remíz")})` : "";
+                if (wA > wB) {
+                    specialItems.push({ tag: "VZÁJOMNÁ BILANCIA", text: `Zápas #${m.index} bol už ${mutual.length}. vzájomným súbojom dvojíc ${m.teamNameA} a ${m.teamNameB} – bilancia je ${wA}:${wB}${drTxt} pre pár ${m.teamNameA}.` });
+                } else if (wB > wA) {
+                    specialItems.push({ tag: "VZÁJOMNÁ BILANCIA", text: `Zápas #${m.index} bol už ${mutual.length}. vzájomným súbojom dvojíc ${m.teamNameA} a ${m.teamNameB} – bilancia je ${wB}:${wA}${drTxt} pre pár ${m.teamNameB}.` });
+                } else {
+                    specialItems.push({ tag: "VZÁJOMNÁ BILANCIA", text: `Zápas #${m.index} bol už ${mutual.length}. vzájomným súbojom dvojíc ${m.teamNameA} a ${m.teamNameB} – vzájomná bilancia je vyrovnaná ${wA}:${wB}${drTxt}!` });
+                }
+
+                // Vzájomná séria / prelomenie kliatby medzi dvojicami
+                if (isAWin || isBWin) {
+                    const winKey = isAWin ? m.pairKeyA : m.pairKeyB;
+                    const winTeam = isAWin ? m.teamNameA : m.teamNameB;
+                    const loseTeam = isAWin ? m.teamNameB : m.teamNameA;
+                    let winRun = 0;
+                    for (let i = mutual.length - 1; i >= 0; i--) {
+                        const xm = mutual[i];
+                        const xs1 = Number(xm.sets1), xs2 = Number(xm.sets2);
+                        const xWinKey = xs1 > xs2 ? xm.pairKeyA : (xs2 > xs1 ? xm.pairKeyB : null);
+                        if (xWinKey === winKey) winRun++;
+                        else break;
+                    }
+                    if (winRun >= 3) {
+                        specialItems.push({ tag: "SÉRIA DVOJÍC", text: `Dvojica ${winTeam} zdolala pár ${loseTeam} už ${winRun}-krát po sebe – v šatni sa začína hovoriť o komplexe.` });
+                    } else if (mutual.length >= 4) {
+                        let prevLossRun = 0;
+                        for (let i = mutual.length - 2; i >= 0; i--) {
+                            const xm = mutual[i];
+                            const xs1 = Number(xm.sets1), xs2 = Number(xm.sets2);
+                            const xWinKey = xs1 > xs2 ? xm.pairKeyA : (xs2 > xs1 ? xm.pairKeyB : null);
+                            if (xWinKey && xWinKey !== winKey) prevLossRun++;
+                            else break;
+                        }
+                        if (prevLossRun >= 3) {
+                            specialItems.push({ tag: "KLIATBA PRELOMENÁ", text: `Pár ${winTeam} konečne prelomil kliatbu a po ${prevLossRun} prehrách v rade zdolal dvojicu ${loseTeam}!` });
+                        }
+                    }
+                }
+            }
+
+            // Papierový favorit vs. prekvapenie
+            if (isAWin || isBWin) {
+                const winProb = isAWin ? m.probA : m.probB;
+                const winDelta = isAWin ? m.deltaA : m.deltaB;
+                const winTeam = isAWin ? m.teamNameA : m.teamNameB;
+                if (winProb < 0.40) {
+                    specialItems.push({ tag: "PREKVAPENIE KOLA", text: `Podľa ELO mal pár ${winTeam} pred štvorhrou #${m.index} len ${Math.round(winProb * 100)} % šancu – bookmakeri v Čadci dnes rátajú straty.` });
+                } else if (winProb >= 0.65) {
+                    specialItems.push({ tag: "POVINNÁ JAZDA", text: `Papierové predpoklady sa v štvorhre #${m.index} naplnili do bodky – favorizovaný pár ${winTeam} si pripísal povinných +${winDelta.toFixed(1)} ELO.` });
+                }
+            }
+
+            // Kanár / Tiebreak / Tesná bitka / Jednoznačný priebeh
+            getMatchDramaItems(m).forEach(it => specialItems.push(it));
+
+            const jokeItems = getMatchJokePool(m.index);
+            return { resultItem, specialItems, jokeItems };
+        }
+
+        function buildRecentMatchesNewsItems() {
+            const matches = computedMatches || [];
+            if (matches.length === 0) return [];
+            const lastM = matches[matches.length - 1];
+            const lastAge = getMatchAgeDays(lastM.date);
+
+            // Ak sa nehralo minimálne 30 dní -> žiadne správy k aktuálnemu zápasu (prvé ide počasie)
+            if (lastAge >= 30) return [];
+
+            // Po 6 dňoch (7 až 29 dní) -> už len 1 náhodná správa k poslednému zápasu
+            if (lastAge > 6) {
+                const { resultItem, specialItems, jokeItems } = buildRecentMatchPoolDoubles(lastM, matches);
+                const combined = [resultItem, ...specialItems, ...jokeItems];
+                return [combined[Math.floor(Math.random() * combined.length)]];
+            }
+
+            // Do 6 dní -> všetky štvorhry odohrané behom posledných dní v poradí ako sa odohrali, ku každej 2 alebo 3 náhodné správy
+            const recentMatches = matches.filter(m => getMatchAgeDays(m.date) <= 6);
+            const result = [];
+            recentMatches.forEach(m => {
+                const { resultItem, specialItems, jokeItems } = buildRecentMatchPoolDoubles(m, matches);
+                const pickCount = Math.random() < 0.5 ? 2 : 3;
+                const shuffledSpecials = shuffleNewsArray(specialItems);
+                const shuffledJokes = shuffleNewsArray(jokeItems);
+                const extras = shuffleNewsArray([
+                    ...shuffledSpecials.slice(0, 2),
+                    ...shuffledJokes.slice(0, 2)
+                ]);
+                const picked = [resultItem, ...extras.slice(0, pickCount - 1)];
+                picked.forEach(item => result.push(item));
+            });
+            return result;
+        }
+
+        let cachedRecentNewsItems = [];
         let cachedOtherNewsItems = [];
         let newsDataSignature = "";
 
@@ -6927,13 +7142,14 @@
 
             if (forceReshuffle || dataSig !== newsDataSignature || cachedOtherNewsItems.length === 0) {
                 newsDataSignature = dataSig;
+                cachedRecentNewsItems = buildRecentMatchesNewsItems();
                 cachedOtherNewsItems = shuffleNewsArray(buildNewsTickerItems());
             }
 
             if (forceReshuffle || fullSig !== newsLastSignature || cachedNewsItems.length === 0) {
                 newsLastSignature = fullSig;
                 const weatherItem = getWeatherNewsItem();
-                cachedNewsItems = [weatherItem, ...cachedOtherNewsItems];
+                cachedNewsItems = [...cachedRecentNewsItems, weatherItem, ...cachedOtherNewsItems];
             }
 
             const html = cachedNewsItems.map(item =>
