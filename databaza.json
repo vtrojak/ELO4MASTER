@@ -1,7 +1,12 @@
 {
   "config": {
     "K": 32,
-    "D": 200
+    "D": 200,
+    "location": {
+      "name": "Čadca",
+      "lat": 49.4386,
+      "lon": 18.7897
+    }
   },
   "players": [
     {
@@ -361,6 +366,6 @@
   "h2hMode": "teams",
   "leaderboardMode": "players",
   "tvMode": "players",
-  "updatedAt": 1795262310271,
-  "exportedAtIso": "2026-11-21T11:58:39.534Z"
+  "updatedAt": 1795286819419,
+  "exportedAtIso": "2026-11-21T18:47:03.648Z"
 }
