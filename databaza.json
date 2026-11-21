@@ -1,8 +1,7 @@
 {
   "config": {
     "K": 32,
-    "D": 200,
-    "calcFrom1500": true
+    "D": 200
   },
   "players": [
     {
@@ -330,6 +329,18 @@
       "sets1": 3,
       "sets2": 0,
       "gems": "6:2 6:2 6:1"
+    },
+    {
+      "id": "m_1795262310271",
+      "date": "2026-11-21",
+      "t1p1": "vlado",
+      "t1p2": "tibor",
+      "t2p1": "belo",
+      "t2p2": "adam",
+      "sets1": 1,
+      "sets2": 1,
+      "gems": "5:7 6:4",
+      "note": "V prvom sete Adam s Belom odvrátili dva setbaly! 3. set sa za stavu 4:1 Pre Vlada s Tiborom nedohral a tak sa stretnutie skončilo spravodlivou remízou.."
     }
   ],
   "chartVisiblePlayers": {
@@ -344,11 +355,12 @@
     "tono": true,
     "cicero": true,
     "peto": true,
-    "majo": true
+    "majo": true,
+    "juro": true
   },
   "h2hMode": "teams",
   "leaderboardMode": "players",
   "tvMode": "players",
-  "updatedAt": 1794988300643,
-  "exportedAtIso": "2026-11-18T07:51:40.643Z"
+  "updatedAt": 1795262310271,
+  "exportedAtIso": "2026-11-21T11:58:39.534Z"
 }
