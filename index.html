@@ -9075,17 +9075,107 @@
                 return blitzPool[seed % blitzPool.length];
             }
 
-            const daysText = skCount(reignDays, "deň", "dni", "dní");
-            const daysLocText = reignDays === 1 ? "1 dni" : `${reignDays} dňoch`;
+            if (reignDays < 7) {
+                const daysText = skCount(reignDays, "deň", "dni", "dní");
+                const shortPool = [
+                    { tag: "KRÁTKA VLÁDA", text: `${newName} zosadil z trónu ${skName(prevName, "acc")} už po necelom týždni (${daysText}) – korunu si dlho neužil!` },
+                    { tag: "ANI TÝŽDEŇ NA TRÓNE", text: `Vláda ${skName(prevName, "gen")} na čele rebríčka netrvala ani celý týždeň (${daysText}) – novou jednotkou je ${newName}!` },
+                    { tag: "RÝCHLA VÝMENA NA ČELE", text: `${prevName} vydržal na absolútnom vrchole len ${daysText} (menej ako týždeň), od zápasu #${lastMatch.index} velí lige ${newName}!` }
+                ];
+                return shortPool[seed % shortPool.length];
+            }
+
+            const reignWeeks = Math.floor(reignDays / 7);
+            const weeksText = skCount(reignWeeks, "týždeň", "týždne", "týždňov");
+            const weeksLocText = reignWeeks === 1 ? "1 týždni" : `${reignWeeks} týždňoch`;
             const coupPool = [
-                { tag: "PALÁCOVÝ PREVRAT", text: `${newName} zosadil z trónu ${skName(prevName, "acc")}! Jeho nepretržitá vláda na čele rebríčka trvala presne ${daysText}.` },
-                { tag: "KRÁĽ JE MŔTVY, NECH ŽIJE KRÁĽ", text: `${newName} ukončil ${reignDays}-dňovú nadvládu ${skName(prevName, "gen")} a preberá post svetovej jednotky!` },
-                { tag: "ZEMETRASENIE NA ČELE", text: `Po ${daysLocText} na absolútnom vrchole padá ${prevName} – novým vládcom rebríčka sa stáva ${newName}!` },
-                { tag: "MIMORIADNA SPRÁVA", text: `Éra ${skName(prevName, "gen")} sa po ${daysLocText} skončila! Korunu na kurte preberá ${newName}.` },
-                { tag: "TRÓN MÁ NOVÉHO MAJITEĽA", text: `Koniec jednej epochy! ${prevName} kraľoval rebríčku ${daysText}, no od zápasu #${lastMatch.index} velí lige ${newName}.` },
-                { tag: "ŠOK NA VRCHOLE", text: `${prevName} prišiel o post jednotky po ${daysLocText} vládnutia – na trón zasadol ${newName}!` }
+                { tag: "PALÁCOVÝ PREVRAT", text: `${newName} zosadil z trónu ${skName(prevName, "acc")}! Jeho nepretržitá vláda na čele rebríčka trvala ${weeksText}.` },
+                { tag: "KRÁĽ JE MŔTVY, NECH ŽIJE KRÁĽ", text: `${newName} ukončil ${reignWeeks}-týždňovú nadvládu ${skName(prevName, "gen")} a preberá post svetovej jednotky!` },
+                { tag: "ZEMETRASENIE NA ČELE", text: `Po ${weeksLocText} na absolútnom vrchole padá ${prevName} – novým vládcom rebríčka sa stáva ${newName}!` },
+                { tag: "MIMORIADNA SPRÁVA", text: `Éra ${skName(prevName, "gen")} sa po ${weeksLocText} skončila! Korunu na kurte preberá ${newName}.` },
+                { tag: "TRÓN MÁ NOVÉHO MAJITEĽA", text: `Koniec jednej epochy! ${prevName} kraľoval rebríčku ${weeksText}, no od zápasu #${lastMatch.index} velí lige ${newName}.` },
+                { tag: "ŠOK NA VRCHOLE", text: `${prevName} prišiel o post jednotky po ${weeksLocText} vládnutia – na trón zasadol ${newName}!` }
             ];
             return coupPool[seed % coupPool.length];
+        }
+
+        function buildCurrentLeaderReignNewsItem(isDoubles) {
+            if (!timelinePoints || timelinePoints.length < 2 || !computedMatches || computedMatches.length < 1) {
+                return null;
+            }
+            const lastIdx = timelinePoints.length - 1;
+
+            // Zostav počty odohratých zápasov hráčov po jednotlivých krokoch histórie
+            const matchCountsAtStep = [];
+            const runningCounts = {};
+            state.players.forEach(p => { runningCounts[p.id] = 0; });
+            matchCountsAtStep.push({ ...runningCounts });
+
+            for (let s = 1; s < timelinePoints.length; s++) {
+                const m = timelinePoints[s].match;
+                if (m) {
+                    const pids = isDoubles ? [m.t1p1, m.t1p2, m.t2p1, m.t2p2] : [m.p1, m.p2];
+                    pids.forEach(pid => {
+                        if (pid) runningCounts[pid] = (runningCounts[pid] || 0) + 1;
+                    });
+                }
+                matchCountsAtStep.push({ ...runningCounts });
+            }
+
+            const getLeaderIdAtStep = (stepIdx) => {
+                const pt = timelinePoints[stepIdx];
+                if (!pt || !pt.elos) return null;
+                const counts = matchCountsAtStep[stepIdx] || {};
+                let bestId = null;
+                let bestElo = -Infinity;
+                let bestMatches = -1;
+                state.players.forEach(p => {
+                    const eloVal = pt.elos[p.id];
+                    if (typeof eloVal !== "number") return;
+                    const mc = counts[p.id] || 0;
+                    if (eloVal > bestElo || (eloVal === bestElo && mc > bestMatches)) {
+                        bestElo = eloVal;
+                        bestMatches = mc;
+                        bestId = p.id;
+                    }
+                });
+                return bestId;
+            };
+
+            const currentLeaderId = getLeaderIdAtStep(lastIdx);
+            if (!currentLeaderId) return null;
+
+            const currentLeader = state.players.find(p => p.id === currentLeaderId);
+            if (!currentLeader) return null;
+
+            // Zisti začiatok nepretržitej vlády aktuálneho lídra
+            let reignStartStep = lastIdx;
+            while (reignStartStep > 1 && getLeaderIdAtStep(reignStartStep - 1) === currentLeaderId) {
+                reignStartStep--;
+            }
+            const reignStartMatch = timelinePoints[reignStartStep] && timelinePoints[reignStartStep].match;
+            const reignStartDate = reignStartMatch && reignStartMatch.date ? reignStartMatch.date : null;
+            if (!reignStartDate) return null;
+
+            const startDays = parseIsoToUtcDays(reignStartDate);
+            const todayDays = getTodayUtcDays();
+            if (startDays === null) return null;
+
+            const reignDays = todayDays - startDays;
+            if (reignDays < 2) return null;
+
+            let durationText = "";
+            if (reignDays >= 7) {
+                const reignWeeks = Math.floor(reignDays / 7);
+                durationText = skCount(reignWeeks, "týždeň", "týždne", "týždňov");
+            } else {
+                durationText = skCount(reignDays, "deň", "dni", "dní");
+            }
+
+            return {
+                tag: "VLÁDCA REBRÍČKA",
+                text: `Aktuálny líder ${currentLeader.name} nepretržite kraľuje rebríčku už ${durationText}.`
+            };
         }
 
         function getMatchAgeDays(isoDate) {
@@ -9355,6 +9445,7 @@
             if (forceReshuffle || fullSig !== newsLastSignature || cachedNewsItems.length === 0) {
                 newsLastSignature = fullSig;
                 const leaderChangeItem = buildLeaderChangeNewsItem(true);
+                const currentLeaderReignItem = buildCurrentLeaderReignNewsItem(true);
                 const weatherItem = getWeatherNewsItem();
                 const extraWeather = buildExtraWeatherNewsItems();
                 const mergedOther = extraWeather.length > 0
@@ -9364,6 +9455,7 @@
                     ...(leaderChangeItem ? [leaderChangeItem] : []),
                     ...cachedRecentNewsItems,
                     ...(weatherItem ? [weatherItem] : []),
+                    ...(currentLeaderReignItem ? [currentLeaderReignItem] : []),
                     ...mergedOther
                 ];
             }
