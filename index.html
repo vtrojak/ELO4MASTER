@@ -2070,7 +2070,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.36</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.37</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -2506,7 +2506,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.36)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.37)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2653,7 +2653,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.36_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.37_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -4168,6 +4168,8 @@
                     accent: "#c084fc",
                     isNegative: false,
                     valueText: `${rBestPairElo.value.toFixed(1)} Párové ELO`,
+                    pairNames: rBestPairElo.holders.map(x => x.name),
+                    pairEloValue: rBestPairElo.value,
                     holders: bestPairPlayers
                 },
                 {
@@ -4207,6 +4209,8 @@
                     accent: "#c084fc",
                     isNegative: false,
                     valueText: `${skCount(rMostFrequentPair.value, "spoločný štart", "spoločné štarty", "spoločných štartov")}`,
+                    pairNames: rMostFrequentPair.holders.map(x => x.name),
+                    pairMatchesCount: rMostFrequentPair.value,
                     holders: frequentPairPlayers
                 }
             ];
@@ -5619,7 +5623,7 @@
             ctx.fillStyle = "#ffffff";
             ctx.font = "800 31px sans-serif";
             ctx.textAlign = "left";
-            ctx.fillText("ELO4MASTER V1.36 | DEBLOVÝ VÝVOJ ELO V ČASE", innerX + 32, topY + 47);
+            ctx.fillText("ELO4MASTER V1.37 | DEBLOVÝ VÝVOJ ELO V ČASE", innerX + 32, topY + 47);
 
             const todayStr = new Date().toLocaleDateString("sk-SK");
             const rangeUpper = formatChartRangeText(bounds).toUpperCase();
@@ -5832,7 +5836,7 @@
 
         function downloadTvChartGraphic() {
             const canvas = document.getElementById("tvChartCanvas");
-            const filename = `ELO4MASTER_v1.36_TV_Graf_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.37_TV_Graf_${new Date().toISOString().split("T")[0]}.png`;
             try {
                 canvas.toBlob(blob => {
                     if (blob) {
@@ -6474,7 +6478,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.36_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.37_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -6529,7 +6533,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.36_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.37_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -6855,7 +6859,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.36 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.37 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -6934,10 +6938,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.36 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.36 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.37 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.37 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.36 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.37 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -7172,7 +7176,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.36_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.37_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
@@ -7229,7 +7233,7 @@
         }
 
 
-        /* ==================== NEWS BAR TICKER (v1.36) ==================== */
+        /* ==================== NEWS BAR TICKER (v1.37) ==================== */
         let cachedNewsItems = [];
         let newsLastSignature = "";
         let newsResizeTimer = null;
@@ -7332,7 +7336,7 @@
             const achievements = computedAchievements || [];
 
             if (players.length === 0) {
-                add("INFO", "Vitajte v ELO4MASTER v1.36! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
+                add("INFO", "Vitajte v ELO4MASTER v1.37! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
                 return items;
             }
 
@@ -7362,40 +7366,31 @@
                 yearIdx++;
             });
 
-            // 2. Čerstvý navrátilec (v posledných 3 štvorhrách sa niekto vrátil po >= 90 dňoch)
+            // 2. Čerstvý navrátilec (len ak sa hráčov posledný zápas hral za posledných 30 dní a pred ním mal pauzu >= 90 dní)
             if (matches.length >= 2) {
-                const recent = matches.slice(-3);
-                const comebackSeen = new Set();
-                recent.forEach(rm => {
-                    [rm.t1p1, rm.t1p2, rm.t2p1, rm.t2p2].forEach(pid => {
-                        if (comebackSeen.has(pid) || !rm.date) return;
-                        const prevMatches = matches.filter(m =>
-                            m.index < rm.index &&
-                            (m.t1p1 === pid || m.t1p2 === pid || m.t2p1 === pid || m.t2p2 === pid) &&
-                            m.date
-                        );
-                        if (prevMatches.length > 0) {
-                            const prevDate = prevMatches[prevMatches.length - 1].date;
-                            const d1 = new Date(prevDate + "T00:00:00");
-                            const d2 = new Date(rm.date + "T00:00:00");
-                            const gapDays = Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
-                            if (gapDays >= 90) {
-                                const pl = players.find(x => x.id === pid);
-                                if (pl) {
-                                    comebackSeen.add(pid);
-                                    add("JE SPÄŤ", `${pl.name} sa po ${gapDays}-dňovej pauze vrátil do štvorhry a hneď zamiešal kartami!`);
-                                }
-                            }
-                        }
-                    });
+                activePlayers.forEach(pl => {
+                    const pMatches = matches.filter(m =>
+                        m.date && (m.t1p1 === pl.id || m.t1p2 === pl.id || m.t2p1 === pl.id || m.t2p2 === pl.id)
+                    );
+                    if (pMatches.length < 2) return;
+                    const lastM = pMatches[pMatches.length - 1];
+                    const prevM = pMatches[pMatches.length - 2];
+                    if (getMatchAgeDays(lastM.date) > 30) return;
+                    const d1 = new Date(prevM.date + "T00:00:00");
+                    const d2 = new Date(lastM.date + "T00:00:00");
+                    const gapDays = Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
+                    if (gapDays >= 90) {
+                        add("JE SPÄŤ", `${pl.name} sa po ${gapDays}-dňovej pauze vrátil do štvorhry a hneď zamiešal kartami!`);
+                    }
                 });
             }
 
-            // 4. Aktuálne série (horúca forma / kríza)
+            // 4. Aktuálne série (horúca forma / kríza – len pre hráčov aktívnych za posledných 180 dní)
             activePlayers.forEach(p => {
-                if (!p.isInactive && p.curWinStreak >= 3) {
+                const isRecentlyActive = typeof p.daysSinceLastMatch === "number" && p.daysSinceLastMatch < 180;
+                if (isRecentlyActive && p.curWinStreak >= 3) {
                     add("HORÚCA FORMA", `${p.name} je na neudržanie – ťahá deblovú sériu ${p.curWinStreak} výhier v rade! Kto ho zastaví?`);
-                } else if (!p.isInactive && p.curLossStreak >= 3) {
+                } else if (isRecentlyActive && p.curLossStreak >= 3) {
                     add("KRÍZOVÝ ŠTÁB", `${p.name} prehral už ${skCount(p.curLossStreak, "štvorhru", "štvorhry", "štvorhier")} po sebe. Odborníci odporúčajú vymeniť výplet alebo parťáka.`);
                 }
             });
@@ -7412,13 +7407,14 @@
                     add("BOJ O ČELO", `${players[1].name} stráca na prvého deblistu ${skName(players[0].name, "acc")} presne ${diff12.toFixed(1)} ELO bodov.`);
                 }
 
+                const activeRanked = players.filter(p => p.matches > 0 && !p.isInactive);
                 let minGap = Infinity;
                 let closePair = null;
-                for (let i = 0; i < players.length - 1; i++) {
-                    const g = Math.round((players[i].elo - players[i + 1].elo) * 10) / 10;
+                for (let i = 0; i < activeRanked.length - 1; i++) {
+                    const g = Math.round((activeRanked[i].elo - activeRanked[i + 1].elo) * 10) / 10;
                     if (g < minGap) {
                         minGap = g;
-                        closePair = [players[i], players[i + 1]];
+                        closePair = [activeRanked[i], activeRanked[i + 1]];
                     }
                 }
                 if (closePair) {
@@ -7426,12 +7422,13 @@
                 }
             }
 
-            if (pairs.length >= 1) {
-                add("PÁR ČÍSLO JEDEN", `Rebríček pevných dvojíc vedie zohraný tandem ${pairs[0].name} s párovým ratingom ${pairs[0].elo.toFixed(1)} ELO.`);
+            const qualifiedPairsNews = pairs.filter(pr => pr.matches >= 2);
+            if (qualifiedPairsNews.length >= 1) {
+                add("PÁR ČÍSLO JEDEN", `Rebríček pevných dvojíc vedie zohraný tandem ${qualifiedPairsNews[0].name} s párovým ratingom ${qualifiedPairsNews[0].elo.toFixed(1)} ELO.`);
             }
-            if (pairs.length >= 2) {
-                const pDiff = Math.round((pairs[0].elo - pairs[1].elo) * 10) / 10;
-                add("SÚBOJ DVOJÍC", `Medzi najlepšími pármi ${pairs[0].name} a ${pairs[1].name} je rozdiel len ${pDiff.toFixed(1)} párových ELO bodov.`);
+            if (qualifiedPairsNews.length >= 2) {
+                const pDiff = Math.round((qualifiedPairsNews[0].elo - qualifiedPairsNews[1].elo) * 10) / 10;
+                add("SÚBOJ DVOJÍC", `Medzi najlepšími pármi ${qualifiedPairsNews[0].name} a ${qualifiedPairsNews[1].name} je rozdiel len ${pDiff.toFixed(1)} párových ELO bodov.`);
             }
 
             // 6. Hráčske štatistiky (úspešnosť, gemy, progres, návrat z dna, pokles z maxima)
@@ -7497,8 +7494,10 @@
                         : `Historický rekord víťaznej série (${a.valueText}) stále drží ${n}.`];
                 },
                 hot_hand: (holders, a) => {
-                    const n = skJoinNames(holders, "nom");
-                    return ["HORÚCA RUKA", holders.length > 1
+                    const freshHolders = holders.filter(h => typeof h.daysSinceLastMatch === "number" && h.daysSinceLastMatch < 180);
+                    if (freshHolders.length === 0) return ["HORÚCA RUKA", ""];
+                    const n = skJoinNames(freshHolders, "nom");
+                    return ["HORÚCA RUKA", freshHolders.length > 1
                         ? `Najdlhšiu práve prebiehajúcu víťaznú šnúru (${a.valueText}) majú ${n}.`
                         : `Najdlhšiu práve prebiehajúcu víťaznú šnúru (${a.valueText}) má ${n}.`];
                 },
@@ -7578,8 +7577,12 @@
                         : `Spoločenský typ: ${n} si v debli zahral už ${withTxt}.`];
                 },
                 dynamic_duo: (holders, a) => {
-                    const n = skJoinNames(holders, "nom");
-                    return ["DYNAMICKÉ DUO", `Najúspešnejšia pevná dvojica rebríčka dosiahla ${a.valueText} (${n}).`];
+                    const pNames = Array.isArray(a.pairNames) && a.pairNames.length > 0 ? a.pairNames : [skJoinNames(holders, "nom")];
+                    const pairList = pNames.length > 1 ? `${pNames.slice(0, -1).join(", ")} a ${pNames[pNames.length - 1]}` : pNames[0];
+                    const eloStr = typeof a.pairEloValue === "number" ? `${a.pairEloValue.toFixed(1)} ELO` : a.valueText;
+                    return ["DYNAMICKÉ DUO", pNames.length > 1
+                        ? `O titul najúspešnejšej pevnej dvojice (${eloStr}) sa delia páry ${pairList}.`
+                        : `Najúspešnejšia pevná dvojica rebríčka (${pairList}) dosiahla párový rating ${eloStr}.`];
                 },
                 steamroller: (holders, a) => {
                     const n = skJoinNames(holders, "nom");
@@ -7589,9 +7592,12 @@
                     return ["KRV, POT A SLZY", `Najdlhšia deblová bitka histórie priniesla až ${a.valueText}!`];
                 },
                 inseparable_pair: (holders, a) => {
-                    const n = skJoinNames(holders, "nom");
-                    const num = parseInt(a.valueText, 10) || 0;
-                    return ["NEROZLUČNÁ DVOJKA", `Parťáci na kurte: ${n} spolu nastúpili už do ${skCount(num, "štvorhry", "štvorhier", "štvorhier")}.`];
+                    const pNames = Array.isArray(a.pairNames) && a.pairNames.length > 0 ? a.pairNames : [skJoinNames(holders, "nom")];
+                    const pairList = pNames.length > 1 ? `${pNames.slice(0, -1).join(", ")} a ${pNames[pNames.length - 1]}` : pNames[0];
+                    const num = typeof a.pairMatchesCount === "number" ? a.pairMatchesCount : (parseInt(a.valueText, 10) || 0);
+                    return ["NEROZLUČNÁ DVOJKA", pNames.length > 1
+                        ? `Parťáci na kurte: dvojice ${pairList} spolu nastúpili už do ${skCount(num, "štvorhry", "štvorhier", "štvorhier")}.`
+                        : `Parťáci na kurte: dvojica ${pairList} spolu nastúpila už do ${skCount(num, "štvorhry", "štvorhier", "štvorhier")}.`];
                 }
             };
 
@@ -7725,7 +7731,7 @@
             if (qualPairsForNews.length >= 2) {
                 const worstPair = qualPairsForNews[qualPairsForNews.length - 1];
                 if (worstPair.elo < 1500) {
-                    add("KRÍZA V TÍME", `Dvojica ${worstPair.name} sa krčí na chvoste párového rebríčka (${worstPair.elo.toFixed(1)} ELO). V šatni sa už šepká o prestupe k inému parťákovi alebo aspoň o výmene strán na prijme.`);
+                    add("KRÍZA V TÍME", `Dvojica ${worstPair.name} sa krčí na chvoste párového rebríčka (${worstPair.elo.toFixed(1)} ELO). V šatni sa už šepká o prestupe k inému parťákovi alebo aspoň o výmene strán na príjme.`);
                 }
             }
 
@@ -7853,17 +7859,17 @@
             1: [
                 "Vonku je to v januári len pre otužilcov – novoročné predsavzatia radšej plňte v teple haly!",
                 "Januárový tenis vonku? Jedine v lyžiarkach a s čajom v termoske. Smer hala!",
-                "V januári na Kysuciach loptičky vonku skôr mrznú než skáču – ideálny čas na halu.",
+                "V januári loptičky vonku skôr mrznú než skáču – ideálny čas na halu.",
                 "Vonku trénujú len ľadové medvede a najtvrdší otužilci. Zvyšok ligy sa hlási v hale!"
             ],
             2: [
-                "Február na Kysuciach nepozná zľutovanie – vonku je to len pre otužilcov, výplety patria do haly.",
+                "Február vonku nepozná zľutovanie – je to len pre otužilcov, výplety patria do haly.",
                 "Ak nemáš rukavice s protišmykovým gripom, februárový kurt vonku vynechaj a rezervuj halu!",
                 "Vonku by si si vo februári skôr privolal omrzliny než eso – istí to vykúrená hala.",
                 "Februárové podmienky vonku sú len pre otužilcov s dobrou poistkou. Hala je jasná voľba!"
             ],
             3: [
-                "Marec sa tvári jarne, ale na Kysuciach je vonku stále len pre otužilcov – radšej ešte hala!",
+                "Marec sa tvári jarne, ale vonku je to stále len pre otužilcov – radšej ešte hala!",
                 "V marci antuka ešte len rozmŕza, vonku hrajú iba najodvážnejší otužilci. Zatiaľ istí hala.",
                 "Prvé marcové slnko vie oklamať – na kraťasy je priskoro, vonku len pre otužilcov, šup do haly!",
                 "V marci vonku skôr chytíš nádchu ako forhend do rohu – halová sezóna ešte nekončí!"
@@ -7871,7 +7877,7 @@
             11: [
                 "V novembri je to vonku už len pre otužilcov – antuka šla na zimný spánok, sťahujeme sa do haly!",
                 "Novembrový tenis vonku? Len ak chceš hrať v hmle s reflexnou loptičkou. Radšej pekne do haly!",
-                "V novembri vonku vydržia len kysuckí otužilci – zvyšok partie nech si nachystá halovky.",
+                "V novembri vonku vydržia len najtvrdší otužilci – zvyšok partie nech si nachystá halovky.",
                 "Sychravý november praje halovému tenisu – vonku by dnes zmrzol aj ten najrýchlejší servis!"
             ],
             12: [
@@ -7891,7 +7897,7 @@
                 outdoor: [
                     "Apríl hlási super podmienky – zoberte rakety a poďte pokrstiť vonkajšiu antuku!",
                     "Teplota nad 14 °C a sucho: ideálny aprílový deň na prvé sklzy na vonkajšej antuke!",
-                    "Hala môže dnes oddychovať – v Čadci to volá von na antuku!"
+                    "Hala môže dnes oddychovať – počasie dnes volá von na antuku!"
                 ]
             },
             5: {
@@ -7901,20 +7907,20 @@
                     "Dnešné májové počasie antuke nepraje, v hale vás aspoň nevyženie dážď ani chlad!"
                 ],
                 outdoor: [
-                    "Májová klasika v Čadci – podmienky ako na Roland Garros, šup von na antuku!",
+                    "Májová klasika na kurte – podmienky ako na Roland Garros, šup von na antuku!",
                     "V máji sedieť v hale by bol hriech – podmienky sú ideálne, poďte na antuku von!",
                     "Sucho a príjemne teplo: májová antuka čaká, kto dnes získa ELO body vonku?"
                 ]
             },
             6: {
                 indoor: [
-                    "Aj v júni vie počasie v Čadci prekvapiť – dnes to na antuku nie je, odporúčame zápas v hale!",
+                    "Aj v júni vie počasie prekvapiť – dnes to na antuku nie je, odporúčame zápas v hale!",
                     "Dážď, búrka alebo chladný jún? Neriskujte blato na teniskách a dajte si zápas v hale.",
                     "Dnešný jún má zlú náladu – pod strechou v hale bude loptička odskakovať spoľahlivejšie!"
                 ],
                 outdoor: [
                     "Jún v plnej paráde – dlhé dni a super počasie, všetci von na antuku!",
-                    "Perfektné júnové podmienky v Čadci – namažte sa, zoberte vodu a hor sa na antuku von!",
+                    "Perfektné júnové podmienky – namažte sa, zoberte vodu a hor sa na antuku von!",
                     "Ideálny júnový deň na antukové výmeny – hala dnes zíva prázdnotou!"
                 ]
             },
@@ -7926,20 +7932,20 @@
                 ],
                 outdoor: [
                     "Letný júl ako z katalógu – ideálny čas vypotiť pár ELO bodov vonku na antuke!",
-                    "Plná letná sezóna v Čadci: antuka je suchá a pripravená, šup von na kurt!",
+                    "Plná letná sezóna: antuka je suchá a pripravená, šup von na kurt!",
                     "V júli patrí tenis pod holé nebo – poďte si to rozdať von na antuku!"
                 ]
             },
             8: {
                 indoor: [
                     "Augustová búrka alebo chladnejší deň – antuka je dnes mimo hry, odporúčame zápas v hale!",
-                    "Aj v auguste vie Kysuce schladiť či spláchnuť dážď – dnes to vyrieši zápas v hale.",
+                    "Aj v auguste vie počasie schladiť či spláchnuť dážď – dnes to vyrieši zápas v hale.",
                     "Dnes radšej neriskujte mokrú antuku a presuňte augustový duel pod strechu do haly!"
                 ],
                 outdoor: [
                     "Augustové slnko a teplý vzduch – perfektné podmienky na poriadnu bitku na antuke vonku!",
                     "V auguste niet nad prach z antuky na ponožkách – vyrazte na kurt von!",
-                    "Skvelé augustové počasie v Čadci – vonkajšia antuka dnes volá po zápase!"
+                    "Skvelé augustové počasie – vonkajšia antuka dnes volá po zápase!"
                 ]
             },
             9: {
@@ -7951,7 +7957,7 @@
                 outdoor: [
                     "Babie leto v septembri! Príjemná teplota bez zrážok – ideálny čas ísť na antuku von!",
                     "September ako stvorený na tenis bez úpalu – využite to a poďte na antuku von!",
-                    "Perfektné septembrové podmienky na Kysuciach – antuka vonku ešte rozhodne nekončí!"
+                    "Perfektné septembrové podmienky na kurtoch – antuka vonku ešte rozhodne nekončí!"
                 ]
             },
             10: {
@@ -7962,7 +7968,7 @@
                 ],
                 outdoor: [
                     "Októbrový zázrak nad 14 °C a bez dažďa – chyťte šancu za pačesy a poďte na antuku von!",
-                    "Zlatý október v Čadci praje tenisu: kým sa dá, užite si ešte vonkajšiu antuku!",
+                    "Zlatý október praje tenisu: kým sa dá, užite si ešte vonkajšiu antuku!",
                     "Bonusové teplo v októbri – hala počká, dnes to ešte vyzerá na skvelú antuku vonku!"
                 ]
             }
@@ -8154,7 +8160,7 @@
             const tempStr = temp.toFixed(1).replace(".", ",");
             const precipStr = precip.toFixed(1).replace(".", ",");
             const placeLabel = (isAwayFromCadca && localWeather)
-                ? (localLocationName ? `V lokalite ${localLocationName}` : "Vo tvojej polohe")
+                ? (localLocationName ? `V lokalite ${localLocationName}` : "V tvojej polohe")
                 : "V Čadci";
 
             if (wind >= 20) {
@@ -8201,7 +8207,7 @@
             if (isDraw) {
                 pool.push({ tag: "TLAČOVKA", text: `Pozápasová tlačovka po remízovom dueli #${matchIndex} sa presunula k najbližšiemu výčapu, kde všetci označili za hlavného vinníka vypršaný čas na kurte a krivé čiary.` });
             } else {
-                pool.push({ tag: "TLAČOVKA", text: `Pozápasová tlačovka po dueli #${matchIndex} sa presunula k najbližšiemu výčapu, kde porazený označil za hlavného vinníka zlé svetlo, krivé čiary a nový výplet.` });
+                pool.push({ tag: "TLAČOVKA", text: `Pozápasová tlačovka po dueli #${matchIndex} sa presunula k najbližšiemu výčapu, kde porazení označili za hlavného vinníka zlé svetlo, krivé čiary a nový výplet.` });
             }
             return pool;
         }
@@ -8231,8 +8237,8 @@
                 ];
                 if (!isDraw) {
                     bagelPool.push(
-                        { tag: "RÝCHLY PROCES", text: `Set 6:0 v dueli #${m.index} trval kratšie než rozcvička – porazený si ani nestihol poriadne zašpiniť tenisky.` },
-                        { tag: "ZĽAVA NA KURT", text: `Po výsledku 6:0 v zápase #${m.index} zvažuje správca kurtu, že porazenému vráti polovicu vstupného, lebo na ihrisku bol len do počtu.` }
+                        { tag: "RÝCHLY PROCES", text: `Set 6:0 v dueli #${m.index} trval kratšie než rozcvička – porazení si ani nestihli poriadne zašpiniť tenisky.` },
+                        { tag: "ZĽAVA NA KURT", text: `Po výsledku 6:0 v zápase #${m.index} zvažuje správca kurtu, že porazenému páru vráti polovicu vstupného, lebo na ihrisku boli len do počtu.` }
                     );
                 }
                 out.push(bagelPool[Math.floor(Math.random() * bagelPool.length)]);
@@ -8262,12 +8268,12 @@
                 } else {
                     closePool.push(
                         { tag: "BITKA O KURT", text: `Žiadny bod zadarmo! V dueli #${m.index} rozhodli až posledné nervy a pár centimetrov od čiary – presne pre takéto zápasy sa hrá tenis.` },
-                        { tag: "O VLÁSOK", text: `V zápase #${m.index} rozhodlo len pár gemov – porazený síce odchádzal bez bodov, ale so vztýčenou hlavou a chuťou na okamžitú odvetu.` }
+                        { tag: "O VLÁSOK", text: `V zápase #${m.index} rozhodlo len pár gemov – porazení síce odchádzali bez bodov, ale so vztýčenou hlavou a chuťou na okamžitú odvetu.` }
                     );
                 }
                 out.push(closePool[Math.floor(Math.random() * closePool.length)]);
             } else if (!isDraw && bagels === 0 && tiebreaks === 0 && totalG > 0 && diffG >= 7) {
-                out.push({ tag: "JEDNOZNAČNÝ PRIEBEH", text: `Zápas #${m.index} mal jednoznačný priebeh – víťaz na kurte takmer nezapol druhý prevodový stupeň.` });
+                out.push({ tag: "JEDNOZNAČNÝ PRIEBEH", text: `Zápas #${m.index} mal jednoznačný priebeh – víťazná dvojica na kurte takmer nezapla druhý prevodový stupeň.` });
             }
             return out;
         }
@@ -8275,10 +8281,11 @@
         function buildRecentMatchPoolDoubles(m, allMatches) {
             const s1 = Number(m.sets1) || 0;
             const s2 = Number(m.sets2) || 0;
-            const gemsTxt = m.gems ? ` (${m.gems})` : "";
             const isAWin = s1 > s2;
             const isBWin = s2 > s1;
             const isDraw = s1 === s2;
+            const gemsOrdered = m.gems ? formatGemsForOrder(m.gems, !isBWin) : "";
+            const gemsTxt = gemsOrdered ? ` (${gemsOrdered})` : "";
 
             let resultItem;
             if (isAWin) {
@@ -8383,15 +8390,18 @@
             // Ak sa nehralo minimálne 30 dní -> žiadne správy k aktuálnemu zápasu (prvé ide počasie)
             if (lastAge >= 30) return [];
 
-            // Po 6 dňoch (7 až 29 dní) -> ak má zápas vlastnú poznámku, ukáž výsledok + poznámku; inak 1 náhodnú správu
+            // Po 6 dňoch (7 až 29 dní) -> vždy ukáž výsledok + poznámku (ak existuje), inak výsledok + 1 náhodnú zaujímavosť/vtip
             if (lastAge > 6) {
                 const { resultItem, specialItems, jokeItems } = buildRecentMatchPoolDoubles(lastM, matches);
                 const noteItem = buildReporterNoteItem(lastM);
                 if (noteItem) {
                     return [resultItem, noteItem];
                 }
-                const combined = [resultItem, ...specialItems, ...jokeItems];
-                return [combined[Math.floor(Math.random() * combined.length)]];
+                const extras = [...specialItems, ...jokeItems];
+                if (extras.length > 0) {
+                    return [resultItem, extras[Math.floor(Math.random() * extras.length)]];
+                }
+                return [resultItem];
             }
 
             // Do 6 dní -> všetky zápasy z posledných dní chronologicky: 1. výsledok, 2. poznámka (ak existuje), potom ďalšie správy
@@ -8425,7 +8435,7 @@
             const track = document.getElementById("news-ticker-track");
             if (!groupA || !groupB || !track) return;
 
-            const dataSig = `${computedMatches.length}_${computedPlayers.map(p => p.id + ":" + p.elo).join("|")}_${computedMatches.map(m => m.note || "").join("~")}`;
+            const dataSig = `${state.updatedAt || 0}_${computedMatches.length}_${computedPlayers.map(p => p.id + ":" + p.elo).join("|")}_${computedMatches.map(m => [m.date, m.sets1, m.sets2, m.gems || "", m.note || ""].join(",")).join("~")}`;
             const weatherSig = `${cadcaWeatherFetchedAt}_${cadcaWeatherFailed ? 1 : 0}_${weatherQuipSeed}`;
             const fullSig = `${dataSig}__${weatherSig}`;
 
