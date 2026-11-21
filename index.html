@@ -1991,8 +1991,8 @@
         }
 
     
-        /* MOTÍV ICE: tmavšie dymové sklo pre 100% čitateľnosť na svetlom ľadovom pozadí */
-        html.theme-ice {
+        /* JEDNOTNÉ DYMOVÉ SKLO PRE VŠETKY MOTÍVY (rovnaké hodnoty ako pri motíve Zima) */
+        :root {
             --bg-card: rgba(12, 24, 38, 0.76);
             --bg-card-alt: rgba(15, 29, 46, 0.72);
             --bg-input: rgba(8, 17, 28, 0.78);
@@ -2001,37 +2001,37 @@
             --shadow: 0 10px 30px rgba(8, 20, 34, 0.34);
         }
 
-        html.theme-ice .app-header {
+        .app-header {
             background: linear-gradient(180deg, rgba(10, 22, 36, 0.92) 0%, rgba(12, 26, 42, 0.86) 100%);
         }
 
-        html.theme-ice .bottom-nav {
+        .bottom-nav {
             background: rgba(10, 22, 36, 0.88);
         }
 
-        html.theme-ice .preview-box,
-        html.theme-ice .match-card,
-        html.theme-ice .team-select-box,
-        html.theme-ice .mm-option-card,
-        html.theme-ice .mode-box,
-        html.theme-ice .chart-nav-bar,
-        html.theme-ice .canvas-wrap {
+        .preview-box,
+        .match-card,
+        .team-select-box,
+        .mm-option-card,
+        .mode-box,
+        .chart-nav-bar,
+        .canvas-wrap {
             background: rgba(10, 22, 36, 0.80);
         }
 
-        html.theme-ice .preview-player {
+        .preview-player {
             background: rgba(7, 16, 28, 0.78);
         }
 
-        html.theme-ice .ach-card {
+        .ach-card {
             background: linear-gradient(145deg, rgba(12, 25, 40, 0.82), rgba(8, 18, 30, 0.78));
         }
 
-        html.theme-ice .profile-mini-badge {
+        .profile-mini-badge {
             background: rgba(10, 22, 36, 0.82);
         }
 
-        html.theme-ice select option {
+        select option {
             background: #0f1d2e;
             color: #ffffff;
         }
@@ -2046,7 +2046,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.34</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.35</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -2474,7 +2474,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.34)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.35)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2613,7 +2613,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.34_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.35_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -5535,7 +5535,7 @@
             ctx.fillStyle = "#ffffff";
             ctx.font = "800 31px sans-serif";
             ctx.textAlign = "left";
-            ctx.fillText("ELO4MASTER V1.34 | DEBLOVÝ VÝVOJ ELO V ČASE", innerX + 32, topY + 47);
+            ctx.fillText("ELO4MASTER V1.35 | DEBLOVÝ VÝVOJ ELO V ČASE", innerX + 32, topY + 47);
 
             const todayStr = new Date().toLocaleDateString("sk-SK");
             const rangeUpper = formatChartRangeText(bounds).toUpperCase();
@@ -5748,7 +5748,7 @@
 
         function downloadTvChartGraphic() {
             const canvas = document.getElementById("tvChartCanvas");
-            const filename = `ELO4MASTER_v1.34_TV_Graf_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.35_TV_Graf_${new Date().toISOString().split("T")[0]}.png`;
             try {
                 canvas.toBlob(blob => {
                     if (blob) {
@@ -6389,7 +6389,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.34_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.35_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -6444,7 +6444,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.34_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.35_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -6770,7 +6770,7 @@
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "800 30px sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.34 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
+                ctx.fillText(`ELO4MASTER V1.35 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
 
                 ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
                 ctx.font = "700 22px sans-serif";
@@ -6849,10 +6849,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.34 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.34 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.35 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.35 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.34 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.35 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -7087,7 +7087,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.34_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.35_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
@@ -7144,7 +7144,7 @@
         }
 
 
-        /* ==================== NEWS BAR TICKER (v1.34) ==================== */
+        /* ==================== NEWS BAR TICKER (v1.35) ==================== */
         let cachedNewsItems = [];
         let newsLastSignature = "";
         let newsResizeTimer = null;
@@ -7247,7 +7247,7 @@
             const achievements = computedAchievements || [];
 
             if (players.length === 0) {
-                add("INFO", "Vitajte v ELO4MASTER v1.34! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
+                add("INFO", "Vitajte v ELO4MASTER v1.35! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
                 return items;
             }
 
