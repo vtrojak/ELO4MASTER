@@ -2060,6 +2060,98 @@
             color: #ffffff;
         }
 
+
+        /* UVÍTACIA KARTA PRE PRÁZDNU DATABÁZU (v2.0) */
+        .welcome-card {
+            background: linear-gradient(145deg, rgba(12, 34, 48, 0.88), rgba(6, 20, 32, 0.86));
+            border: 1px solid rgba(190, 242, 100, 0.48);
+            border-radius: var(--radius);
+            padding: 18px 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 12px 34px rgba(0, 14, 22, 0.44), inset 0 1px 1px rgba(255, 255, 255, 0.22);
+        }
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: rgba(190, 242, 100, 0.16);
+            border: 1px solid rgba(190, 242, 100, 0.42);
+            color: var(--tennis-lime);
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .welcome-title {
+            font-size: 1.08rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .welcome-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            line-height: 1.48;
+        }
+
+        .welcome-step {
+            background: rgba(6, 18, 28, 0.62);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 12px;
+            padding: 11px 12px;
+            margin-top: 10px;
+        }
+
+        .welcome-step-label {
+            font-size: 0.74rem;
+            font-weight: 800;
+            color: var(--blue-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 6px;
+        }
+
+        .loc-input-row {
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        .loc-input-row input {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .loc-input-row .btn {
+            width: auto;
+            flex: 0 0 auto;
+            white-space: nowrap;
+            padding: 10px 14px;
+        }
+
+        .loc-status-hint {
+            margin-top: 6px;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            line-height: 2.0;
+        }
+
+        @media (max-width: 480px) {
+            .loc-input-row {
+                flex-direction: column;
+            }
+            .loc-input-row .btn {
+                width: 100%;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -2070,7 +2162,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.38</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v2.0</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -2096,6 +2188,27 @@
                 <i class="fa-solid fa-rotate"></i>
                 <span>Načítať aktuálnu databázu</span>
             </button>
+            <!-- UVÍTACIA KARTA PRI PRÁZDNEJ DATABÁZE (PRESKOČÍ SA, AK SA NAČÍTA DATABAZA.JSON Z GITHUBU) -->
+            <div id="empty-welcome-card" class="welcome-card" style="display:none;">
+                <div class="welcome-badge">Čistý štart · ELO4MASTER v2.0</div>
+                <div class="welcome-title">Databáza je zatiaľ prázdna</div>
+                <div class="welcome-desc">
+                    Nahraj existujúci súbor <strong>databaza.json</strong> (všetko sa okamžite prepočíta), alebo si nastav domovské mesto a pridaj prvých deblistov nižšie.
+                </div>
+                <div class="grid-2" style="margin-bottom: 4px;">
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('import-json-input').click()">Načítať databázu (JSON)</button>
+                    <button type="button" class="btn btn-secondary" onclick="focusAddPlayerForm()">Pridať prvých deblistov ↓</button>
+                </div>
+                <div class="welcome-step">
+                    <div class="welcome-step-label">Voliteľné: Domovské mesto / okres pre počasie a NEWS</div>
+                    <div class="loc-input-row">
+                        <input type="text" id="welcome-home-city" placeholder="Zadaj mesto alebo okres (nie obec/dedinu), napr. Čadca, Žilina...">
+                        <button type="button" class="btn btn-secondary" onclick="saveHomeLocationFromInput('welcome-home-city')">Uložiť mesto</button>
+                    </div>
+                    <div id="welcome-location-status" class="loc-status-hint">Uloží sa priamo do <strong>databaza.json</strong>. Ak pole necháš prázdne, použije sa geolokácia prehliadača.</div>
+                </div>
+            </div>
+
             <div class="stat-tile" id="last-match-banner" style="margin-bottom: 14px; padding: 12px 14px;">
                 <div class="stat-tile-label" id="last-match-label">Posledný odohratý zápas</div>
                 <div id="last-match-board" class="lm-board-wrap"></div>
@@ -2109,7 +2222,7 @@
                         <span id="leaderboard-card-title">Priebežná tabuľka ELO – Jednotlivci</span>
                     </div>
                     <div style="display:flex; gap:6px;">
-                        <button id="tbl-mode-players" class="preset-btn active" style="padding:4px 10px; font-size:0.74rem;" onclick="setLeaderboardMode('players')">Jednotlivci (12)</button>
+                        <button id="tbl-mode-players" class="preset-btn active" style="padding:4px 10px; font-size:0.74rem;" onclick="setLeaderboardMode('players')">Jednotlivci (0)</button>
                         <button id="tbl-mode-pairs" class="preset-btn" style="padding:4px 10px; font-size:0.74rem;" onclick="setLeaderboardMode('pairs')">Pevné dvojice</button>
                     </div>
                 </div>
@@ -2506,7 +2619,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.38)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v2.0)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2631,6 +2744,16 @@
                     </div>
                 </div>
 
+                <div class="form-group" style="margin-bottom: 14px; padding: 12px; border-radius: 12px; background: rgba(6, 18, 28, 0.56); border: 1px solid rgba(186, 230, 253, 0.24);">
+                    <label for="cfg-home-city" style="color: var(--tennis-lime); font-weight: 700;">Domovské mesto / okres (zadaj mesto alebo okres, nie obec/dedinu)</label>
+                    <div class="loc-input-row">
+                        <input type="text" id="cfg-home-city" placeholder="napr. Čadca, Žilina, Trenčín, Praha...">
+                        <button type="button" class="btn btn-secondary" onclick="saveHomeLocationFromInput('cfg-home-city')">Uložiť mesto</button>
+                    </div>
+                    <div id="cfg-location-status" class="loc-status-hint">Bez zadaného domovského mesta – pre počasie sa použije geolokácia prehliadača.</div>
+                </div>
+
+
                 <div style="margin-bottom: 10px;">
                     <div class="ctx-btn-wrap">
                         <button class="btn btn-primary" onclick="exportBackupJSON('databaza.json')">Stiahnuť databaza.json (pre GitHub)</button>
@@ -2653,7 +2776,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.38_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v2.0_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -2711,14 +2834,14 @@
                 </div>
 
                 <div class="ctx-btn-wrap">
-                    <button class="btn btn-danger" onclick="resetToThreadDefault()">Obnoviť pôvodných 24 zápasov (Reset)</button>
+                    <button class="btn btn-danger" onclick="resetToThreadDefault()">Vymazať lokálnu databázu (Čistý štart)</button>
                     <div class="ctx-popover" role="tooltip">
                         <div class="ctx-popover-head">
-                            <span><i class="fa-solid fa-triangle-exclamation"></i> Továrenský reset databázy</span>
-                            <span class="ctx-popover-badge" style="color:#fca5a5; border-color:rgba(252,165,165,0.4); background:rgba(252,165,165,0.15);">Reset</span>
+                            <span><i class="fa-solid fa-triangle-exclamation"></i> Vyčistenie lokálnej databázy</span>
+                            <span class="ctx-popover-badge" style="color:#fca5a5; border-color:rgba(252,165,165,0.4); background:rgba(252,165,165,0.15);">Čistý štart</span>
                         </div>
-                        <div class="ctx-popover-desc">Vymaže lokálnu pamäť prehliadača a obnoví vstavanú východiskovú databázu 24 historických štvorhier.</div>
-                        <div class="ctx-popover-tip">Všetky neuložené lokálne zmeny budú odstránené.</div>
+                        <div class="ctx-popover-desc">Vymaže lokálne uložených hráčov, štvorhry aj domovské mesto a vráti aplikáciu do čistého prázdneho stavu.</div>
+                        <div class="ctx-popover-tip">Odporúčame najprv stiahnuť zálohu JSON.</div>
                     </div>
                 </div>
             </div>
@@ -2939,7 +3062,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "ELO4MASTER_DB_V1";
+        const STORAGE_KEY = "ELO4MASTER_DB_V2";
         const REMOTE_JSON_FILES = ["databaza.json", "data.json"];
         const ACHIEVEMENT_ICON_DIRS = ["./", "./icons/", "./ikony/", "./badges/", "./img/", "./images/", "./achievements/"];
 
@@ -3092,51 +3215,13 @@
             "#f43f5e"  // Majo
         ];
 
-        const INITIAL_PLAYERS = [
-            { id: "vlado",  name: "Vlado",  color: "#f97316" },
-            { id: "tibor",  name: "Tibor",  color: "#c084fc" },
-            { id: "belo",   name: "Belo",   color: "#facc15" },
-            { id: "martin", name: "Martin", color: "#2dd4bf" },
-            { id: "adam",   name: "Adam",   color: "#fb7185" },
-            { id: "uher",   name: "Uher",   color: "#60a5fa" },
-            { id: "igor",   name: "Igor",   color: "#e879f9" },
-            { id: "matus",  name: "Matúš",  color: "#fbbf24" },
-            { id: "tono",   name: "Toňo",   color: "#38bdf8" },
-            { id: "cicero", name: "Cicero", color: "#34d399" },
-            { id: "peto",   name: "Peťo",   color: "#a3e635" },
-            { id: "majo",   name: "Majo",   color: "#f43f5e" }
-        ];
+        const INITIAL_PLAYERS = [];
 
-        // 24 completed doubles matches ordered chronologically from #1 (2024-07-06) to #24 (2026-09-15)
-        const INITIAL_MATCHES = [
-            { id: "d24_1",  date: "2024-07-06", t1p1: "tono",  t1p2: "peto",   t2p1: "majo",  t2p2: "tibor",  sets1: 1, sets2: 1, gems: "5:7 6:3" },
-            { id: "d24_2",  date: "2024-08-11", t1p1: "belo",  t1p2: "tono",   t2p1: "majo",  t2p2: "peto",   sets1: 2, sets2: 0, gems: "6:2 6:3" },
-            { id: "d24_3",  date: "2024-08-18", t1p1: "belo",  t1p2: "tono",   t2p1: "majo",  t2p2: "peto",   sets1: 1, sets2: 1, gems: "2:6 6:4" },
-            { id: "d24_4",  date: "2024-08-25", t1p1: "belo",  t1p2: "matus",  t2p1: "majo",  t2p2: "peto",   sets1: 1, sets2: 1, gems: "1:6 6:4" },
-            { id: "d24_5",  date: "2024-09-01", t1p1: "belo",  t1p2: "tibor",  t2p1: "majo",  t2p2: "peto",   sets1: 2, sets2: 0, gems: "6:4 6:2" },
-            { id: "d24_6",  date: "2024-09-07", t1p1: "uher",  t1p2: "belo",   t2p1: "tono",  t2p2: "cicero", sets1: 2, sets2: 0, gems: "6:4 6:2" },
-            { id: "d24_7",  date: "2024-09-07", t1p1: "belo",  t1p2: "peto",   t2p1: "cicero",t2p2: "tono",   sets1: 2, sets2: 0, gems: "6:4 6:3" },
-            { id: "d24_8",  date: "2024-10-26", t1p1: "belo",  t1p2: "majo",   t2p1: "tono",  t2p2: "cicero", sets1: 1, sets2: 1, gems: "1:6 6:3" },
-            { id: "d24_9",  date: "2024-11-02", t1p1: "belo",  t1p2: "tono",   t2p1: "majo",  t2p2: "peto",   sets1: 3, sets2: 0, gems: "6:2 6:3 6:3" },
-            { id: "d24_10", date: "2024-11-09", t1p1: "belo",  t1p2: "tono",   t2p1: "majo",  t2p2: "peto",   sets1: 2, sets2: 0, gems: "7:5 6:0" },
-            { id: "d24_11", date: "2024-11-23", t1p1: "belo",  t1p2: "tono",   t2p1: "majo",  t2p2: "peto",   sets1: 3, sets2: 0, gems: "6:3 6:4 6:1" },
-            { id: "d24_12", date: "2025-01-05", t1p1: "belo",  t1p2: "majo",   t2p1: "peto",  t2p2: "vlado",  sets1: 0, sets2: 2, gems: "1:6 1:6" },
-            { id: "d24_13", date: "2025-01-11", t1p1: "belo",  t1p2: "majo",   t2p1: "tono",  t2p2: "tibor",  sets1: 1, sets2: 1, gems: "6:3 4:6" },
-            { id: "d24_14", date: "2025-01-26", t1p1: "belo",  t1p2: "tibor",  t2p1: "peto",  t2p2: "vlado",  sets1: 0, sets2: 3, gems: "4:6 3:6 3:6" },
-            { id: "d24_15", date: "2025-02-08", t1p1: "majo",  t1p2: "martin", t2p1: "belo",  t2p2: "peto",   sets1: 3, sets2: 0, gems: "6:1 6:1 6:1" },
-            { id: "d24_16", date: "2025-05-17", t1p1: "belo",  t1p2: "tibor",  t2p1: "vlado", t2p2: "majo",   sets1: 0, sets2: 3, gems: "2:6 5:7 5:7" },
-            { id: "d24_17", date: "2025-05-24", t1p1: "belo",  t1p2: "cicero", t2p1: "peto",  t2p2: "majo",   sets1: 2, sets2: 1, gems: "4:6 7:5 7:6" },
-            { id: "d24_18", date: "2025-06-07", t1p1: "belo",  t1p2: "tibor",  t2p1: "tono",  t2p2: "majo",   sets1: 3, sets2: 0, gems: "6:3 6:1 6:3" },
-            { id: "d24_19", date: "2025-11-09", t1p1: "vlado", t1p2: "tibor",  t2p1: "belo",  t2p2: "tono",   sets1: 3, sets2: 0, gems: "6:0 6:3 6:1" },
-            { id: "d24_20", date: "2025-11-23", t1p1: "vlado", t1p2: "tibor",  t2p1: "belo",  t2p2: "igor",   sets1: 1, sets2: 1, gems: "7:6 3:6" },
-            { id: "d24_21", date: "2025-11-30", t1p1: "vlado", t1p2: "tibor",  t2p1: "belo",  t2p2: "tono",   sets1: 1, sets2: 1, gems: "6:4 6:7" },
-            { id: "d24_22", date: "2025-12-28", t1p1: "vlado", t1p2: "majo",   t2p1: "belo",  t2p2: "tibor",  sets1: 1, sets2: 1, gems: "7:5 4:6" },
-            { id: "d24_23", date: "2026-05-16", t1p1: "vlado", t1p2: "majo",   t2p1: "tibor", t2p2: "belo",   sets1: 0, sets2: 3, gems: "3:6 4:6 6:7" },
-            { id: "d24_24", date: "2026-09-15", t1p1: "tibor", t1p2: "adam",   t2p1: "belo",  t2p2: "peto",   sets1: 3, sets2: 0, gems: "6:2 6:2 6:1" }
-        ];
+        // Čistý štart v2.0 – žiadna vstavaná história (dáta sa načítajú z databaza.json alebo pridajú ručne)
+        const INITIAL_MATCHES = [];
 
         let state = {
-            config: { K: 32, D: 200 },
+            config: { K: 32, D: 200, location: { name: "", lat: null, lon: null } },
             players: [],
             matches: [],
             chartVisiblePlayers: {},
@@ -3162,12 +3247,165 @@
         let timelinePoints = [];
         let interactiveHitPoints = [];
 
-        function normalizeStatePlayers() {
-            INITIAL_PLAYERS.forEach(ip => {
-                if (!state.players.some(p => p.id === ip.id)) {
-                    state.players.push(JSON.parse(JSON.stringify(ip)));
+        const CADCA_DEFAULT_LAT = 49.4386;
+        const CADCA_DEFAULT_LON = 18.7897;
+
+        function normalizeLocationConfig(loc) {
+            if (!loc || typeof loc !== "object") {
+                return { name: "", lat: null, lon: null };
+            }
+            const name = String(loc.name || "").trim();
+            const lat = (typeof loc.lat === "number" && isFinite(loc.lat)) ? loc.lat : null;
+            const lon = (typeof loc.lon === "number" && isFinite(loc.lon)) ? loc.lon : null;
+            if (!name) return { name: "", lat: null, lon: null };
+            const normKey = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if (normKey === "cadca" && (lat === null || lon === null)) {
+                return { name: "Čadca", lat: CADCA_DEFAULT_LAT, lon: CADCA_DEFAULT_LON };
+            }
+            return { name, lat, lon };
+        }
+
+        function getLocationContext() {
+            const loc = normalizeLocationConfig(state.config && state.config.location);
+            const name = loc.name;
+            const normKey = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const isCadca = normKey === "cadca";
+            const hasCity = name.length > 0;
+            const hasCoords = loc.lat !== null && loc.lon !== null;
+            return {
+                name,
+                lat: loc.lat,
+                lon: loc.lon,
+                isCadca,
+                hasCity,
+                hasCoords,
+                inPlace: isCadca ? "v Čadci" : (hasCity ? `v meste ${name}` : "v klube"),
+                inPlaceCap: isCadca ? "V Čadci" : (hasCity ? `V meste ${name}` : "V klube"),
+                methodAdj: isCadca ? "tradičnou kysuckou metódou" : "tradičnou klubovou metódou",
+                homeWeatherTag: isCadca ? "POČASIE ČADCA" : (hasCity ? `POČASIE ${name.toUpperCase()}` : "POČASIE")
+            };
+        }
+
+        function syncLocationInputsUI() {
+            const loc = getLocationContext();
+            const cfgInput = document.getElementById("cfg-home-city");
+            const welInput = document.getElementById("welcome-home-city");
+            if (cfgInput) cfgInput.value = loc.name;
+            if (welInput) welInput.value = loc.name;
+
+            let statusHtml = "";
+            if (loc.isCadca) {
+                statusHtml = `Aktívne domovské mesto: <strong style="color:var(--tennis-lime);">Čadca</strong> (${loc.lat.toFixed(2)}, ${loc.lon.toFixed(2)}) · aktívne pôvodné hlášky o Čadci a Kysuciach.`;
+            } else if (loc.hasCity && loc.hasCoords) {
+                statusHtml = `Aktívne domovské mesto: <strong style="color:var(--tennis-lime);">${escapeHtml(loc.name)}</strong> (${loc.lat.toFixed(2)}, ${loc.lon.toFixed(2)}) · NEWS a počasie prispôsobené pre mesto ${escapeHtml(loc.name)}.`;
+            } else if (loc.hasCity) {
+                statusHtml = `Uložené mesto: <strong style="color:var(--draw);">${escapeHtml(loc.name)}</strong> (súradnice pre počasie sa nepodarilo získať – počasie pôjde cez geolokáciu).`;
+            } else {
+                statusHtml = `Bez zadaného domovského mesta – pre počasie sa použije geolokácia prehliadača a neutrálne klubové hlášky.`;
+            }
+
+            const cfgStatus = document.getElementById("cfg-location-status");
+            const welStatus = document.getElementById("welcome-location-status");
+            if (cfgStatus) cfgStatus.innerHTML = statusHtml;
+            if (welStatus) welStatus.innerHTML = statusHtml;
+        }
+
+        async function geocodeCityName(cityName) {
+            const clean = String(cityName || "").trim();
+            if (!clean) return null;
+            const normKey = clean.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if (normKey === "cadca") {
+                return { name: "Čadca", lat: CADCA_DEFAULT_LAT, lon: CADCA_DEFAULT_LON };
+            }
+            try {
+                const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(clean)}&count=5&language=sk&format=json`;
+                const resp = await fetch(url, { cache: "no-store" });
+                if (resp.ok) {
+                    const data = await resp.json();
+                    if (data && Array.isArray(data.results) && data.results.length > 0) {
+                        const preferred = data.results.find(r => r.country_code === "SK" || r.country_code === "CZ") || data.results[0];
+                        if (typeof preferred.latitude === "number" && typeof preferred.longitude === "number") {
+                            return {
+                                name: clean,
+                                lat: Math.round(preferred.latitude * 10000) / 10000,
+                                lon: Math.round(preferred.longitude * 10000) / 10000
+                            };
+                        }
+                    }
                 }
-            });
+            } catch (e) {}
+            return { name: clean, lat: null, lon: null };
+        }
+
+        async function saveHomeLocationFromInput(inputId) {
+            const inp = document.getElementById(inputId);
+            if (!inp) return;
+            const rawName = inp.value.trim();
+            if (!rawName) {
+                state.config.location = { name: "", lat: null, lon: null };
+                saveState();
+                syncLocationInputsUI();
+                homeWeather = null;
+                localWeather = null;
+                isAwayFromHome = false;
+                homeWeatherFetchedAt = 0;
+                try { localStorage.removeItem(WEATHER_CACHE_KEY); } catch (e) {}
+                renderNewsTicker(true);
+                fetchHomeWeather(true);
+                showToast("Domovské mesto vymazané (použije sa geolokácia).");
+                return;
+            }
+
+            showToast(`Vyhľadávam lokalitu ${rawName}...`);
+            const resolved = await geocodeCityName(rawName);
+            state.config.location = normalizeLocationConfig(resolved);
+            saveState();
+            syncLocationInputsUI();
+            homeWeather = null;
+            localWeather = null;
+            isAwayFromHome = false;
+            homeWeatherFetchedAt = 0;
+            try { localStorage.removeItem(WEATHER_CACHE_KEY); } catch (e) {}
+            renderNewsTicker(true);
+            fetchHomeWeather(true);
+
+            if (state.config.location.lat !== null) {
+                showToast(`Domovské mesto ${state.config.location.name} uložené do databázy!`);
+            } else {
+                showToast(`Mesto ${state.config.location.name} uložené (bez súradníc – skontroluj pripojenie alebo zadaj okresné mesto).`, true);
+            }
+        }
+
+        let initialSyncDone = false;
+
+        function updateEmptyWelcomeCard() {
+            const card = document.getElementById("empty-welcome-card");
+            if (!card) return;
+            const isEmpty = state.players.length === 0 && state.matches.length === 0;
+            card.style.display = (initialSyncDone && isEmpty) ? "block" : "none";
+        }
+
+        function focusAddPlayerForm() {
+            const inp = document.getElementById("new-player-name");
+            if (inp) {
+                inp.scrollIntoView({ behavior: "smooth", block: "center" });
+                setTimeout(() => inp.focus(), 250);
+            }
+        }
+
+        function normalizeStatePlayers() {
+            if (!state.config || typeof state.config !== "object") {
+                state.config = { K: 32, D: 200, location: { name: "", lat: null, lon: null } };
+            }
+            state.config.K = Number(state.config.K) > 0 ? Number(state.config.K) : 32;
+            state.config.D = Number(state.config.D) > 0 ? Number(state.config.D) : 200;
+            state.config.location = normalizeLocationConfig(state.config.location);
+
+            if (!Array.isArray(state.players)) state.players = [];
+            if (!Array.isArray(state.matches)) state.matches = [];
+            if (!state.chartVisiblePlayers || typeof state.chartVisiblePlayers !== "object") {
+                state.chartVisiblePlayers = {};
+            }
 
             state.players.forEach((p, idx) => {
                 if (!p.color) p.color = PLAYER_COLORS[idx % PLAYER_COLORS.length];
@@ -3210,7 +3448,7 @@
                 title.style.color = "var(--blue-accent)";
                 desc.innerHTML = detailText;
             } else {
-                pill.textContent = "Vstavané dáta";
+                pill.textContent = state.players.length === 0 ? "Čistý štart" : "Lokálny režim";
                 pill.style.background = "rgba(163, 230, 53, 0.15)";
                 pill.style.color = "var(--tennis-lime)";
                 pill.style.borderColor = "rgba(163, 230, 53, 0.35)";
@@ -3269,7 +3507,7 @@
                 const preservedCharts = state.chartVisiblePlayers || {};
                 const rCfg = remoteData.config || {};
                 state = {
-                    config: { K: Number(rCfg.K) || 32, D: Number(rCfg.D) || 200 },
+                    config: { K: Number(rCfg.K) || 32, D: Number(rCfg.D) || 200, location: normalizeLocationConfig(rCfg.location) },
                     players: remoteData.players,
                     matches: remoteData.matches,
                     chartVisiblePlayers: { ...(remoteData.chartVisiblePlayers || {}), ...preservedCharts },
@@ -3281,6 +3519,7 @@
                 normalizeStatePlayers();
                 document.getElementById("cfg-k").value = state.config.K;
                 document.getElementById("cfg-d").value = state.config.D;
+                syncLocationInputsUI();
                 sortMatchesChronologically();
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
                 recalculateAll();
@@ -3288,6 +3527,7 @@
                 setLeaderboardMode(state.leaderboardMode, true);
                 setH2HMode(state.h2hMode, true);
                 refreshAllViews();
+                fetchHomeWeather(false);
 
                 setDbButtonSyncedState(true);
                 const syncTimeStr = remoteUpdated ? new Date(remoteUpdated).toLocaleString("sk-SK") : "bez časovej pečiatky";
@@ -3310,9 +3550,9 @@
                 try {
                     const parsed = JSON.parse(raw);
                     const pCfg = parsed.config || {};
-                    state.config = { K: Number(pCfg.K) || 32, D: Number(pCfg.D) || 200 };
-                    state.players = parsed.players || JSON.parse(JSON.stringify(INITIAL_PLAYERS));
-                    state.matches = parsed.matches || JSON.parse(JSON.stringify(INITIAL_MATCHES));
+                    state.config = { K: Number(pCfg.K) || 32, D: Number(pCfg.D) || 200, location: normalizeLocationConfig(pCfg.location) };
+                    state.players = Array.isArray(parsed.players) ? parsed.players : [];
+                    state.matches = Array.isArray(parsed.matches) ? parsed.matches : [];
                     state.chartVisiblePlayers = parsed.chartVisiblePlayers || {};
                     state.h2hMode = parsed.h2hMode || "teams";
                     state.leaderboardMode = parsed.leaderboardMode || "players";
@@ -3329,9 +3569,10 @@
 
             const todayIso = new Date().toISOString().split("T")[0];
             document.getElementById("match-date").value = todayIso;
-            document.getElementById("hist-date").value = "2025-06-01";
+            document.getElementById("hist-date").value = todayIso;
             document.getElementById("cfg-k").value = state.config.K;
             document.getElementById("cfg-d").value = state.config.D;
+            syncLocationInputsUI();
 
             sortMatchesChronologically();
             recalculateAll();
@@ -3351,28 +3592,25 @@
                 }
             });
 
-            // Načítať aktuálne počasie pre Čadcu (Open-Meteo) ako 1. správu v NEWS
-            fetchCadcaWeather(false);
-            setInterval(() => fetchCadcaWeather(false), 25 * 60 * 1000);
-
-            // Automaticky skontrolovať externý databaza.json na GitHube
+            // Najprv automaticky skontrolovať externý databaza.json na GitHube (ak existuje, preskočí prázdnu uvítaciu kartu)
             await syncFromRemoteJSON(false);
+            initialSyncDone = true;
+            updateEmptyWelcomeCard();
+
+            // Načítať aktuálne počasie podľa domovského mesta z databázy alebo geolokácie (Open-Meteo)
+            fetchHomeWeather(false);
+            setInterval(() => fetchHomeWeather(false), 25 * 60 * 1000);
         }
 
         function loadDefaults() {
-            state.config = { K: 32, D: 200 };
-            state.players = JSON.parse(JSON.stringify(INITIAL_PLAYERS));
-            state.matches = JSON.parse(JSON.stringify(INITIAL_MATCHES));
+            state.config = { K: 32, D: 200, location: { name: "", lat: null, lon: null } };
+            state.players = [];
+            state.matches = [];
             state.chartVisiblePlayers = {};
             state.h2hMode = "teams";
             state.leaderboardMode = "players";
             state.tvMode = "players";
             state.updatedAt = 0;
-            state.players.forEach((p, idx) => {
-                p.color = PLAYER_COLORS[idx % PLAYER_COLORS.length];
-                state.chartVisiblePlayers[p.id] = true;
-            });
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         }
 
         function saveState(isDataChange = true) {
@@ -4166,13 +4404,13 @@
                     id: "dynamic_duo",
                     cat: 4,
                     title: "Dynamické duo",
-                    desc: `Najúspešnejšia pevná dvojica podľa párového ELO (${rBestPairElo.holders.map(x => x.name).join(", ")})`,
+                    desc: rBestPairElo.holders.length > 0 ? `Najúspešnejšia pevná dvojica podľa párového ELO (${rBestPairElo.holders.map(x => x.name).join(", ")})` : "Najúspešnejšia pevná dvojica podľa párového ELO",
                     iconFile: "dynamicke_duo.png",
                     faClass: "fa-solid fa-handshake-simple",
                     theme: "ach-purple",
                     accent: "#c084fc",
                     isNegative: false,
-                    valueText: `${rBestPairElo.value.toFixed(1)} Párové ELO`,
+                    valueText: rBestPairElo.holders.length > 0 ? `${rBestPairElo.value.toFixed(1)} Párové ELO` : "—",
                     pairNames: rBestPairElo.holders.map(x => x.name),
                     pairEloValue: rBestPairElo.value,
                     holders: bestPairPlayers
@@ -4181,39 +4419,39 @@
                     id: "steamroller",
                     cat: 4,
                     title: "Parný valec",
-                    desc: `Najvyšší rozdiel gemov v jednom zápase (${steamrollerMatches.map(m => '#' + m.index + ' ' + m.gems).join(', ')})`,
+                    desc: steamrollerMatches.length > 0 ? `Najvyšší rozdiel gemov v jednom zápase (${steamrollerMatches.map(m => '#' + m.index + ' ' + m.gems).join(', ')})` : "Najvyšší rozdiel gemov v jednom zápase",
                     iconFile: "valec.png",
                     faClass: "fa-solid fa-burst",
                     theme: "ach-green",
                     accent: "#4ade80",
                     isNegative: false,
-                    valueText: `Rozdiel +${skCount(maxGemDiffVal, "gem", "gemy", "gemov")}`,
+                    valueText: maxGemDiffVal > 0 ? `Rozdiel +${skCount(maxGemDiffVal, "gem", "gemy", "gemov")}` : "—",
                     holders: steamrollerHolders
                 },
                 {
                     id: "blood_sweat",
                     cat: 4,
                     title: "Krv, pot a slzy",
-                    desc: `Najdlhšia bitka histórie podľa počtu gemov (${marathonMatches.map(m => '#' + m.index + ' ' + m.gems).join(', ')})`,
+                    desc: marathonMatches.length > 0 ? `Najdlhšia bitka histórie podľa počtu gemov (${marathonMatches.map(m => '#' + m.index + ' ' + m.gems).join(', ')})` : "Najdlhšia bitka histórie podľa počtu gemov",
                     iconFile: "krv_pot.png",
                     faClass: "fa-solid fa-stopwatch",
                     theme: "ach-blue",
                     accent: "#38bdf8",
                     isNegative: false,
-                    valueText: `${skCount(maxTotalGemsVal, "odohratý gem", "odohraté gemy", "odohratých gemov")}`,
+                    valueText: maxTotalGemsVal > 0 ? `${skCount(maxTotalGemsVal, "odohratý gem", "odohraté gemy", "odohratých gemov")}` : "—",
                     holders: marathonHolders
                 },
                 {
                     id: "inseparable_pair",
                     cat: 4,
                     title: "Nerozlučná dvojka",
-                    desc: `Najčastejšie spolu nastupujúci deblový pár (${rMostFrequentPair.holders.map(x => x.name).join(", ")})`,
+                    desc: rMostFrequentPair.holders.length > 0 ? `Najčastejšie spolu nastupujúci deblový pár (${rMostFrequentPair.holders.map(x => x.name).join(", ")})` : "Najčastejšie spolu nastupujúci deblový pár",
                     iconFile: "nerozlucna_dvojka.png",
                     faClass: "fa-solid fa-link",
                     theme: "ach-purple",
                     accent: "#c084fc",
                     isNegative: false,
-                    valueText: `${skCount(rMostFrequentPair.value, "spoločný štart", "spoločné štarty", "spoločných štartov")}`,
+                    valueText: rMostFrequentPair.holders.length > 0 ? `${skCount(rMostFrequentPair.value, "spoločný štart", "spoločné štarty", "spoločných štartov")}` : "—",
                     pairNames: rMostFrequentPair.holders.map(x => x.name),
                     pairMatchesCount: rMostFrequentPair.value,
                     holders: frequentPairPlayers
@@ -4247,7 +4485,7 @@
                                 <div class="ach-title">${escapeHtml(ach.title)}</div>
                                 <div class="ach-desc">${escapeHtml(ach.desc)}</div>
                                 <div class="ach-record-pill" style="color:${pillColor}">
-                                    Rekord: ${ach.valueText}
+                                    Rekord: ${ach.holders.length > 0 ? ach.valueText : "—"}
                                 </div>
                                 <div class="ach-holders">
                                     ${holdersHtml}
@@ -4312,31 +4550,27 @@
                 }
             });
 
-            const ensureUniqueFour = (s1, s2, s3, s4, defaults) => {
+            const ensureUniqueFour = (s1, s2, s3, s4) => {
                 const els = [s1, s2, s3, s4].map(id => document.getElementById(id));
                 if (els.some(e => !e)) return;
                 const vals = els.map(e => e.value);
                 if (new Set(vals).size < 4 && sortedByElo.length >= 4) {
-                    defaults.forEach((defId, i) => {
-                        if (sortedByElo.some(p => p.id === defId)) {
-                            els[i].value = defId;
-                        } else {
-                            els[i].value = sortedByElo[i % sortedByElo.length].id;
-                        }
-                    });
+                    for (let i = 0; i < 4; i++) {
+                        els[i].value = sortedByElo[i].id;
+                    }
                 }
             };
 
-            ensureUniqueFour("match-t1p1", "match-t1p2", "match-t2p1", "match-t2p2", ["vlado", "tibor", "belo", "tono"]);
-            ensureUniqueFour("hist-t1p1", "hist-t1p2", "hist-t2p1", "hist-t2p2", ["vlado", "majo", "belo", "tibor"]);
-            ensureUniqueFour("h2h-t1p1", "h2h-t1p2", "h2h-t2p1", "h2h-t2p2", ["belo", "tono", "majo", "peto"]);
-            ensureUniqueFour("mm-p1", "mm-p2", "mm-p3", "mm-p4", ["vlado", "tibor", "belo", "majo"]);
+            ensureUniqueFour("match-t1p1", "match-t1p2", "match-t2p1", "match-t2p2");
+            ensureUniqueFour("hist-t1p1", "hist-t1p2", "hist-t2p1", "hist-t2p2");
+            ensureUniqueFour("h2h-t1p1", "h2h-t1p2", "h2h-t2p1", "h2h-t2p2");
+            ensureUniqueFour("mm-p1", "mm-p2", "mm-p3", "mm-p4");
 
             const hp1 = document.getElementById("h2h-p1");
             const hp2 = document.getElementById("h2h-p2");
             if (hp1 && hp2 && hp1.value === hp2.value && sortedByElo.length >= 2) {
-                hp1.value = "vlado";
-                hp2.value = "belo";
+                hp1.value = sortedByElo[0].id;
+                hp2.value = sortedByElo[1].id;
             }
 
             const histFilter = document.getElementById("history-filter-player");
@@ -4349,6 +4583,8 @@
         }
 
         function refreshAllViews() {
+            updateEmptyWelcomeCard();
+            syncLocationInputsUI();
             renderLeaderboard();
             renderMatchmaker();
             updateMatchPreview();
@@ -4538,7 +4774,15 @@
                 const tbody = document.querySelector("#leaderboard-table tbody");
                 tbody.innerHTML = "";
 
-                getSortedPlayers().forEach((p) => {
+                const sortedPlayersList = getSortedPlayers();
+                if (sortedPlayersList.length === 0) {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `<td colspan="10" style="text-align:center; padding:18px 10px; color:var(--text-muted); font-size:0.84rem; white-space:normal;">Zatiaľ nie sú pridaní žiadni deblisti. Načítaj súbor <strong>databaza.json</strong> alebo pridaj prvých hráčov nižšie.</td>`;
+                    tbody.appendChild(tr);
+                    return;
+                }
+
+                sortedPlayersList.forEach((p) => {
                     const rank = p.baseRank;
                     const winPct = p.matches > 0
                         ? (((p.wins + 0.5 * p.draws) / p.matches) * 100).toFixed(1)
@@ -4603,7 +4847,15 @@
                 const tbody = document.querySelector("#pairs-leaderboard-table tbody");
                 tbody.innerHTML = "";
 
-                getSortedPairs().forEach((pr) => {
+                const sortedPairsList = getSortedPairs();
+                if (sortedPairsList.length === 0) {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `<td colspan="9" style="text-align:center; padding:18px 10px; color:var(--text-muted); font-size:0.84rem; white-space:normal;">Zatiaľ nie sú zaznamenané žiadne deblové dvojice.</td>`;
+                    tbody.appendChild(tr);
+                    return;
+                }
+
+                sortedPairsList.forEach((pr) => {
                     const rank = pr.baseRank;
                     const winPct = pr.matches > 0
                         ? (((pr.wins + 0.5 * pr.draws) / pr.matches) * 100).toFixed(1)
@@ -4774,7 +5026,20 @@
             const pA2 = computedPlayers.find(p => p.id === idA2);
             const pB1 = computedPlayers.find(p => p.id === idB1);
             const pB2 = computedPlayers.find(p => p.id === idB2);
-            if (!pA1 || !pA2 || !pB1 || !pB2) return;
+            if (!pA1 || !pA2 || !pB1 || !pB2) {
+                document.getElementById("match-team1-avg").textContent = "Priemer: —";
+                document.getElementById("match-team2-avg").textContent = "Priemer: —";
+                const labelEl = document.getElementById("preview-outcome-label");
+                labelEl.textContent = "Pridaj aspoň 4 hráčov";
+                labelEl.style.color = "var(--text-muted)";
+                document.getElementById("prev-name-a").textContent = "Tím A";
+                document.getElementById("prev-name-b").textContent = "Tím B";
+                document.getElementById("prev-prob-a").textContent = "Šanca tímu E: --%";
+                document.getElementById("prev-prob-b").textContent = "Šanca tímu E: --%";
+                document.getElementById("prev-elo-a").textContent = "--";
+                document.getElementById("prev-elo-b").textContent = "--";
+                return;
+            }
 
             const avgA = (pA1.elo + pA2.elo) / 2;
             const avgB = (pB1.elo + pB2.elo) / 2;
@@ -5628,7 +5893,7 @@
             ctx.fillStyle = "#ffffff";
             ctx.font = "800 31px sans-serif";
             ctx.textAlign = "left";
-            ctx.fillText("ELO4MASTER V1.38 | DEBLOVÝ VÝVOJ ELO V ČASE", innerX + 32, topY + 47);
+            ctx.fillText("ELO4MASTER V2.0 | DEBLOVÝ VÝVOJ ELO V ČASE", innerX + 32, topY + 47);
 
             const todayStr = new Date().toLocaleDateString("sk-SK");
             const rangeUpper = formatChartRangeText(bounds).toUpperCase();
@@ -5841,7 +6106,7 @@
 
         function downloadTvChartGraphic() {
             const canvas = document.getElementById("tvChartCanvas");
-            const filename = `ELO4MASTER_v1.38_TV_Graf_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v2.0_TV_Graf_${new Date().toISOString().split("T")[0]}.png`;
             try {
                 canvas.toBlob(blob => {
                     if (blob) {
@@ -6108,7 +6373,10 @@
             const id = document.getElementById("profile-select").value;
             const p = computedPlayers.find(pl => pl.id === id);
             const box = document.getElementById("profile-content");
-            if (!p) return;
+            if (!p) {
+                box.innerHTML = `<div style="color:var(--text-muted); font-size:0.84rem;">Zatiaľ nie je vybraný žiaden hráč.</div>`;
+                return;
+            }
 
             const rank = computedPlayers.findIndex(pl => pl.id === id) + 1;
             const winPct = p.matches > 0 ? (((p.wins + 0.5 * p.draws) / p.matches) * 100).toFixed(1) : "0.0";
@@ -6464,15 +6732,24 @@
         }
 
         function resetToThreadDefault() {
-            if (!confirm("Obnoviť pôvodnú históriu 24 štvorhier? Všetky neskôr pridané zmeny sa vymažú.")) return;
+            if (!confirm("Naozaj chceš vymazať celú lokálnu databázu (hráčov, štvorhry aj domovské mesto) a vrátiť aplikáciu do čistého štartu?")) return;
             localStorage.removeItem(STORAGE_KEY);
             loadDefaults();
+            document.getElementById("cfg-k").value = state.config.K;
+            document.getElementById("cfg-d").value = state.config.D;
             setDbButtonSyncedState(false);
+            homeWeather = null;
+            localWeather = null;
+            isAwayFromHome = false;
+            homeWeatherFetchedAt = 0;
+            try { localStorage.removeItem(WEATHER_CACHE_KEY); } catch (e) {}
             sortMatchesChronologically();
             recalculateAll();
             populateSelects();
             refreshAllViews();
-            showToast("Dáta boli obnovené na predvolených 24 štvorhier!");
+            updateSyncBanner("default", "Lokálna databáza bola vyčistená. Môžeš nahrať súbor <strong>databaza.json</strong> alebo pridať prvých deblistov.");
+            fetchHomeWeather(true);
+            showToast("Lokálna databáza bola vymazaná (čistý štart).");
         }
 
         function exportBackupJSON(customFilename = null) {
@@ -6483,7 +6760,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.38_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v2.0_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -6500,18 +6777,19 @@
                     if (imported.players && Array.isArray(imported.players)) {
                         const iCfg = imported.config || {};
                         state = {
-                            config: { K: Number(iCfg.K) || 32, D: Number(iCfg.D) || 200 },
+                            config: { K: Number(iCfg.K) || 32, D: Number(iCfg.D) || 200, location: normalizeLocationConfig(iCfg.location) },
                             players: imported.players,
                             matches: imported.matches || [],
                             chartVisiblePlayers: imported.chartVisiblePlayers || {},
                             h2hMode: imported.h2hMode || "teams",
                             leaderboardMode: imported.leaderboardMode || "players",
-                            tvMode: "players",
+                            tvMode: state.tvMode || "players",
                             updatedAt: Date.now()
                         };
                         normalizeStatePlayers();
                         document.getElementById("cfg-k").value = state.config.K;
                         document.getElementById("cfg-d").value = state.config.D;
+                        syncLocationInputsUI();
                         sortMatchesChronologically();
                         saveState();
                         recalculateAll();
@@ -6519,7 +6797,8 @@
                         setLeaderboardMode(state.leaderboardMode, true);
                         setH2HMode(state.h2hMode, true);
                         refreshAllViews();
-                        showToast("Záloha bola úspešne načítaná!");
+                        fetchHomeWeather(true);
+                        showToast("Databáza bola úspešne načítaná a prepočítaná!");
                     } else {
                         showToast("Neplatný JSON súbor!", true);
                     }
@@ -6538,7 +6817,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.38_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v2.0_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -6848,7 +7127,7 @@
             const innerW = panelW - 88;
             const topY = panelY + 32;
             const headerH = 68;
-            const appTag = isDoubles ? "ELO4MASTER V1.38" : "ELO2MASTER V1.55";
+            const appTag = isDoubles ? "ELO4MASTER V2.0" : "ELO2MASTER V2.0";
 
             if (!hasMatch) {
                 ctx.fillStyle = "#ffffff";
@@ -7393,10 +7672,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.38 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.38 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V2.0 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V2.0 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.38 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V2.0 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -7631,7 +7910,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.38_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v2.0_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
@@ -7688,7 +7967,7 @@
         }
 
 
-        /* ==================== NEWS BAR TICKER (v1.38) ==================== */
+        /* ==================== NEWS BAR TICKER (v2.0) ==================== */
         let cachedNewsItems = [];
         let newsLastSignature = "";
         let newsResizeTimer = null;
@@ -7791,7 +8070,7 @@
             const achievements = computedAchievements || [];
 
             if (players.length === 0) {
-                add("INFO", "Vitajte v ELO4MASTER v1.38! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
+                add("INFO", "Vitajte v ELO4MASTER v2.0! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
                 return items;
             }
 
@@ -8138,7 +8417,7 @@
                 }
                 // 6. Slovenská špecialita
                 if (clubDrawsAll >= 2) {
-                    add("SLOVENSKÁ ŠPECIALITA", `V databáze ${skPlural(clubDrawsAll, "svieti už", "svietia už", "svieti už")} ${skCount(clubDrawsAll, "remíza", "remízy", "remíz")}. Na ATP Tour nemožné, v Čadci bežná realita, keď zapípa časovač v hale.`);
+                    add("SLOVENSKÁ ŠPECIALITA", `V databáze ${skPlural(clubDrawsAll, "svieti už", "svietia už", "svieti už")} ${skCount(clubDrawsAll, "remíza", "remízy", "remíz")}. Na ATP Tour nemožné, ${getLocationContext().inPlace} bežná realita, keď zapípa časovač v hale.`);
                 }
                 // 10. Ekonomika športu
                 if (clubGemsAll >= 50) {
@@ -8149,7 +8428,7 @@
                 const lastLeagueAge = getMatchAgeDays(matches[matches.length - 1].date);
                 if (lastLeagueAge >= 60) {
                     const hibPool = [
-                        { tag: "TENISOVÁ HIBERNÁCIA", text: `V lige sa neodohral žiaden zápas už ${skCount(lastLeagueAge, "deň", "dni", "dní")}! Rakety v Čadci začínajú hrdzavieť a na loptičkách sa vraj objavila prvá vrstva machu.` },
+                        { tag: "TENISOVÁ HIBERNÁCIA", text: `V lige sa neodohral žiaden zápas už ${skCount(lastLeagueAge, "deň", "dni", "dní")}! Rakety ${getLocationContext().inPlace} začínajú hrdzavieť a na loptičkách sa vraj objavila prvá vrstva machu.` },
                         { tag: "KONIEC SEZÓNY?", text: `Už ${skCount(lastLeagueAge, "deň", "dni", "dní")} bez jediného zápisu v tabuľke. Podľa neoverených správ sa celá partia preorientovala na gaučing a odborné komentovanie tenisu z obývačky.` },
                         { tag: "POPLACH V ELO SYSTÉME", text: `Posledný zápas sa hral pred ${lastLeagueAge} dňami – algoritmus sa od nudy začal sám prepočítavať a zvažuje, že začne udeľovať mínusové body za lenivosť!` }
                     ];
@@ -8247,20 +8526,36 @@
         }
 
 
-        /* ==================== POČASIE PODĽA POLOHY + ČADCA (OPEN-METEO) ==================== */
-        const WEATHER_CACHE_KEY = "ELO_WEATHER_GEO_CACHE_V2";
+        function parseIsoToUtcDays(isoDate) {
+            if (!isoDate) return null;
+            const dp = String(isoDate).split("-").map(Number);
+            if (dp.length !== 3 || dp.some(isNaN)) return null;
+            return Math.floor(Date.UTC(dp[0], dp[1] - 1, dp[2]) / 86400000);
+        }
+
+        function getTodayUtcDays() {
+            const now = new Date();
+            return Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
+        }
+
+        function skNum(val, decimals = 1) {
+            const num = Number(val);
+            if (isNaN(num)) return String(val);
+            return num.toFixed(decimals).replace(".", ",");
+        }
+
+        /* ==================== POČASIE PODĽA DOMOVSKÉHO MESTA A POLOHY (OPEN-METEO) ==================== */
+        const WEATHER_CACHE_KEY = "ELO_WEATHER_GEO_CACHE_V3";
         const WEATHER_CACHE_TTL_MS = 20 * 60 * 1000;
-        const CADCA_LAT = 49.4386;
-        const CADCA_LON = 18.7897;
-        const CADCA_NEAR_KM = 15;
+        const HOME_NEAR_KM = 15;
         const WEATHER_TEMP_DIFF_THRESHOLD = 3.5;
 
-        let cadcaWeather = null;
+        let homeWeather = null;
         let localWeather = null;
         let localLocationName = "";
-        let isAwayFromCadca = false;
-        let cadcaWeatherFetchedAt = 0;
-        let cadcaWeatherFailed = false;
+        let isAwayFromHome = false;
+        let homeWeatherFetchedAt = 0;
+        let homeWeatherFailed = false;
         let weatherQuipSeed = Math.floor(Math.random() * 1000);
 
         function haversineKm(lat1, lon1, lat2, lon2) {
@@ -8314,17 +8609,17 @@
             1: [
                 "Vonku je to v januári len pre otužilcov – novoročné predsavzatia radšej plňte v teple haly!",
                 "Januárový tenis vonku? Jedine v lyžiarkach a s čajom v termoske. Smer hala!",
-                "V januári loptičky vonku skôr mrznú než skáču – ideálny čas na halu.",
+                "V januári na Kysuciach loptičky vonku skôr mrznú než skáču – ideálny čas na halu.",
                 "Vonku trénujú len ľadové medvede a najtvrdší otužilci. Zvyšok ligy sa hlási v hale!"
             ],
             2: [
-                "Február vonku nepozná zľutovanie – je to len pre otužilcov, výplety patria do haly.",
+                "Február na Kysuciach nepozná zľutovanie – vonku je to len pre otužilcov, výplety patria do haly.",
                 "Ak nemáš rukavice s protišmykovým gripom, februárový kurt vonku vynechaj a rezervuj halu!",
                 "Vonku by si si vo februári skôr privolal omrzliny než eso – istí to vykúrená hala.",
                 "Februárové podmienky vonku sú len pre otužilcov s dobrou poistkou. Hala je jasná voľba!"
             ],
             3: [
-                "Marec sa tvári jarne, ale vonku je to stále len pre otužilcov – radšej ešte hala!",
+                "Marec sa tvári jarne, ale na Kysuciach je vonku stále len pre otužilcov – radšej ešte hala!",
                 "V marci antuka ešte len rozmŕza, vonku hrajú iba najodvážnejší otužilci. Zatiaľ istí hala.",
                 "Prvé marcové slnko vie oklamať – na kraťasy je priskoro, vonku len pre otužilcov, šup do haly!",
                 "V marci vonku skôr chytíš nádchu ako forhend do rohu – halová sezóna ešte nekončí!"
@@ -8332,7 +8627,7 @@
             11: [
                 "V novembri je to vonku už len pre otužilcov – antuka šla na zimný spánok, sťahujeme sa do haly!",
                 "Novembrový tenis vonku? Len ak chceš hrať v hmle s reflexnou loptičkou. Radšej pekne do haly!",
-                "V novembri vonku vydržia len najtvrdší otužilci – zvyšok partie nech si nachystá halovky.",
+                "V novembri vonku vydržia len kysuckí otužilci – zvyšok partie nech si nachystá halovky.",
                 "Sychravý november praje halovému tenisu – vonku by dnes zmrzol aj ten najrýchlejší servis!"
             ],
             12: [
@@ -8352,7 +8647,7 @@
                 outdoor: [
                     "Apríl hlási super podmienky – zoberte rakety a poďte pokrstiť vonkajšiu antuku!",
                     "Teplota nad 14 °C a sucho: ideálny aprílový deň na prvé sklzy na vonkajšej antuke!",
-                    "Hala môže dnes oddychovať – počasie dnes volá von na antuku!"
+                    "Hala môže dnes oddychovať – v Čadci to volá von na antuku!"
                 ]
             },
             5: {
@@ -8362,20 +8657,20 @@
                     "Dnešné májové počasie antuke nepraje, v hale vás aspoň nevyženie dážď ani chlad!"
                 ],
                 outdoor: [
-                    "Májová klasika na kurte – podmienky ako na Roland Garros, šup von na antuku!",
+                    "Májová klasika v Čadci – podmienky ako na Roland Garros, šup von na antuku!",
                     "V máji sedieť v hale by bol hriech – podmienky sú ideálne, poďte na antuku von!",
                     "Sucho a príjemne teplo: májová antuka čaká, kto dnes získa ELO body vonku?"
                 ]
             },
             6: {
                 indoor: [
-                    "Aj v júni vie počasie prekvapiť – dnes to na antuku nie je, odporúčame zápas v hale!",
+                    "Aj v júni vie počasie v Čadci prekvapiť – dnes to na antuku nie je, odporúčame zápas v hale!",
                     "Dážď, búrka alebo chladný jún? Neriskujte blato na teniskách a dajte si zápas v hale.",
                     "Dnešný jún má zlú náladu – pod strechou v hale bude loptička odskakovať spoľahlivejšie!"
                 ],
                 outdoor: [
                     "Jún v plnej paráde – dlhé dni a super počasie, všetci von na antuku!",
-                    "Perfektné júnové podmienky – namažte sa, zoberte vodu a hor sa na antuku von!",
+                    "Perfektné júnové podmienky v Čadci – namažte sa, zoberte vodu a hor sa na antuku von!",
                     "Ideálny júnový deň na antukové výmeny – hala dnes zíva prázdnotou!"
                 ]
             },
@@ -8387,20 +8682,20 @@
                 ],
                 outdoor: [
                     "Letný júl ako z katalógu – ideálny čas vypotiť pár ELO bodov vonku na antuke!",
-                    "Plná letná sezóna: antuka je suchá a pripravená, šup von na kurt!",
+                    "Plná letná sezóna v Čadci: antuka je suchá a pripravená, šup von na kurt!",
                     "V júli patrí tenis pod holé nebo – poďte si to rozdať von na antuku!"
                 ]
             },
             8: {
                 indoor: [
                     "Augustová búrka alebo chladnejší deň – antuka je dnes mimo hry, odporúčame zápas v hale!",
-                    "Aj v auguste vie počasie schladiť či spláchnuť dážď – dnes to vyrieši zápas v hale.",
+                    "Aj v auguste vie Kysuce schladiť či spláchnuť dážď – dnes to vyrieši zápas v hale.",
                     "Dnes radšej neriskujte mokrú antuku a presuňte augustový duel pod strechu do haly!"
                 ],
                 outdoor: [
                     "Augustové slnko a teplý vzduch – perfektné podmienky na poriadnu bitku na antuke vonku!",
                     "V auguste niet nad prach z antuky na ponožkách – vyrazte na kurt von!",
-                    "Skvelé augustové počasie – vonkajšia antuka dnes volá po zápase!"
+                    "Skvelé augustové počasie v Čadci – vonkajšia antuka dnes volá po zápase!"
                 ]
             },
             9: {
@@ -8412,7 +8707,7 @@
                 outdoor: [
                     "Babie leto v septembri! Príjemná teplota bez zrážok – ideálny čas ísť na antuku von!",
                     "September ako stvorený na tenis bez úpalu – využite to a poďte na antuku von!",
-                    "Perfektné septembrové podmienky na kurtoch – antuka vonku ešte rozhodne nekončí!"
+                    "Perfektné septembrové podmienky na Kysuciach – antuka vonku ešte rozhodne nekončí!"
                 ]
             },
             10: {
@@ -8423,65 +8718,108 @@
                 ],
                 outdoor: [
                     "Októbrový zázrak nad 14 °C a bez dažďa – chyťte šancu za pačesy a poďte na antuku von!",
-                    "Zlatý október praje tenisu: kým sa dá, užite si ešte vonkajšiu antuku!",
+                    "Zlatý október v Čadci praje tenisu: kým sa dá, užite si ešte vonkajšiu antuku!",
                     "Bonusové teplo v októbri – hala počká, dnes to ešte vyzerá na skvelú antuku vonku!"
                 ]
             }
         };
 
-        function decodeWmoWeather(code) {
-            const c = Number(code);
-            if (c === 0) return { label: "jasno", icon: "☀️", isWet: false, isStorm: false };
-            if (c === 1) return { label: "prevažne jasno", icon: "🌤️", isWet: false, isStorm: false };
-            if (c === 2) return { label: "polojasno", icon: "⛅", isWet: false, isStorm: false };
-            if (c === 3) return { label: "zamračené", icon: "☁️", isWet: false, isStorm: false };
-            if (c === 45 || c === 48) return { label: "hmla", icon: "🌫️", isWet: false, isStorm: false };
-            if (c === 51 || c === 53 || c === 55) return { label: "mrholenie", icon: "🌦️", isWet: true, isStorm: false };
-            if (c === 56 || c === 57) return { label: "mrznúce mrholenie", icon: "🌧️", isWet: true, isStorm: false };
-            if (c === 61 || c === 63 || c === 65) return { label: "dážď", icon: "🌧️", isWet: true, isStorm: false };
-            if (c === 66 || c === 67) return { label: "mrznúci dážď", icon: "🌧️", isWet: true, isStorm: false };
-            if (c === 71 || c === 73 || c === 75 || c === 77) return { label: "sneženie", icon: "❄️", isWet: true, isStorm: false };
-            if (c === 80 || c === 81 || c === 82) return { label: "prehánky", icon: "🌦️", isWet: true, isStorm: false };
-            if (c === 85 || c === 86) return { label: "snehové prehánky", icon: "🌨️", isWet: true, isStorm: false };
-            if (c === 95 || c === 96 || c === 99) return { label: "búrka", icon: "⛈️", isWet: true, isStorm: true };
-            return { label: "premenlivo", icon: "🌤️", isWet: false, isStorm: false };
+        function localizeWeatherQuip(quip, useCadcaMode, cityNameForNeutral = "") {
+            if (useCadcaMode || !quip) return quip;
+            const inCity = cityNameForNeutral ? `v meste ${cityNameForNeutral}` : "";
+            return quip
+                .replace("V januári na Kysuciach ", "V januári ")
+                .replace("Február na Kysuciach ", "Február ")
+                .replace("ale na Kysuciach je vonku ", "ale vonku je ")
+                .replace("len kysuckí otužilci", "len najtvrdší otužilci")
+                .replace("v Čadci to volá", inCity ? `${inCity} to volá` : "dnes to volá")
+                .replace("Májová klasika v Čadci", inCity ? `Májová klasika ${inCity}` : "Májová klasika")
+                .replace("počasie v Čadci prekvapiť", inCity ? `počasie ${inCity} prekvapiť` : "počasie prekvapiť")
+                .replace("júnové podmienky v Čadci", inCity ? `júnové podmienky ${inCity}` : "júnové podmienky")
+                .replace("sezóna v Čadci:", inCity ? `sezóna ${inCity}:` : "sezóna:")
+                .replace("vie Kysuce schladiť", "vie počasie schladiť")
+                .replace("augustové počasie v Čadci", inCity ? `augustové počasie ${inCity}` : "augustové počasie")
+                .replace("podmienky na Kysuciach", inCity ? `podmienky ${inCity}` : "podmienky")
+                .replace("október v Čadci praje", inCity ? `október ${inCity} praje` : "október praje");
         }
 
-        function loadCachedCadcaWeather() {
+        function decodeWmoWeather(code) {
+            const c = Number(code);
+            if (c === 0) return { label: "jasno", icon: "☀️", isWet: false, isStorm: false, isSnow: false };
+            if (c === 1) return { label: "prevažne jasno", icon: "🌤️", isWet: false, isStorm: false, isSnow: false };
+            if (c === 2) return { label: "polojasno", icon: "⛅", isWet: false, isStorm: false, isSnow: false };
+            if (c === 3) return { label: "zamračené", icon: "☁️", isWet: false, isStorm: false, isSnow: false };
+            if (c === 45 || c === 48) return { label: "hmla", icon: "🌫️", isWet: false, isStorm: false, isSnow: false };
+            if (c === 51 || c === 53 || c === 55) return { label: "mrholenie", icon: "🌦️", isWet: true, isStorm: false, isSnow: false };
+            if (c === 56 || c === 57) return { label: "mrznúce mrholenie", icon: "🌧️", isWet: true, isStorm: false, isSnow: false };
+            if (c === 61 || c === 63 || c === 65) return { label: "dážď", icon: "🌧️", isWet: true, isStorm: false, isSnow: false };
+            if (c === 66 || c === 67) return { label: "mrznúci dážď", icon: "🌧️", isWet: true, isStorm: false, isSnow: false };
+            if (c === 71 || c === 73 || c === 75 || c === 77) return { label: "sneženie", icon: "❄️", isWet: true, isStorm: false, isSnow: true };
+            if (c === 80 || c === 81 || c === 82) return { label: "prehánky", icon: "🌦️", isWet: true, isStorm: false, isSnow: false };
+            if (c === 85 || c === 86) return { label: "snehové prehánky", icon: "🌨️", isWet: true, isStorm: false, isSnow: true };
+            if (c === 95 || c === 96 || c === 99) return { label: "búrka", icon: "⛈️", isWet: true, isStorm: true, isSnow: false };
+            return { label: "premenlivo", icon: "🌤️", isWet: false, isStorm: false, isSnow: false };
+        }
+
+        function getWeatherLocSig() {
+            const loc = getLocationContext();
+            return `${loc.name}|${loc.lat}|${loc.lon}`;
+        }
+
+        function loadCachedHomeWeather() {
             try {
                 const raw = localStorage.getItem(WEATHER_CACHE_KEY);
                 if (!raw) return false;
                 const parsed = JSON.parse(raw);
-                if (parsed && parsed.cadca && typeof parsed.cadca.temperature_2m === "number") {
-                    cadcaWeather = parsed.cadca;
+                if (!parsed || parsed.locSig !== getWeatherLocSig()) return false;
+                const hasData = (parsed.home && typeof parsed.home.temperature_2m === "number") ||
+                                (parsed.local && typeof parsed.local.temperature_2m === "number");
+                if (hasData) {
+                    homeWeather = parsed.home || null;
                     localWeather = parsed.local || null;
                     localLocationName = parsed.locationName || "";
-                    isAwayFromCadca = Boolean(parsed.isAwayFromCadca);
-                    cadcaWeatherFetchedAt = Number(parsed.fetchedAt) || 0;
-                    const age = Date.now() - cadcaWeatherFetchedAt;
+                    isAwayFromHome = Boolean(parsed.isAwayFromHome);
+                    homeWeatherFetchedAt = Number(parsed.fetchedAt) || 0;
+                    const age = Date.now() - homeWeatherFetchedAt;
                     return age < WEATHER_CACHE_TTL_MS;
                 }
             } catch (e) {}
             return false;
         }
 
-        async function fetchCadcaWeather(force = false) {
-            if (!force && loadCachedCadcaWeather()) {
+        async function fetchHomeWeather(force = false) {
+            if (!force && loadCachedHomeWeather()) {
                 renderNewsTicker(false);
                 return;
             }
+            const loc = getLocationContext();
             try {
                 const coords = await getBrowserCoords();
+                const hasHomeCoords = loc.hasCoords;
                 let away = false;
                 let cityName = "";
-                let apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${CADCA_LAT}&longitude=${CADCA_LON}&current=temperature_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,wind_speed_10m&timezone=Europe%2FBratislava`;
+                let apiUrl = "";
 
-                if (coords && typeof coords.lat === "number" && typeof coords.lon === "number") {
-                    const dist = haversineKm(coords.lat, coords.lon, CADCA_LAT, CADCA_LON);
-                    if (dist > CADCA_NEAR_KM) {
-                        away = true;
-                        apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat.toFixed(4)},${CADCA_LAT}&longitude=${coords.lon.toFixed(4)},${CADCA_LON}&current=temperature_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,wind_speed_10m&timezone=Europe%2FBratislava`;
+                if (hasHomeCoords) {
+                    apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,wind_speed_10m&timezone=auto`;
+                    if (coords && typeof coords.lat === "number" && typeof coords.lon === "number") {
+                        const dist = haversineKm(coords.lat, coords.lon, loc.lat, loc.lon);
+                        if (dist > HOME_NEAR_KM) {
+                            away = true;
+                            apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat.toFixed(4)},${loc.lat}&longitude=${coords.lon.toFixed(4)},${loc.lon}&current=temperature_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,wind_speed_10m&timezone=auto`;
+                        }
                     }
+                } else if (coords && typeof coords.lat === "number" && typeof coords.lon === "number") {
+                    away = true;
+                    apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat.toFixed(4)}&longitude=${coords.lon.toFixed(4)}&current=temperature_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,wind_speed_10m&timezone=auto`;
+                } else {
+                    // Žiadne domovské mesto ani povolená geolokácia -> počasie potichu vynecháme
+                    homeWeather = null;
+                    localWeather = null;
+                    isAwayFromHome = false;
+                    homeWeatherFailed = false;
+                    renderNewsTicker(false);
+                    return;
                 }
 
                 const [weatherResp, resolvedCity] = await Promise.all([
@@ -8493,36 +8831,41 @@
                 const json = await weatherResp.json();
 
                 let newLocal = null;
-                let newCadca = null;
-                if (away && Array.isArray(json) && json.length >= 2) {
+                let newHome = null;
+                if (hasHomeCoords && away && Array.isArray(json) && json.length >= 2) {
                     newLocal = json[0] && json[0].current ? json[0].current : null;
-                    newCadca = json[1] && json[1].current ? json[1].current : null;
+                    newHome = json[1] && json[1].current ? json[1].current : null;
                     cityName = resolvedCity || "";
-                } else if (json && json.current && typeof json.current.temperature_2m === "number") {
-                    newCadca = json.current;
+                } else if (hasHomeCoords && json && json.current && typeof json.current.temperature_2m === "number") {
+                    newHome = json.current;
                     away = false;
+                } else if (!hasHomeCoords && json && json.current && typeof json.current.temperature_2m === "number") {
+                    newLocal = json.current;
+                    cityName = resolvedCity || "";
+                    away = true;
                 }
 
-                if (newCadca && typeof newCadca.temperature_2m === "number") {
-                    cadcaWeather = newCadca;
+                if ((newHome && typeof newHome.temperature_2m === "number") || (newLocal && typeof newLocal.temperature_2m === "number")) {
+                    homeWeather = newHome;
                     localWeather = newLocal;
                     localLocationName = cityName;
-                    isAwayFromCadca = away && Boolean(newLocal);
-                    cadcaWeatherFetchedAt = Date.now();
-                    cadcaWeatherFailed = false;
+                    isAwayFromHome = away && Boolean(newLocal);
+                    homeWeatherFetchedAt = Date.now();
+                    homeWeatherFailed = false;
                     try {
                         localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({
-                            fetchedAt: cadcaWeatherFetchedAt,
-                            cadca: cadcaWeather,
+                            locSig: getWeatherLocSig(),
+                            fetchedAt: homeWeatherFetchedAt,
+                            home: homeWeather,
                             local: localWeather,
                             locationName: localLocationName,
-                            isAwayFromCadca: isAwayFromCadca
+                            isAwayFromHome: isAwayFromHome
                         }));
                     } catch (e) {}
                     renderNewsTicker(false);
                 }
             } catch (err) {
-                cadcaWeatherFailed = true;
+                homeWeatherFailed = true;
                 renderNewsTicker(false);
             }
         }
@@ -8536,29 +8879,29 @@
         }
 
         function getWeatherNewsItem() {
-            const month = new Date().getMonth() + 1; // 1 – 12
+            const loc = getLocationContext();
+            const month = new Date().getMonth() + 1;
             const isWinterPeriod = (month === 11 || month === 12 || month === 1 || month === 2 || month === 3);
 
-            const activeW = (isAwayFromCadca && localWeather) ? localWeather : cadcaWeather;
-            const activeTag = (isAwayFromCadca && localWeather)
-                ? (localLocationName ? `POČASIE ${localLocationName.toUpperCase()}` : "POČASIE (POLOHA)")
-                : "POČASIE ČADCA";
+            const usingLocal = Boolean(isAwayFromHome && localWeather);
+            const activeW = usingLocal ? localWeather : homeWeather;
 
             if (!activeW) {
-                if (cadcaWeatherFailed) {
+                if (homeWeatherFailed && loc.hasCoords) {
                     const fallbackQuip = isWinterPeriod
                         ? "Offline režim – v tomto období to vonku aj tak býva len pre otužilcov, radšej zvoľte halu!"
                         : "Offline režim – mrknite z okna: ak je nad 14 °C a sucho, šup na antuku, inak do haly.";
                     return {
-                        tag: "POČASIE ČADCA",
+                        tag: loc.homeWeatherTag,
                         text: `Aktuálne dáta sa nepodarilo načítať. ${fallbackQuip}`
                     };
                 }
-                return {
-                    tag: "POČASIE",
-                    text: "Načítavam aktuálne podmienky pre tenis z Open-Meteo..."
-                };
+                return null;
             }
+
+            const activeTag = usingLocal
+                ? (localLocationName ? `POČASIE ${localLocationName.toUpperCase()}` : "POČASIE (POLOHA)")
+                : loc.homeWeatherTag;
 
             const temp = Number(activeW.temperature_2m);
             const wind = Math.round(Number(activeW.wind_speed_10m) || 0);
@@ -8575,24 +8918,28 @@
                 quipList = goIndoor ? monthPool.indoor : monthPool.outdoor;
             }
 
-            const quip = quipList[weatherQuipSeed % quipList.length];
-            const tempStr = temp.toFixed(1).replace(".", ",");
-            const precipExtra = (precip > 0) ? `, zrážky ${precip.toFixed(1).replace(".", ",")} mm` : "";
+            const rawQuip = quipList[weatherQuipSeed % quipList.length];
+            const useCadcaQuips = !usingLocal && loc.isCadca;
+            const neutralCityLabel = usingLocal ? "" : (loc.hasCity && !loc.isCadca ? loc.name : "");
+            const quip = localizeWeatherQuip(rawQuip, useCadcaQuips, neutralCityLabel);
+
+            const tempStr = skNum(temp, 1);
+            const precipExtra = (precip > 0) ? `, zrážky ${skNum(precip, 1)} mm` : "";
             let text = `${wmo.icon} ${tempStr} °C (${wmo.label}, vietor ${wind} km/h${precipExtra}) – ${quip}`;
 
-            // Ak je používateľ mimo Čadce a počasie sa výrazne líši (teplota >= 3,5 °C alebo zrážky/búrka), pripoj poznámku o Čadci
-            if (isAwayFromCadca && localWeather && cadcaWeather) {
-                const cTemp = Number(cadcaWeather.temperature_2m);
-                const cWmo = decodeWmoWeather(cadcaWeather.weather_code);
-                const cHasPrecip = hasWeatherPrecip(cadcaWeather, cWmo);
+            // Ak je používateľ mimo domovského mesta a počasie sa výrazne líši, pripoj poznámku o domovskom meste
+            if (usingLocal && homeWeather && loc.hasCity) {
+                const cTemp = Number(homeWeather.temperature_2m);
+                const cWmo = decodeWmoWeather(homeWeather.weather_code);
+                const cHasPrecip = hasWeatherPrecip(homeWeather, cWmo);
                 const isDiffSignificant =
                     Math.abs(temp - cTemp) >= WEATHER_TEMP_DIFF_THRESHOLD ||
                     hasPrecip !== cHasPrecip ||
                     wmo.isStorm !== cWmo.isStorm;
 
                 if (isDiffSignificant) {
-                    const cTempStr = cTemp.toFixed(1).replace(".", ",");
-                    text += ` (Pozn.: v Čadci, kde sa obvykle zápasy hrajú, je momentálne ${cWmo.icon} ${cTempStr} °C, ${cWmo.label}.)`;
+                    const cTempStr = skNum(cTemp, 1);
+                    text += ` (Pozn.: ${loc.inPlace}, kde sa obvykle zápasy hrajú, je momentálne ${cWmo.icon} ${cTempStr} °C, ${cWmo.label}.)`;
                 }
             }
 
@@ -8602,39 +8949,143 @@
             };
         }
 
-
         function buildExtraWeatherNewsItems() {
             const items = [];
-            const activeW = (isAwayFromCadca && localWeather) ? localWeather : cadcaWeather;
+            const loc = getLocationContext();
+            const usingLocal = Boolean(isAwayFromHome && localWeather);
+            const activeW = usingLocal ? localWeather : homeWeather;
             if (!activeW) return items;
+
+            const month = new Date().getMonth() + 1;
+            const isOutdoorSeason = (month >= 4 && month <= 10);
+
             const temp = Number(activeW.temperature_2m);
             const wind = Math.round(Number(activeW.wind_speed_10m) || 0);
             const precip = Number(activeW.precipitation) || 0;
+            const snowfall = Number(activeW.snowfall) || 0;
             const wmo = decodeWmoWeather(activeW.weather_code);
             const hasPrecip = hasWeatherPrecip(activeW, wmo);
-            const tempStr = temp.toFixed(1).replace(".", ",");
-            const precipStr = precip.toFixed(1).replace(".", ",");
-            const placeLabel = (isAwayFromCadca && localWeather)
-                ? (localLocationName ? `V lokalite ${localLocationName}` : "V tvojej polohe")
-                : "V Čadci";
+            const isSnow = wmo.isSnow || snowfall > 0;
+            const isRain = hasPrecip && !isSnow;
 
-            if (wind >= 20) {
+            const tempStr = skNum(temp, 1);
+            const precipStr = skNum(precip, 1);
+            const placeLabel = usingLocal
+                ? (localLocationName ? `V meste ${localLocationName}` : "V tvojej polohe")
+                : loc.inPlaceCap;
+
+            if (isOutdoorSeason && wind >= 20) {
                 items.push({ tag: "VETERNÁ LOTÉRIA", text: `${placeLabel} fúka ${wind} km/h – dnes na vonkajšom kurte nerozhoduje technika, ale to, kto trafí lob v správnom poryve vetra.` });
             }
-            if (temp >= 28) {
+            if (isOutdoorSeason && temp >= 28) {
                 items.push({ tag: "SAUNA NA ANTUKE", text: `Teplomer ukazuje ${tempStr} °C. Kto dnes vyhrá trojsetový zápas bez infúzie, mal by dostať bonusových +20 ELO za prežitie.` });
             }
-            if (hasPrecip && temp > 1) {
+            if (isOutdoorSeason && isRain && temp > 1) {
                 const rainTxt = precip > 0 ? `Vonku prší (${precipStr} mm).` : "Vonku prší.";
                 items.push({ tag: "VODNÉ PÓLO", text: `${rainTxt} Hrať dnes na antuke by chcelo skôr gumáky než antukové tenisky – jediná záchrana je strecha v hale.` });
             }
             if (temp < 0) {
                 items.push({ tag: "ARCTIC OPEN", text: `${placeLabel} mrzne (${tempStr} °C). Ak niekto dnes navrhne hrať vonku, okamžite mu skontrolujte občiansky, či nepochádza z Jakutska.` });
             }
-            if (temp >= 18 && temp <= 24 && !hasPrecip && wind < 15) {
+            if (isOutdoorSeason && temp >= 18 && temp <= 24 && !hasPrecip && wind < 15) {
                 items.push({ tag: "ŽIADNE VÝHOVORKY", text: `${placeLabel} je ${tempStr} °C a bezvetrie – dnes sa na počasie, slnko ani vietor pri prehre nevyhovorí absolútne nikto!` });
             }
             return items;
+        }
+
+        function buildLeaderChangeNewsItem(isDoubles) {
+            if (!timelinePoints || timelinePoints.length < 3 || !computedMatches || computedMatches.length < 2) {
+                return null;
+            }
+            const lastIdx = timelinePoints.length - 1;
+            const lastPoint = timelinePoints[lastIdx];
+            const lastMatch = lastPoint && lastPoint.match;
+            if (!lastMatch || !lastMatch.date) return null;
+
+            const matchAge = getMatchAgeDays(lastMatch.date);
+            if (matchAge < 0 || matchAge >= 30) return null;
+
+            // Zostav počty odohratých zápasov hráčov po jednotlivých krokoch histórie
+            const matchCountsAtStep = [];
+            const runningCounts = {};
+            state.players.forEach(p => { runningCounts[p.id] = 0; });
+            matchCountsAtStep.push({ ...runningCounts });
+
+            for (let s = 1; s < timelinePoints.length; s++) {
+                const m = timelinePoints[s].match;
+                if (m) {
+                    const pids = isDoubles ? [m.t1p1, m.t1p2, m.t2p1, m.t2p2] : [m.p1, m.p2];
+                    pids.forEach(pid => {
+                        if (pid) runningCounts[pid] = (runningCounts[pid] || 0) + 1;
+                    });
+                }
+                matchCountsAtStep.push({ ...runningCounts });
+            }
+
+            const getLeaderIdAtStep = (stepIdx) => {
+                const pt = timelinePoints[stepIdx];
+                if (!pt || !pt.elos) return null;
+                const counts = matchCountsAtStep[stepIdx] || {};
+                let bestId = null;
+                let bestElo = -Infinity;
+                let bestMatches = -1;
+                state.players.forEach(p => {
+                    const eloVal = pt.elos[p.id];
+                    if (typeof eloVal !== "number") return;
+                    const mc = counts[p.id] || 0;
+                    if (eloVal > bestElo || (eloVal === bestElo && mc > bestMatches)) {
+                        bestElo = eloVal;
+                        bestMatches = mc;
+                        bestId = p.id;
+                    }
+                });
+                return bestId;
+            };
+
+            const newLeaderId = getLeaderIdAtStep(lastIdx);
+            const prevLeaderId = getLeaderIdAtStep(lastIdx - 1);
+            if (!newLeaderId || !prevLeaderId || newLeaderId === prevLeaderId) return null;
+
+            const newPlayer = state.players.find(p => p.id === newLeaderId);
+            const prevPlayer = state.players.find(p => p.id === prevLeaderId);
+            if (!newPlayer || !prevPlayer) return null;
+
+            // Zisti začiatok nepretržitej vlády pôvodného lídra
+            let reignStartStep = lastIdx - 1;
+            while (reignStartStep > 1 && getLeaderIdAtStep(reignStartStep - 1) === prevLeaderId) {
+                reignStartStep--;
+            }
+            const reignStartMatch = timelinePoints[reignStartStep] && timelinePoints[reignStartStep].match;
+            const reignStartDate = reignStartMatch && reignStartMatch.date ? reignStartMatch.date : lastMatch.date;
+
+            const startDays = parseIsoToUtcDays(reignStartDate);
+            const endDays = parseIsoToUtcDays(lastMatch.date);
+            const reignDays = (startDays !== null && endDays !== null) ? Math.max(0, endDays - startDays) : 0;
+
+            const newName = newPlayer.name;
+            const prevName = prevPlayer.name;
+            const seed = (Number(lastMatch.index) || 0) + weatherQuipSeed;
+
+            if (reignDays === 0) {
+                const blitzPool = [
+                    { tag: "BLESKOVÝ PREVRAT", text: `${newName} zosadil ${skName(prevName, "acc")} z prvého miesta ešte v ten istý deň – na tróne sa nestihol ani ohriať!` },
+                    { tag: "KRÁĽ NA JEDNO POOBEDIE", text: `Vláda ${skName(prevName, "gen")} na čele rebríčka trvala len pár hodín! Korunu mu okamžite vyfúkol ${newName}.` },
+                    { tag: "EXPRESNÁ VÝMENA NA TRÓNE", text: `Ani celý deň na vrchole! ${newName} bleskovo strieda ${skName(prevName, "acc")} na poste svetovej jednotky.` }
+                ];
+                return blitzPool[seed % blitzPool.length];
+            }
+
+            const daysText = skCount(reignDays, "deň", "dni", "dní");
+            const daysLocText = reignDays === 1 ? "1 dni" : `${reignDays} dňoch`;
+            const coupPool = [
+                { tag: "PALÁCOVÝ PREVRAT", text: `${newName} zosadil z trónu ${skName(prevName, "acc")}! Jeho nepretržitá vláda na čele rebríčka trvala presne ${daysText}.` },
+                { tag: "KRÁĽ JE MŔTVY, NECH ŽIJE KRÁĽ", text: `${newName} ukončil ${reignDays}-dňovú nadvládu ${skName(prevName, "gen")} a preberá post svetovej jednotky!` },
+                { tag: "ZEMETRASENIE NA ČELE", text: `Po ${daysLocText} na absolútnom vrchole padá ${prevName} – novým vládcom rebríčka sa stáva ${newName}!` },
+                { tag: "MIMORIADNA SPRÁVA", text: `Éra ${skName(prevName, "gen")} sa po ${daysLocText} skončila! Korunu na kurte preberá ${newName}.` },
+                { tag: "TRÓN MÁ NOVÉHO MAJITEĽA", text: `Koniec jednej epochy! ${prevName} kraľoval rebríčku ${daysText}, no od zápasu #${lastMatch.index} velí lige ${newName}.` },
+                { tag: "ŠOK NA VRCHOLE", text: `${prevName} prišiel o post jednotky po ${daysLocText} vládnutia – na trón zasadol ${newName}!` }
+            ];
+            return coupPool[seed % coupPool.length];
         }
 
         function getMatchAgeDays(isoDate) {
@@ -8653,7 +9104,7 @@
                 { tag: "BEZ TV PRENOSU", text: `Zápas #${matchIndex} z technických príčin nevysielala žiadna TV – kameraman vraj zabudol nabiť batériu a sťažoval sa na slabý honorár.` },
                 { tag: "BEZ ROZHODCU", text: `Duel #${matchIndex} sa odohral aj napriek tomu, že hlavný rozhodca sa nedostavil. Podľa očitých svedkov ho videli v blízkej krčme s partiou miestnych štamgastov.` },
                 { tag: "ZÁKULISIE", text: `Zápas #${matchIndex} sa musel zaobísť bez rozhodcu – zákulisné správy tvrdia, že dal prednosť blízkej krčme v spoločnosti veselých slečien.` },
-                { tag: "HAWK-EYE", text: `V zápase #${matchIndex} opäť nefungoval systém Hawk-Eye – všetky sporné auty sa riešili tradičnou kysuckou metódou: kto zakričal hlasnejšie, mal pravdu.` },
+                { tag: "HAWK-EYE", text: `V zápase #${matchIndex} opäť nefungoval systém Hawk-Eye – všetky sporné auty sa riešili ${getLocationContext().methodAdj}: kto zakričal hlasnejšie, mal pravdu.` },
                 { tag: "ANTIDOPING", text: `Antidopingový komisár po zápase #${matchIndex} odobral vzorky – v krvi hráčov sa našli len stopy horčíka, kofeínu a stopové množstvo etanolu.` },
                 { tag: "TRIBÚNA", text: `Zápas #${matchIndex} sledovala z tribúny napätá návšteva: jeden znudený holub a náhodný okoloidúci, ktorý hľadal skratku do obchodu.` },
                 { tag: "ZBERAČI", text: `Pre štrajk zberačov loptičiek si hráči v zápase #${matchIndex} museli po každý aut chodiť sami – najviac kilometrov tak nabehali mimo výmen.` },
@@ -8687,7 +9138,7 @@
                 out.push({ tag: "DVOJITÝ KANÁR", text: `Dvojitý kanár 6:0 6:0 v zápase #${m.index}! Zápisnica bola odoslaná na úrad pre ochranu zvierat ako podozrenie z chovu vtáctva vo veľkom.` });
             } else if (bagels === 1) {
                 const bagelPool = [
-                    { tag: "POZOR NA KANÁRA", text: `V zápase #${m.index} padol čistý kanár 6:0 – ornitológovia v Čadci hlásia výskyt vzácneho vtáctva priamo na kurte.` },
+                    { tag: "POZOR NA KANÁRA", text: `V zápase #${m.index} padol čistý kanár 6:0 – ornitológovia ${getLocationContext().inPlace} hlásia výskyt vzácneho vtáctva priamo na kurte.` },
                     { tag: "NULA NA TANIERI", text: `V dueli #${m.index} sa podávala nula na tanieri (6:0) – podľa svedkov bol v tomto sete čas aj na krátku kávu medzi gemami.` }
                 ];
                 if (!isDraw) {
@@ -8823,7 +9274,7 @@
                 const winDelta = isAWin ? m.deltaA : m.deltaB;
                 const winTeam = isAWin ? m.teamNameA : m.teamNameB;
                 if (winProb < 0.40) {
-                    specialItems.push({ tag: "PREKVAPENIE KOLA", text: `Podľa ELO mal pár ${winTeam} pred štvorhrou #${m.index} len ${Math.round(winProb * 100)} % šancu – bookmakeri v Čadci dnes rátajú straty.` });
+                    specialItems.push({ tag: "PREKVAPENIE KOLA", text: `Podľa ELO mal pár ${winTeam} pred štvorhrou #${m.index} len ${Math.round(winProb * 100)} % šancu – bookmakeri ${getLocationContext().inPlace} dnes rátajú straty.` });
                 } else if (winProb >= 0.65) {
                     specialItems.push({ tag: "POVINNÁ JAZDA", text: `Papierové predpoklady sa v štvorhre #${m.index} naplnili do bodky – favorizovaný pár ${winTeam} si pripísal povinných +${winDelta.toFixed(1)} ELO.` });
                 }
@@ -8890,8 +9341,9 @@
             const track = document.getElementById("news-ticker-track");
             if (!groupA || !groupB || !track) return;
 
-            const dataSig = `${state.updatedAt || 0}_${computedMatches.length}_${computedPlayers.map(p => p.id + ":" + p.elo).join("|")}_${computedMatches.map(m => [m.date, m.sets1, m.sets2, m.gems || "", m.note || ""].join(",")).join("~")}`;
-            const weatherSig = `${cadcaWeatherFetchedAt}_${cadcaWeatherFailed ? 1 : 0}_${weatherQuipSeed}`;
+            const locSig = getWeatherLocSig();
+            const dataSig = `${state.updatedAt || 0}_${locSig}_${computedMatches.length}_${computedPlayers.map(p => p.id + ":" + p.elo).join("|")}_${computedMatches.map(m => [m.date, m.sets1, m.sets2, m.gems || "", m.note || ""].join(",")).join("~")}`;
+            const weatherSig = `${homeWeatherFetchedAt}_${homeWeatherFailed ? 1 : 0}_${weatherQuipSeed}`;
             const fullSig = `${dataSig}__${weatherSig}`;
 
             if (forceReshuffle || dataSig !== newsDataSignature || cachedOtherNewsItems.length === 0) {
@@ -8902,12 +9354,18 @@
 
             if (forceReshuffle || fullSig !== newsLastSignature || cachedNewsItems.length === 0) {
                 newsLastSignature = fullSig;
+                const leaderChangeItem = buildLeaderChangeNewsItem(true);
                 const weatherItem = getWeatherNewsItem();
                 const extraWeather = buildExtraWeatherNewsItems();
                 const mergedOther = extraWeather.length > 0
                     ? shuffleNewsArray([...cachedOtherNewsItems, ...extraWeather])
                     : cachedOtherNewsItems;
-                cachedNewsItems = [...cachedRecentNewsItems, weatherItem, ...mergedOther];
+                cachedNewsItems = [
+                    ...(leaderChangeItem ? [leaderChangeItem] : []),
+                    ...cachedRecentNewsItems,
+                    ...(weatherItem ? [weatherItem] : []),
+                    ...mergedOther
+                ];
             }
 
             const html = cachedNewsItems.map(item =>
