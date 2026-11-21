@@ -2070,7 +2070,7 @@
                 <div class="brand-ball">E4M</div>
                 <div>
                     <div class="brand-title">ELO<span>4</span>MASTER</div>
-                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.37</span>
+                    <span class="brand-sub" id="brand-mode-sub">Deblový ELO rebríček · v1.38</span>
                 </div>
             </div>
             <div class="header-badges">
@@ -2506,7 +2506,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-dot" style="background: var(--tennis-lime);"></span>
-                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.37)
+                        Aktívny režim histórie &amp; GitHub Sync (ELO4MASTER v1.38)
                     </div>
                     <span class="param-pill" id="sync-status-pill" style="background:rgba(163,230,53,0.15); color:var(--tennis-lime); border-color:rgba(163,230,53,0.35);">Od 1500 ELO</span>
                 </div>
@@ -2653,7 +2653,7 @@
                                 <span><i class="fa-solid fa-file-shield"></i> Archívna lokálna záloha</span>
                                 <span class="ctx-popover-badge">JSON</span>
                             </div>
-                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.37_zaloha_RRRR-MM-DD.json</em>).</div>
+                            <div class="ctx-popover-desc">Uloží kompletnú kópiu deblovej databázy do PC s aktuálnym dátumom v názve súboru (napr. <em>ELO4MASTER_v1.38_zaloha_RRRR-MM-DD.json</em>).</div>
                             <div class="ctx-popover-tip">Ideálne na priebežné zálohovanie sezóny pred väčšími úpravami.</div>
                         </div>
                     </div>
@@ -3047,6 +3047,11 @@
             if (persist) {
                 saveThemePreference(theme.key, getSeasonKeyByDate());
             }
+
+            const tvMod = document.getElementById("tv-modal");
+            if (tvMod && tvMod.classList.contains("open")) renderTvCanvas();
+            const tvChartMod = document.getElementById("tv-chart-modal");
+            if (tvChartMod && tvChartMod.classList.contains("open")) renderTvChartCanvas();
 
             if (showNotification) {
                 showToast(`Motív: ${theme.label}`);
@@ -5623,7 +5628,7 @@
             ctx.fillStyle = "#ffffff";
             ctx.font = "800 31px sans-serif";
             ctx.textAlign = "left";
-            ctx.fillText("ELO4MASTER V1.37 | DEBLOVÝ VÝVOJ ELO V ČASE", innerX + 32, topY + 47);
+            ctx.fillText("ELO4MASTER V1.38 | DEBLOVÝ VÝVOJ ELO V ČASE", innerX + 32, topY + 47);
 
             const todayStr = new Date().toLocaleDateString("sk-SK");
             const rangeUpper = formatChartRangeText(bounds).toUpperCase();
@@ -5836,7 +5841,7 @@
 
         function downloadTvChartGraphic() {
             const canvas = document.getElementById("tvChartCanvas");
-            const filename = `ELO4MASTER_v1.37_TV_Graf_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.38_TV_Graf_${new Date().toISOString().split("T")[0]}.png`;
             try {
                 canvas.toBlob(blob => {
                     if (blob) {
@@ -6478,7 +6483,7 @@
                 exportedAtIso: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: "application/json;charset=utf-8" });
-            const filename = customFilename || `ELO4MASTER_v1.37_zaloha_${new Date().toISOString().split("T")[0]}.json`;
+            const filename = customFilename || `ELO4MASTER_v1.38_zaloha_${new Date().toISOString().split("T")[0]}.json`;
             triggerBlobDownload(blob, filename);
             if (customFilename === "databaza.json") {
                 showToast("Súbor databaza.json stiahnutý! Nahraj ho na GitHub vedľa index.html.");
@@ -6533,7 +6538,7 @@
                 csv += `${i+1};${p.name};${p.elo.toFixed(1).replace('.', ',')};${p.matches};${p.wins};${p.losses};${p.draws};${winPct.replace('.', ',')}\n`;
             });
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-            triggerBlobDownload(blob, `ELO4MASTER_v1.37_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
+            triggerBlobDownload(blob, `ELO4MASTER_v1.38_tabulka_${new Date().toISOString().split("T")[0]}.csv`);
         }
 
         const TV_SETTINGS_KEY = "ELO4MASTER_TV_CFG_V1";
@@ -6675,6 +6680,7 @@
                         fallbackImg.onerror = () => {
                             tvBgImage = null;
                             tvBgLoaded = false;
+                            tvBgPromise = null;
                             resolve();
                         };
                         fallbackImg.src = "./TV.jpeg";
@@ -6701,6 +6707,60 @@
             ctx.closePath();
         }
 
+        function drawThemeFallbackBackground(targetCtx, W, H) {
+            const theme = SEASON_THEMES[currentSeasonThemeIndex] || SEASON_THEMES[0];
+            const matches = [...String(theme.gradient || "").matchAll(/(#[0-9a-fA-F]{3,8})\s*(\d+(?:\.\d+)?)?%/g)];
+
+            // Presný 135° CSS uhol gradientu (zľava hore doprava dole)
+            const rad = (135 - 90) * Math.PI / 180;
+            const dx = Math.cos(rad);
+            const dy = Math.sin(rad);
+            const halfLen = (Math.abs(W * dx) + Math.abs(H * dy)) / 2;
+            const cx = W / 2;
+            const cy = H / 2;
+
+            const bgGrad = targetCtx.createLinearGradient(
+                cx - dx * halfLen, cy - dy * halfLen,
+                cx + dx * halfLen, cy + dy * halfLen
+            );
+
+            if (matches.length >= 2) {
+                matches.forEach((m, idx) => {
+                    const pos = m[2] !== undefined ? Math.max(0, Math.min(1, parseFloat(m[2]) / 100)) : (idx / (matches.length - 1));
+                    bgGrad.addColorStop(pos, m[1]);
+                });
+            } else {
+                bgGrad.addColorStop(0, theme.themeColor || "#007263");
+                bgGrad.addColorStop(1, "#0b1e2d");
+            }
+
+            targetCtx.fillStyle = bgGrad;
+            targetCtx.fillRect(0, 0, W, H);
+
+            // Jemné moderné broadcast línie tenisového kurtu pre hĺbku obrazu
+            targetCtx.save();
+            targetCtx.strokeStyle = "rgba(255, 255, 255, 0.14)";
+            targetCtx.lineWidth = 3;
+            targetCtx.beginPath();
+            targetCtx.moveTo(144, H * 0.68);
+            targetCtx.lineTo(W - 144, H * 0.68);
+            targetCtx.moveTo(288, H * 0.28);
+            targetCtx.lineTo(84, H * 0.93);
+            targetCtx.moveTo(W - 288, H * 0.28);
+            targetCtx.lineTo(W - 84, H * 0.93);
+            targetCtx.moveTo(W / 2, H * 0.28);
+            targetCtx.lineTo(W / 2, H * 0.68);
+            targetCtx.stroke();
+            targetCtx.restore();
+
+            // Jemná vinetácia okrajov bez stmavenia samotného motívu
+            const radGrad = targetCtx.createRadialGradient(W / 2, H / 2, H * 0.25, W / 2, H / 2, W * 0.72);
+            radGrad.addColorStop(0, "rgba(0, 0, 0, 0.0)");
+            radGrad.addColorStop(1, "rgba(4, 10, 18, 0.34)");
+            targetCtx.fillStyle = radGrad;
+            targetCtx.fillRect(0, 0, W, H);
+        }
+
         function drawTvBackgroundLayer(targetCtx, W, H, forceFallbackBg = false) {
             if (!forceFallbackBg && tvBgLoaded && tvBgImage && tvBgImage.naturalWidth > 0) {
                 const imgW = tvBgImage.naturalWidth;
@@ -6719,33 +6779,495 @@
                 targetCtx.fillStyle = vig;
                 targetCtx.fillRect(0, 0, W, H);
             } else {
-                // Ak TV.jpeg nie je k dispozícii, ponecháme pôvodnú farbu/grafiku antukového podkladu
-                const bgGrad = targetCtx.createLinearGradient(0, 0, 0, H);
-                bgGrad.addColorStop(0, "#5c2010");
-                bgGrad.addColorStop(0.35, "#9a3b1c");
-                bgGrad.addColorStop(1, "#692511");
-                targetCtx.fillStyle = bgGrad;
-                targetCtx.fillRect(0, 0, W, H);
-
-                targetCtx.strokeStyle = "rgba(255, 255, 255, 0.25)";
-                targetCtx.lineWidth = 4;
-                targetCtx.beginPath();
-                targetCtx.moveTo(144, H * 0.68);
-                targetCtx.lineTo(W - 144, H * 0.68);
-                targetCtx.moveTo(264, H * 0.25);
-                targetCtx.lineTo(72, H * 0.94);
-                targetCtx.moveTo(W - 264, H * 0.25);
-                targetCtx.lineTo(W - 72, H * 0.94);
-                targetCtx.moveTo(W / 2, H * 0.25);
-                targetCtx.lineTo(W / 2, H * 0.68);
-                targetCtx.stroke();
-
-                const radGrad = targetCtx.createRadialGradient(W / 2, H / 2, H * 0.2, W / 2, H / 2, W * 0.65);
-                radGrad.addColorStop(0, "rgba(9, 14, 26, 0.18)");
-                radGrad.addColorStop(1, "rgba(9, 14, 26, 0.82)");
-                targetCtx.fillStyle = radGrad;
-                targetCtx.fillRect(0, 0, W, H);
+                drawThemeFallbackBackground(targetCtx, W, H);
             }
+        }
+
+        function renderTvLastMatchBroadcast(ctx, W, H, forceFallbackBg, isDoubles) {
+            const hasMatch = computedMatches.length > 0;
+            const m = hasMatch ? computedMatches[computedMatches.length - 1] : null;
+            const noteTxt = (m && m.note) ? String(m.note).trim() : "";
+            const hasNote = Boolean(noteTxt);
+
+            const panelW = 1680;
+            const panelH = hasMatch ? (hasNote ? 696 : 624) : 440;
+            const panelX = Math.round((W - panelW) / 2);
+            const panelY = Math.round((H - panelH) / 2);
+            const panelRadius = 28;
+
+            const blurPx = Math.round((tvBlurPct / 100) * 28 * 10) / 10;
+            const opacityFactor = Math.max(0, Math.min(1, 1 - tvTransparencyPct / 100));
+
+            // Jemný priestorový tieň TV overlay okna
+            ctx.save();
+            ctx.shadowColor = "rgba(0, 8, 16, 0.52)";
+            ctx.shadowBlur = 44;
+            ctx.shadowOffsetY = 16;
+            drawRoundedRectPath(ctx, panelX, panelY, panelW, panelH, panelRadius);
+            ctx.fillStyle = "rgba(4, 14, 24, 0.18)";
+            ctx.fill();
+            ctx.restore();
+
+            // Glassmorphism výplň s nastaviteľným blurom a priehľadnosťou
+            ctx.save();
+            drawRoundedRectPath(ctx, panelX, panelY, panelW, panelH, panelRadius);
+            ctx.clip();
+            if (blurPx > 0) {
+                ctx.filter = `blur(${blurPx}px)`;
+                drawTvBackgroundLayer(ctx, W, H, forceFallbackBg);
+                ctx.filter = "none";
+            }
+            if (opacityFactor > 0.001) {
+                const a0 = Math.min(1, +(opacityFactor * 1.02).toFixed(3));
+                const a1 = Math.min(1, +(opacityFactor * 0.90).toFixed(3));
+                const a2 = Math.min(1, +(opacityFactor * 1.08).toFixed(3));
+                const glassGrad = ctx.createLinearGradient(panelX, panelY, panelX + panelW, panelY + panelH);
+                glassGrad.addColorStop(0, `rgba(7, 24, 38, ${a0})`);
+                glassGrad.addColorStop(0.5, `rgba(5, 18, 30, ${a1})`);
+                glassGrad.addColorStop(1, `rgba(3, 12, 22, ${a2})`);
+                ctx.fillStyle = glassGrad;
+                ctx.fillRect(panelX, panelY, panelW, panelH);
+
+                const shineGrad = ctx.createLinearGradient(panelX, panelY, panelX, panelY + 150);
+                shineGrad.addColorStop(0, `rgba(255, 255, 255, ${+(0.15 * opacityFactor).toFixed(3)})`);
+                shineGrad.addColorStop(1, "rgba(255, 255, 255, 0.0)");
+                ctx.fillStyle = shineGrad;
+                ctx.fillRect(panelX, panelY, panelW, 150);
+            }
+            ctx.restore();
+
+            // Vonkajší rám panelu
+            ctx.save();
+            drawRoundedRectPath(ctx, panelX, panelY, panelW, panelH, panelRadius);
+            ctx.strokeStyle = `rgba(210, 238, 255, ${+(Math.max(0.18, 0.36 * Math.max(0.45, opacityFactor))).toFixed(3)})`;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.restore();
+
+            const innerX = panelX + 44;
+            const innerW = panelW - 88;
+            const topY = panelY + 32;
+            const headerH = 68;
+            const appTag = isDoubles ? "ELO4MASTER V1.38" : "ELO2MASTER V1.55";
+
+            if (!hasMatch) {
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "800 34px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(`${appTag} | POSLEDNÝ ZÁPAS`, W / 2, panelY + 180);
+                ctx.fillStyle = "rgba(226, 238, 248, 0.78)";
+                ctx.font = "600 28px sans-serif";
+                ctx.fillText("Zatiaľ nie je zapísaný žiaden odohratý zápas.", W / 2, panelY + 250);
+                return;
+            }
+
+            const s1 = Number(m.sets1) || 0;
+            const s2 = Number(m.sets2) || 0;
+            const isDraw = s1 === s2;
+            const swapOrder = s2 > s1;
+            const accentHex = isDraw ? "#7dd3fc" : "#d9f928";
+
+            // 1. Horná TV broadcast lišta
+            ctx.save();
+            drawRoundedRectPath(ctx, innerX, topY, innerW, headerH, 14);
+            ctx.fillStyle = "rgba(3, 14, 24, 0.68)";
+            ctx.fill();
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.18)";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            ctx.restore();
+
+            ctx.save();
+            drawRoundedRectPath(ctx, innerX, topY, 10, headerH, 5);
+            ctx.fillStyle = accentHex;
+            ctx.fill();
+            ctx.restore();
+
+            // Štítok VÝSLEDOK / REMÍZA
+            const pillText = isDraw ? "REMÍZA" : "VÝSLEDOK";
+            const pillX = innerX + 26;
+            const pillY = topY + 15;
+            const pillW = isDraw ? 128 : 158;
+            const pillH = 38;
+            ctx.save();
+            drawRoundedRectPath(ctx, pillX, pillY, pillW, pillH, 9);
+            ctx.fillStyle = accentHex;
+            ctx.fill();
+            ctx.fillStyle = "#051018";
+            ctx.font = "900 20px sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText(pillText, pillX + pillW / 2, pillY + 26);
+            ctx.restore();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "800 28px sans-serif";
+            ctx.textAlign = "left";
+            const matchTypeLabel = isDoubles ? "ŠTVORHRA" : "DVOJHRA";
+            ctx.fillText(`${appTag}  ·  ${matchTypeLabel} #${m.index}`, pillX + pillW + 22, topY + 44);
+
+            ctx.fillStyle = "rgba(226, 238, 248, 0.90)";
+            ctx.font = "700 23px sans-serif";
+            ctx.textAlign = "right";
+            ctx.fillText(`DÁTUM ZÁPASU: ${formatDateSk(m.date)}`, innerX + innerW - 24, topY + 43);
+
+            // Príprava dát pre horný (víťaz) a spodný riadok
+            const parsedSets = parseSetsFromGemsString(m.gems);
+            const setsCount = parsedSets.length;
+            const topName = isDoubles
+                ? (swapOrder ? m.teamNameB : m.teamNameA)
+                : (swapOrder ? m.nameB : m.nameA);
+            const botName = isDoubles
+                ? (swapOrder ? m.teamNameA : m.teamNameB)
+                : (swapOrder ? m.nameA : m.nameB);
+            const topSets = swapOrder ? s2 : s1;
+            const botSets = swapOrder ? s1 : s2;
+            const topDelta = swapOrder ? m.deltaB : m.deltaA;
+            const botDelta = swapOrder ? m.deltaA : m.deltaB;
+            const topProb = swapOrder ? m.probB : m.probA;
+            const botProb = swapOrder ? m.probA : m.probB;
+
+            const getColor = (pid) => {
+                const pl = computedPlayers.find(x => x.id === pid);
+                return pl && pl.color ? pl.color : "#ffffff";
+            };
+            const topColors = isDoubles
+                ? (swapOrder ? [getColor(m.t2p1), getColor(m.t2p2)] : [getColor(m.t1p1), getColor(m.t1p2)])
+                : [getColor(swapOrder ? m.p2 : m.p1)];
+            const botColors = isDoubles
+                ? (swapOrder ? [getColor(m.t1p1), getColor(m.t1p2)] : [getColor(m.t2p1), getColor(m.t2p2)])
+                : [getColor(swapOrder ? m.p1 : m.p2)];
+
+            // Rozmery broadcast tabuľky (štýl karty Tabuľka .lm-scoreboard)
+            const sbX = innerX;
+            const sbW = innerW;
+            const sbY = panelY + 154;
+            const rowH = 126;
+            const sbH = rowH * 2;
+            const sbRadius = 20;
+
+            const setsColW = 164;
+            const gemColW = setsCount <= 3 ? 136 : (setsCount === 4 ? 116 : 102);
+            const teamColW = sbW - setsColW - setsCount * gemColW;
+
+            // 2. Popisky stĺpcov nad tabuľkou
+            const colHeadBaseline = sbY - 14;
+            ctx.fillStyle = "rgba(226, 238, 248, 0.78)";
+            ctx.font = "800 18px sans-serif";
+            ctx.textAlign = "left";
+            ctx.fillText(isDoubles ? "DVOJICA (TÍM)" : "HRÁČ", sbX + 34, colHeadBaseline);
+
+            ctx.textAlign = "center";
+            ctx.fillStyle = accentHex;
+            ctx.fillText("SETY", sbX + teamColW + setsColW / 2, colHeadBaseline);
+
+            ctx.fillStyle = "rgba(226, 238, 248, 0.74)";
+            for (let j = 0; j < setsCount; j++) {
+                const gxCenter = sbX + teamColW + setsColW + j * gemColW + gemColW / 2;
+                ctx.fillText(setsCount >= 4 ? `S${j + 1}` : `SET ${j + 1}`, gxCenter, colHeadBaseline);
+            }
+
+            // Neónová žiara pod scoreboardom
+            ctx.save();
+            ctx.shadowColor = isDraw ? "rgba(125, 211, 252, 0.34)" : "rgba(217, 249, 40, 0.32)";
+            ctx.shadowBlur = 32;
+            drawRoundedRectPath(ctx, sbX, sbY, sbW, sbH, sbRadius);
+            ctx.fillStyle = "rgba(0, 14, 24, 0.65)";
+            ctx.fill();
+            ctx.restore();
+
+            // 3. Samotný 2-riadkový broadcast scoreboard
+            ctx.save();
+            drawRoundedRectPath(ctx, sbX, sbY, sbW, sbH, sbRadius);
+            ctx.clip();
+
+            const drawRow = (rowIdx, labelName, colorsArr, setsVal, isWinnerRow) => {
+                const ry = sbY + rowIdx * rowH;
+
+                // Bunka mena (kráľovská modrá)
+                const teamGrad = ctx.createLinearGradient(sbX, ry, sbX + teamColW, ry + rowH);
+                if (isDraw) {
+                    teamGrad.addColorStop(0, "rgba(0, 86, 188, 0.90)");
+                    teamGrad.addColorStop(1, "rgba(0, 48, 126, 0.86)");
+                } else if (isWinnerRow) {
+                    teamGrad.addColorStop(0, "rgba(0, 96, 208, 0.94)");
+                    teamGrad.addColorStop(1, "rgba(0, 52, 138, 0.88)");
+                } else {
+                    teamGrad.addColorStop(0, "rgba(0, 68, 152, 0.84)");
+                    teamGrad.addColorStop(1, "rgba(0, 38, 102, 0.82)");
+                }
+                ctx.fillStyle = teamGrad;
+                ctx.fillRect(sbX, ry, teamColW, rowH);
+
+                // Neónový ľavý pásik pre víťaza
+                if (!isDraw && isWinnerRow) {
+                    ctx.fillStyle = "#e2ff26";
+                    ctx.fillRect(sbX, ry, 10, rowH);
+                }
+
+                // Farebné bodky hráča/dvojice
+                const dotR = 10;
+                let textStartX = sbX + 36;
+                colorsArr.forEach((col, ci) => {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(textStartX + dotR + ci * (dotR * 2 + 8), ry + rowH / 2, dotR, 0, Math.PI * 2);
+                    ctx.fillStyle = col;
+                    ctx.globalAlpha = (!isDraw && !isWinnerRow) ? 0.72 : 1;
+                    ctx.fill();
+                    ctx.strokeStyle = "rgba(255, 255, 255, 0.55)";
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    ctx.restore();
+                });
+                textStartX += colorsArr.length * (dotR * 2 + 8) + 14;
+
+                // Meno hráča / dvojice (tučná kurzíva v TV štýle)
+                ctx.save();
+                const nameFontSize = isWinnerRow || isDraw ? 50 : 46;
+                ctx.font = `italic 900 ${nameFontSize}px sans-serif`;
+                ctx.textAlign = "left";
+                ctx.fillStyle = (!isDraw && !isWinnerRow) ? "rgba(255, 255, 255, 0.70)" : "#ffffff";
+                if (isWinnerRow && !isDraw) {
+                    ctx.shadowColor = "rgba(125, 211, 252, 0.45)";
+                    ctx.shadowBlur = 14;
+                }
+                const maxNameW = teamColW - (textStartX - sbX) - (!isDraw && isWinnerRow ? 74 : 28);
+                ctx.fillText(labelName.toUpperCase(), textStartX, ry + rowH / 2 + Math.round(nameFontSize * 0.35), maxNameW);
+                ctx.restore();
+
+                // ATP/TV víťazný neónový trojuholník vpravo od mena víťaza
+                if (!isDraw && isWinnerRow) {
+                    const tx = sbX + teamColW - 44;
+                    const ty = ry + rowH / 2;
+                    ctx.save();
+                    ctx.fillStyle = "#e8ff2a";
+                    ctx.shadowColor = "rgba(232, 255, 42, 0.75)";
+                    ctx.shadowBlur = 12;
+                    ctx.beginPath();
+                    ctx.moveTo(tx, ty);
+                    ctx.lineTo(tx + 20, ty - 13);
+                    ctx.lineTo(tx + 20, ty + 13);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                // Bunka SETY (neónovo žlto-limetková pre víťaza, biela pre porazeného)
+                const setsX = sbX + teamColW;
+                const setsGrad = ctx.createLinearGradient(setsX, ry, setsX + setsColW, ry + rowH);
+                if (isDraw) {
+                    setsGrad.addColorStop(0, "rgba(240, 249, 255, 0.94)");
+                    setsGrad.addColorStop(1, "rgba(204, 230, 248, 0.88)");
+                } else if (isWinnerRow) {
+                    setsGrad.addColorStop(0, "#fff21a");
+                    setsGrad.addColorStop(1, "#d2f724");
+                } else {
+                    setsGrad.addColorStop(0, "#ffffff");
+                    setsGrad.addColorStop(1, "#dce8f2");
+                }
+                ctx.fillStyle = setsGrad;
+                ctx.fillRect(setsX, ry, setsColW, rowH);
+
+                ctx.fillStyle = "#051018";
+                ctx.font = "italic 900 72px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(`${setsVal}`, setsX + setsColW / 2 - 2, ry + rowH / 2 + 25);
+
+                // Bunky GEMY po setoch (tmavé antracitové sklo)
+                parsedSets.forEach((st, j) => {
+                    const gx = setsX + setsColW + j * gemColW;
+                    const gTop = swapOrder ? st.g2 : st.g1;
+                    const gBot = swapOrder ? st.g1 : st.g2;
+                    const gCur = rowIdx === 0 ? gTop : gBot;
+                    const gOpp = rowIdx === 0 ? gBot : gTop;
+
+                    const gemGrad = ctx.createLinearGradient(gx, ry, gx, ry + rowH);
+                    gemGrad.addColorStop(0, "rgba(54, 61, 69, 0.92)");
+                    gemGrad.addColorStop(1, "rgba(24, 29, 35, 0.95)");
+                    ctx.fillStyle = gemGrad;
+                    ctx.fillRect(gx, ry, gemColW, rowH);
+
+                    ctx.save();
+                    const wonSet = gCur > gOpp;
+                    ctx.fillStyle = wonSet ? "#ffffff" : (gCur < gOpp ? "rgba(255, 255, 255, 0.56)" : "#ffffff");
+                    ctx.font = `italic ${wonSet ? "900 62px" : "800 58px"} sans-serif`;
+                    if (wonSet) {
+                        ctx.shadowColor = "rgba(255, 255, 255, 0.35)";
+                        ctx.shadowBlur = 10;
+                    }
+                    ctx.textAlign = "center";
+                    ctx.fillText(`${gCur}`, gx + gemColW / 2 - 2, ry + rowH / 2 + 21);
+                    ctx.restore();
+                });
+            };
+
+            drawRow(0, topName, topColors, topSets, !isDraw);
+            drawRow(1, botName, botColors, botSets, false);
+
+            // Jemný horný sklenený lesk cez celý scoreboard
+            const sbGloss = ctx.createLinearGradient(sbX, sbY, sbX, sbY + 42);
+            sbGloss.addColorStop(0, "rgba(255, 255, 255, 0.16)");
+            sbGloss.addColorStop(1, "rgba(255, 255, 255, 0.0)");
+            ctx.fillStyle = sbGloss;
+            ctx.fillRect(sbX, sbY, sbW, 42);
+
+            // Ostré oddeľovacie linky mriežky
+            ctx.strokeStyle = "rgba(2, 10, 18, 0.90)";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(sbX, sbY + rowH);
+            ctx.lineTo(sbX + sbW, sbY + rowH);
+            ctx.moveTo(sbX + teamColW, sbY);
+            ctx.lineTo(sbX + teamColW, sbY + sbH);
+            for (let j = 0; j < setsCount; j++) {
+                const vx = sbX + teamColW + setsColW + j * gemColW;
+                ctx.moveTo(vx, sbY);
+                ctx.lineTo(vx, sbY + sbH);
+            }
+            ctx.stroke();
+            ctx.restore();
+
+            // Neónový vonkajší rám scoreboardu
+            ctx.save();
+            drawRoundedRectPath(ctx, sbX, sbY, sbW, sbH, sbRadius);
+            ctx.strokeStyle = isDraw ? "rgba(125, 211, 252, 0.72)" : "rgba(217, 249, 40, 0.72)";
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+            ctx.restore();
+
+            // 4. Dve moderné ELO telemetrické karty pod scoreboardom
+            const eloY = sbY + sbH + 26;
+            const eloH = 114;
+            const cardGap = 24;
+            const cardW = (innerW - cardGap) / 2;
+
+            const drawEloCard = (cx, title, colorsArr, delta, leftSub, rightSub) => {
+                const isPos = delta > 0;
+                const isNeg = delta < 0;
+                const deltaStr = isPos ? `+${delta.toFixed(1)} ELO` : `${delta.toFixed(1)} ELO`;
+
+                ctx.save();
+                drawRoundedRectPath(ctx, cx, eloY, cardW, eloH, 16);
+                ctx.fillStyle = "rgba(4, 18, 30, 0.62)";
+                ctx.fill();
+                ctx.strokeStyle = isPos
+                    ? "rgba(110, 231, 183, 0.42)"
+                    : (isNeg ? "rgba(252, 165, 165, 0.34)" : "rgba(255, 255, 255, 0.22)");
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                ctx.restore();
+
+                // Farebné bodky + meno
+                let nx = cx + 22;
+                colorsArr.forEach((col, ci) => {
+                    ctx.beginPath();
+                    ctx.arc(nx + 7 + ci * 20, eloY + 37, 7, 0, Math.PI * 2);
+                    ctx.fillStyle = col;
+                    ctx.fill();
+                });
+                nx += colorsArr.length * 20 + 8;
+
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "800 26px sans-serif";
+                ctx.textAlign = "left";
+                ctx.fillText(title.toUpperCase(), nx, eloY + 46, cardW - 230);
+
+                // Delta ELO pill vpravo hore
+                const badgeW = 164;
+                const badgeH = 38;
+                const bx = cx + cardW - badgeW - 20;
+                const by = eloY + 18;
+                ctx.save();
+                drawRoundedRectPath(ctx, bx, by, badgeW, badgeH, 10);
+                ctx.fillStyle = isPos ? "#34d399" : (isNeg ? "#f87171" : "rgba(255,255,255,0.22)");
+                ctx.fill();
+                ctx.fillStyle = isPos ? "#022c22" : (isNeg ? "#450a0a" : "#ffffff");
+                ctx.font = "900 22px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(deltaStr, bx + badgeW / 2, by + 27);
+                ctx.restore();
+
+                // Spodný riadok telemetrie
+                ctx.fillStyle = "#a5f3fc";
+                ctx.font = "700 21px sans-serif";
+                ctx.textAlign = "left";
+                ctx.fillText(leftSub, cx + 22, eloY + 89, cardW - 250);
+
+                ctx.fillStyle = "rgba(226, 238, 248, 0.78)";
+                ctx.font = "600 20px sans-serif";
+                ctx.textAlign = "right";
+                ctx.fillText(rightSub, cx + cardW - 22, eloY + 89);
+            };
+
+            const topLeftSub = isDoubles
+                ? (swapOrder
+                    ? `${m.nameB1}: ${m.eloAfterB1.toFixed(1)} · ${m.nameB2}: ${m.eloAfterB2.toFixed(1)}`
+                    : `${m.nameA1}: ${m.eloAfterA1.toFixed(1)} · ${m.nameA2}: ${m.eloAfterA2.toFixed(1)}`)
+                : (swapOrder
+                    ? `ELO: ${m.eloBeforeB.toFixed(1)} → ${m.eloAfterB.toFixed(1)}`
+                    : `ELO: ${m.eloBeforeA.toFixed(1)} → ${m.eloAfterA.toFixed(1)}`);
+
+            const botLeftSub = isDoubles
+                ? (swapOrder
+                    ? `${m.nameA1}: ${m.eloAfterA1.toFixed(1)} · ${m.nameA2}: ${m.eloAfterA2.toFixed(1)}`
+                    : `${m.nameB1}: ${m.eloAfterB1.toFixed(1)} · ${m.nameB2}: ${m.eloAfterB2.toFixed(1)}`)
+                : (swapOrder
+                    ? `ELO: ${m.eloBeforeA.toFixed(1)} → ${m.eloAfterA.toFixed(1)}`
+                    : `ELO: ${m.eloBeforeB.toFixed(1)} → ${m.eloAfterB.toFixed(1)}`);
+
+            drawEloCard(innerX, topName, topColors, topDelta, topLeftSub, `Šanca: ${Math.round(topProb * 100)} %`);
+            drawEloCard(innerX + cardW + cardGap, botName, botColors, botDelta, botLeftSub, `Šanca: ${Math.round(botProb * 100)} %`);
+
+            // 5. Voliteľná poznámka reportéra zo zápasu
+            if (hasNote) {
+                const noteY = eloY + eloH + 20;
+                const noteH = 54;
+                ctx.save();
+                drawRoundedRectPath(ctx, innerX, noteY, innerW, noteH, 12);
+                ctx.fillStyle = "rgba(190, 242, 100, 0.12)";
+                ctx.fill();
+                ctx.strokeStyle = "rgba(190, 242, 100, 0.36)";
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                ctx.restore();
+
+                ctx.save();
+                drawRoundedRectPath(ctx, innerX, noteY, 7, noteH, 4);
+                ctx.fillStyle = "#bef264";
+                ctx.fill();
+                ctx.restore();
+
+                ctx.fillStyle = "#bef264";
+                ctx.font = "800 19px sans-serif";
+                ctx.textAlign = "left";
+                ctx.fillText("Z KURTU:", innerX + 22, noteY + 34);
+
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "600 21px sans-serif";
+                ctx.fillText(noteTxt, innerX + 128, noteY + 34, innerW - 150);
+            }
+
+            // 6. Spodný broadcast info riadok
+            const gSum = parseGemsString(m.gems);
+            const topG = swapOrder ? gSum.g2 : gSum.g1;
+            const botG = swapOrder ? gSum.g1 : gSum.g2;
+            const footY = panelY + panelH - 22;
+
+            ctx.fillStyle = "rgba(226, 238, 248, 0.72)";
+            ctx.font = "700 18px sans-serif";
+            ctx.textAlign = "left";
+            ctx.fillText(
+                (topG + botG > 0) ? `SÚČET GEMOV: ${topG} : ${botG}` : `VÝSLEDOK NA SETY: ${topSets} : ${botSets}`,
+                innerX + 4,
+                footY
+            );
+
+            ctx.textAlign = "right";
+            ctx.fillText(
+                `ELO SYSTÉM: K=${state.config.K} · D=${state.config.D}  ·  ${new Date().toLocaleDateString("sk-SK")}`,
+                innerX + innerW - 4,
+                footY
+            );
         }
 
         function setTvMode(mode) {
@@ -6779,8 +7301,13 @@
 
             ctx.clearRect(0, 0, W, H);
 
-            // 1. Vykreslenie hlavného pozadia (TV.jpeg alebo pôvodný antukový podklad)
+            // 1. Vykreslenie hlavného pozadia (TV.jpeg alebo aktuálny farebný motív)
             drawTvBackgroundLayer(ctx, W, H, forceFallbackBg);
+
+            if (state.tvMode === "last") {
+                renderTvLastMatchBroadcast(ctx, W, H, forceFallbackBg, true);
+                return;
+            }
 
             const panelX = 88;
             const panelW = W - 176; // 1744
@@ -6837,78 +7364,6 @@
             const topY = panelY + 26;
             const todayStr = new Date().toLocaleDateString("sk-SK");
 
-            // REŽIM "POSLEDNÝ ZÁPAS" V GLASS ŠTÝLE
-            if (state.tvMode === "last" && computedMatches.length > 0) {
-                const m = computedMatches[computedMatches.length - 1];
-
-                ctx.save();
-                drawRoundedRectPath(ctx, innerX, topY, innerW, 74, 16);
-                ctx.fillStyle = "rgba(0, 26, 22, 0.62)";
-                ctx.fill();
-                ctx.strokeStyle = "rgba(255, 255, 255, 0.22)";
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-                ctx.restore();
-
-                ctx.save();
-                drawRoundedRectPath(ctx, innerX, topY, 12, 74, 6);
-                ctx.fillStyle = "#ff6b6b";
-                ctx.fill();
-                ctx.restore();
-
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "800 30px sans-serif";
-                ctx.textAlign = "left";
-                ctx.fillText(`ELO4MASTER V1.37 | OFICIÁLNY VÝSLEDOK ŠTVORHRY #${m.index}`, innerX + 32, topY + 47);
-
-                ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
-                ctx.font = "700 22px sans-serif";
-                ctx.textAlign = "right";
-                ctx.fillText(`DÁTUM ZÁPASU: ${m.date}`, innerX + innerW - 26, topY + 46);
-
-                // Stredový glass box pre skóre
-                const cardY = topY + 110;
-                const cardH = panelH - 190;
-                ctx.save();
-                drawRoundedRectPath(ctx, innerX + 60, cardY, innerW - 120, cardH, 22);
-                ctx.fillStyle = "rgba(255, 255, 255, 0.10)";
-                ctx.fill();
-                ctx.strokeStyle = "rgba(255, 255, 255, 0.24)";
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-                ctx.restore();
-
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "800 64px sans-serif";
-                ctx.textAlign = "center";
-                ctx.fillText(`${m.teamNameA}`, W / 2, cardY + 145);
-
-                // Skóre na sety
-                ctx.fillStyle = "#bef264";
-                ctx.font = "900 112px sans-serif";
-                ctx.fillText(`${m.sets1} : ${m.sets2}`, W / 2, cardY + 305);
-
-                // Gemy
-                ctx.fillStyle = "#a5f3fc";
-                ctx.font = "800 44px sans-serif";
-                ctx.fillText(`GEMY: ${m.gems || '—'}`, W / 2, cardY + 390);
-
-                // Tím B
-                ctx.fillStyle = "#7dd3fc";
-                ctx.font = "800 64px sans-serif";
-                ctx.fillText(`${m.teamNameB}`, W / 2, cardY + 530);
-
-                const sA = m.deltaA >= 0 ? `+${m.deltaA.toFixed(1)}` : m.deltaA.toFixed(1);
-                const sB = m.deltaB >= 0 ? `+${m.deltaB.toFixed(1)}` : m.deltaB.toFixed(1);
-
-                ctx.fillStyle = "rgba(255, 255, 255, 0.90)";
-                ctx.font = "700 32px sans-serif";
-                ctx.fillText(
-                    `POSUN ELO: ${m.teamNameA} (${sA})   ·   ${m.teamNameB} (${sB})`,
-                    W / 2, cardY + 665
-                );
-                return;
-            }
 
             // 3. Hlavička vnútri glass panelu (režim Hráči alebo Dvojice)
             const headerBarH = 66;
@@ -6938,10 +7393,10 @@
             let headerTitle = "";
             if (state.tvMode === "pairs") {
                 headerTitle = qualifiedPairs.length > 20
-                    ? `ELO4MASTER V1.37 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
-                    : `ELO4MASTER V1.37 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
+                    ? `ELO4MASTER V1.38 | REBRÍČEK DVOJÍC (TOP 20 Z ${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`
+                    : `ELO4MASTER V1.38 | REBRÍČEK DVOJÍC (${qualifiedPairs.length} PÁROV · MIN. 2 ZÁP.)`;
             } else {
-                headerTitle = `ELO4MASTER V1.37 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
+                headerTitle = `ELO4MASTER V1.38 | DEBLOVÝ REBRÍČEK ŠTVORHRY (${computedPlayers.length} HRÁČOV)`;
             }
             ctx.fillText(headerTitle, innerX + 30, topY + 43);
 
@@ -7176,7 +7631,7 @@
 
         function downloadTvGraphic() {
             const canvas = document.getElementById("tvCanvas");
-            const filename = `ELO4MASTER_v1.37_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
+            const filename = `ELO4MASTER_v1.38_TV_Grafika_${new Date().toISOString().split("T")[0]}.png`;
 
             try {
                 // Použitie toBlob + createObjectURL obchádza 2 MB limit prehliadača Chrome na data: URL pri FullHD PNG
@@ -7233,7 +7688,7 @@
         }
 
 
-        /* ==================== NEWS BAR TICKER (v1.37) ==================== */
+        /* ==================== NEWS BAR TICKER (v1.38) ==================== */
         let cachedNewsItems = [];
         let newsLastSignature = "";
         let newsResizeTimer = null;
@@ -7336,7 +7791,7 @@
             const achievements = computedAchievements || [];
 
             if (players.length === 0) {
-                add("INFO", "Vitajte v ELO4MASTER v1.37! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
+                add("INFO", "Vitajte v ELO4MASTER v1.38! Pridajte prvých deblistov a štvorhry pre spustenie štatistík.");
                 return items;
             }
 
