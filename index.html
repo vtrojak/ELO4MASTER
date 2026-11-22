@@ -6259,15 +6259,15 @@
                         </div>
                         <div style="font-size:0.78rem; color:var(--text-main); margin-top:12px; padding-top:10px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
                             <span style="color:var(--text-muted);">1) Sety a Gemy:</span>
-                            <span><strong>${setsA} : ${setsB}</strong> (Sety) · <strong>${gemsA} : ${gemsB}</strong> (Gemy)</span>
+                            <span><strong>${setsA} : ${setsB}</strong> (S) · <strong>${gemsA} : ${gemsB}</strong> (G)</span>
                         </div>
                         <div style="font-size:0.78rem; color:var(--text-main); margin-top:8px; padding-top:8px; border-top:1px solid rgba(148,163,184,0.08); display:flex; justify-content:space-between; align-items:center;">
-                            <span style="color:var(--text-muted);">2) Šanca dvojíc na výhru:</span>
+                            <span style="color:var(--text-muted);">2) Šanca na výhru:</span>
                             <span><strong style="color:var(--win)">${(probA*100).toFixed(1)}%</strong> : <strong style="color:var(--blue-accent)">${(probB*100).toFixed(1)}%</strong></span>
                         </div>
                         <div style="font-size:0.78rem; color:var(--text-main); margin-top:8px; padding-top:8px; border-top:1px solid rgba(148,163,184,0.08); display:flex; justify-content:space-between; align-items:center;">
-                            <span style="color:var(--text-muted);">3) Zisk na hráča pri výhre:</span>
-                            <span>Dvojica A: <strong style="color:var(--win)">+${winGainA}</strong> | Dvojica B: <strong style="color:var(--win)">+${winGainB}</strong></span>
+                            <span style="color:var(--text-muted);">3) Zisk pri výhre:</span>
+                            <span>Tím A: <strong style="color:var(--win)">+${winGainA}</strong> | Tím B: <strong style="color:var(--win)">+${winGainB}</strong></span>
                         </div>
                     </div>
                     ${matchesListHtml}
@@ -6496,7 +6496,7 @@
                         </div>
                     </div>
                     <div class="stat-tile" style="text-align:left; border-color:rgba(239,68,68,0.3);">
-                        <div class="stat-tile-label" style="color:var(--loss);">⚡ Nemesis (Najťažší súper)</div>
+                        <div class="stat-tile-label" style="color:var(--loss);">⚡ Nemesis </div>
                         <div style="font-weight:800; font-size:0.92rem; margin-top:3px;">
                             ${nemesis ? `${escapeHtml(nemesis.name)} (${nemesis.wins}V-${nemesis.losses}P-${nemesis.draws}R)` : '—'}
                         </div>
@@ -6610,7 +6610,7 @@
                     </div>
                 </div>
                 <div class="stat-tile" style="text-align:left; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-                    <span>Celková bilancia: <strong>${p.matches} záp. (${p.wins}V - ${p.losses}P - ${p.draws}R)</strong></span>
+                    <span>Bilancia: <strong>${p.matches} záp. (${p.wins}V - ${p.losses}P - ${p.draws}R)</strong></span>
                     <span>Úspešnosť: <strong style="color:var(--clay-light)">${winPct}%</strong></span>
                     <span>Sety: <strong>${p.setsWon}:${p.setsLost}</strong> · Gemy: <strong>${p.gemsWon}:${p.gemsLost}</strong></span>
                 </div>
